@@ -234,11 +234,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: 1
   unitMove:
-    moveSpeed: 5
+    moveSpeed: 500
   freezeRotation:
     x: 1
     y: 1
-    z: 1
+    z: 0
   harvester:
     carryCapacity: 10
     harvestAmount: 2

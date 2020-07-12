@@ -1,10 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using Unity.Collections;
+﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
-using Unity.Mathematics;
 using Unity.Transforms;
 
 public class FindAITargetSystem : KodeboldJobSystem
@@ -33,7 +29,7 @@ public class FindAITargetSystem : KodeboldJobSystem
 			NativeArray<RaycastResult> raycastResult = m_raycastSystem.RaycastResult;
 			EntityCommandBuffer.Concurrent ecb = m_endSimECBSystem.CreateCommandBuffer().ToConcurrent();
 
-			Dependency = Entities.WithReadOnly(raycastResult).WithAll<SelectedTag>().ForEach((Entity entity, int entityInQueryIndex, ref CurrentTarget currentTarget) =>
+			Dependency = Entities.WithReadOnly(raycastResult).WithAll<SelectedTag>().ForEach((Entity entity, int entityInQueryIndex, ref CurrentTarget currentTarget, ref DynamicBuffer<Command> commandBuffer) =>
 			{
 				if (raycastResult[0].raycastTargetType == RaycastTargetType.Ground)
 				{
@@ -46,9 +42,10 @@ public class FindAITargetSystem : KodeboldJobSystem
 
 					ecb.AddComponent(entityInQueryIndex, entity, new SwitchToState { aiState = AIState.MovingToPosition, target = targetData });
 
-					//UnityEngine.Debug.Log("Request switch to MovingToPosition state");
+					UnityEngine.Debug.Log("Request switch to MovingToPosition state");
 
 					currentTarget.findTargetOfType = AITargetType.None;
+					commandBuffer.Clear();
 
 					return;
 				}
@@ -67,9 +64,10 @@ public class FindAITargetSystem : KodeboldJobSystem
 
 					ecb.AddComponent(entityInQueryIndex, entity, new SwitchToState { aiState = AIState.MovingToHarvest, target = targetData }); 
 
-					//UnityEngine.Debug.Log("Request switch to MovingToHarvest state");
+					UnityEngine.Debug.Log("Request switch to MovingToHarvest state");
 
 					currentTarget.findTargetOfType = AITargetType.None;
+					commandBuffer.Clear();
 
 					return;
 				}
@@ -85,9 +83,10 @@ public class FindAITargetSystem : KodeboldJobSystem
 
 					ecb.AddComponent(entityInQueryIndex, entity, new SwitchToState { aiState = AIState.MovingToAttack, target = targetData });
 
-					//UnityEngine.Debug.Log("Request switch to MovingToAttack state");
+					UnityEngine.Debug.Log("Request switch to MovingToAttack state");
 
 					currentTarget.findTargetOfType = AITargetType.None;
+					commandBuffer.Clear();
 
 					return;
 				}

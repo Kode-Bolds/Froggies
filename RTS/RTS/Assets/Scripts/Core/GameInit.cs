@@ -83,13 +83,13 @@ public class GameInit : MonoBehaviour
 	public class PostPhysicsSystemsGroup : Unity.Entities.ComponentSystemGroup { }
 
 	[Unity.Entities.UpdateAfter(typeof(FindNearestTargetSystem))]
-	public class PostFindTargetEntityCommandBufferSystem : Unity.Entities.EntityCommandBufferSystem { }
+	public class PreStateTransitionEntityCommandBufferSystem : Unity.Entities.EntityCommandBufferSystem { }
 
 	[Unity.Entities.UpdateAfter(typeof(StateTransitionSystem))]
 	public class PostStateTransitionEntityCommandBufferSystem : Unity.Entities.EntityCommandBufferSystem { }
 
 	[Unity.Entities.UpdateAfter(typeof(PostStateTransitionEntityCommandBufferSystem))]
-	public class PostFindTargetSystemsGroup : Unity.Entities.ComponentSystemGroup { }
+	public class PostStateTransitionSystemsGroup : Unity.Entities.ComponentSystemGroup { }
 
 
 	private static Unity.Entities.World GetOrCreateWorld()
@@ -152,22 +152,23 @@ public class GameInit : MonoBehaviour
 			simSystemGroup.AddSystemToUpdateList(postPhysicsSystemsGroup);
 
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<RaycastSystem>());
-			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SpawningSystem>());
-			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SelectionSystem>());
-			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<CameraControlSystem>());
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<FindAITargetSystem>());
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<FindNearestTargetSystem>());
-			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<PostFindTargetEntityCommandBufferSystem>());
+			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<CommandProcessSystem>());
+			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<PreStateTransitionEntityCommandBufferSystem>());
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<StateTransitionSystem>());
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<PostStateTransitionEntityCommandBufferSystem>());
 
 			{
-				PostFindTargetSystemsGroup postFindTargetSystemsGroup = world.GetOrCreateSystem<PostFindTargetSystemsGroup>();
-				postPhysicsSystemsGroup.AddSystemToUpdateList(postFindTargetSystemsGroup);
+				PostStateTransitionSystemsGroup postStateTransitionSystemsGroup = world.GetOrCreateSystem<PostStateTransitionSystemsGroup>();
+				postPhysicsSystemsGroup.AddSystemToUpdateList(postStateTransitionSystemsGroup);
 
-				postFindTargetSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<HarvestingSystem>());
-				postFindTargetSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<DepositSystem>());
-				postFindTargetSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<UnitMoveSystem>());
+				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SpawningSystem>());
+				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SelectionSystem>());
+				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<CameraControlSystem>());
+				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<HarvestingSystem>());
+				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<DepositSystem>());
+				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<UnitMoveSystem>());
 			}
 		}
 

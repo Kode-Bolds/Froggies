@@ -12,7 +12,7 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 	private EntityQuery m_resourceQuery;
 	private EntityQuery m_enemyQuery;
 	private EntityQuery m_storeQuery;
-	private GameInit.PostFindTargetEntityCommandBufferSystem m_postFindTargetECBSystem;
+	private GameInit.PreStateTransitionEntityCommandBufferSystem m_postFindTargetECBSystem;
 
 	public override void GetSystemDependencies(Dependencies dependencies)
 	{
@@ -25,7 +25,7 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 		m_enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
 		m_storeQuery = GetEntityQuery(ComponentType.ReadOnly<Store>(), ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
 
-		m_postFindTargetECBSystem = World.GetOrCreateSystem<GameInit.PostFindTargetEntityCommandBufferSystem>();
+		m_postFindTargetECBSystem = World.GetOrCreateSystem<GameInit.PreStateTransitionEntityCommandBufferSystem>();
 	}
 
 	public override void UpdateSystem()
@@ -68,12 +68,15 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 		.WithDeallocateOnJobCompletion(storeTranslations)
 		.WithDeallocateOnJobCompletion(storeTargets)
 		.WithDeallocateOnJobCompletion(storeEntities)
-		.ForEach((int entityInQueryIndex, Entity entity, ref CurrentTarget currentTarget, in Translation unitTranslation) =>
+		.ForEach((int entityInQueryIndex, Entity entity, ref CurrentTarget currentTarget, in DynamicBuffer<Command> commandBuffer, in Translation unitTranslation) =>
 		{
+			if (commandBuffer.Length > 0)
+				currentTarget.findTargetOfType = AITargetType.None;
+
 			if (currentTarget.findTargetOfType == AITargetType.None)
 				return;
 
-			//Debug.Log($"Finding nearest target of type { currentTarget.findTargetOfType }");
+			Debug.Log($"Finding nearest target of type { currentTarget.findTargetOfType }");
 
 			int closestTargetIndex = -1;
 			switch (currentTarget.findTargetOfType)
@@ -87,7 +90,7 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 					//If we don't find a nearby resource node, then find the nearest store to deposit at and request a state change to MovingToDeposit instead.
 					if (closestTargetIndex == -1)
 					{
-						//Debug.Log($"Finding nearest target of type { AITargetType.Store }");
+						Debug.Log($"Finding nearest target of type { AITargetType.Store }");
 
 						closestTargetIndex = FindTarget(storeTargets, storeTranslations, storeEntities, AITargetType.Store, unitTranslation);
 
@@ -150,10 +153,10 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 			}
 		}
 
-		//if (closestIndex != -1)
-			//Debug.Log($"Closest target at index { closestIndex } with entity id { targetEntities[closestIndex].Index }");
-		//else
-			//Debug.Log("Target not found");
+		if (closestIndex != -1)
+			Debug.Log($"Closest target at index { closestIndex } with entity id { targetEntities[closestIndex].Index }");
+		else
+			Debug.Log("Target not found");
 
 		return closestIndex;
 	}
@@ -163,7 +166,7 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 	{
 		StateTransitionSystem.RequestStateChange(AIState.MovingToHarvest, ecb, entityInQueryIndex, entity, resourceTargetType, resourceTranslation, resourceEntity);
 
-		//Debug.Log("Request switch to MovingToHarvest state");
+		Debug.Log("Request switch to MovingToHarvest state");
 
 		currentTarget.findTargetOfType = AITargetType.None;
 	}
@@ -173,7 +176,7 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 	{
 		StateTransitionSystem.RequestStateChange(AIState.MovingToAttack, ecb, entityInQueryIndex, entity, enemyTargetType, enemyTranslation, enemyEntity);
 
-		//Debug.Log("Request switch to MovingToAttack state");
+		Debug.Log("Request switch to MovingToAttack state");
 
 		currentTarget.findTargetOfType = AITargetType.None;
 	}
@@ -183,7 +186,7 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 	{
 		StateTransitionSystem.RequestStateChange(AIState.MovingToDeposit, ecb, entityInQueryIndex, entity, storeTargetType, storeTranslation, storeEntity);
 
-		//Debug.Log("Request switch to MovingToDeposit state");
+		Debug.Log("Request switch to MovingToDeposit state");
 
 		currentTarget.findTargetOfType = AITargetType.None;
 	}

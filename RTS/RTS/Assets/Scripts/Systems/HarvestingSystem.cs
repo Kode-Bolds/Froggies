@@ -33,8 +33,8 @@ public class HarvestingSystem : KodeboldJobSystem
 
 			if (!resourceNodeLookup.TryGetComponentDataFromEntity(currentTarget.targetData.targetEntity, out ResourceNode resourceNode))
 			{
-				//Debug.Log($"Harvest node {currentTarget.targetData.targetEntity} destroyed when moving to it, finding nearby resource node of type {currentTarget.targetData.targetType} instead");
-				
+				Debug.Log($"Harvest node {currentTarget.targetData.targetEntity} destroyed when moving to it, finding nearby resource node of type {currentTarget.targetData.targetType} instead");
+
 				currentTarget.findTargetOfType = currentTarget.targetData.targetType;
 				return;
 			}
@@ -46,15 +46,15 @@ public class HarvestingSystem : KodeboldJobSystem
 			//Are we close enough to harvest yet?
 			if (dist <= range)
 			{
-				StateTransitionSystem.RequestStateChange(AIState.Harvesting, ecb, entityInQueryIndex, entity, 
+				StateTransitionSystem.RequestStateChange(AIState.Harvesting, ecb, entityInQueryIndex, entity,
 					currentTarget.targetData.targetType, currentTarget.targetData.targetPos, currentTarget.targetData.targetEntity);
-				//Debug.Log("Request switch to Harvesting state");
-				
+				Debug.Log("Request switch to Harvesting state");
+
 				//Set type we are harvesting + empty inventory if type is different
 				ResourceNode resource = GetComponent<ResourceNode>(currentTarget.targetData.targetEntity);
 				if (harvester.currentlyCarryingType != resource.resourceType)
 				{
-					//Debug.Log($"Harvesting type { resource.resourceType } setting carry amount to 0");
+					Debug.Log($"Harvesting type { resource.resourceType } setting carry amount to 0");
 
 					harvester.currentlyCarryingAmount = 0;
 					harvester.currentlyCarryingType = resource.resourceType;
@@ -66,10 +66,17 @@ public class HarvestingSystem : KodeboldJobSystem
 		EntityCommandBuffer.Concurrent ecb2 = m_endSimECBSystem.CreateCommandBuffer().ToConcurrent();
 
 		Dependency = Entities
+		.WithReadOnly(resourceNodeLookup)
 		.WithAll<HarvestingState>()
 		.ForEach((Entity entity, int entityInQueryIndex, ref Harvester harvester, ref CurrentTarget currentTarget) =>
 		{
-			ResourceNode resource = GetComponent<ResourceNode>(currentTarget.targetData.targetEntity);
+			if (!resourceNodeLookup.TryGetComponentDataFromEntity(currentTarget.targetData.targetEntity, out ResourceNode resourceNode))
+			{
+				Debug.Log($"Harvest node {currentTarget.targetData.targetEntity} destroyed while harvesting it, finding nearby resource node of type {currentTarget.targetData.targetType} instead");
+
+				currentTarget.findTargetOfType = currentTarget.targetData.targetType;
+				return;
+			}
 
 			//If harvest is on cd
 			if (harvester.harvestTickTimer > 0)
@@ -80,25 +87,25 @@ public class HarvestingSystem : KodeboldJobSystem
 			}
 			//Put harvest on cd
 			harvester.harvestTickTimer = harvester.harvestTickCooldown;
-			
+
 			//Harvest the smallest amount between amount of resource, amount harvestable and inventory space
 			int inventorySpace = harvester.carryCapacity - harvester.currentlyCarryingAmount;
-			int harvestAmount = math.min(math.min(resource.resourceAmount, harvester.harvestAmount), inventorySpace);
+			int harvestAmount = math.min(math.min(resourceNode.resourceAmount, harvester.harvestAmount), inventorySpace);
 
 			//Transfer resource from resource node to harvester
-			//Debug.Log($"Harvested { harvestAmount } of {resource.resourceType}");
+			Debug.Log($"Harvested { harvestAmount } of {resourceNode.resourceType}");
 			harvester.currentlyCarryingAmount += harvestAmount;
-			resource.resourceAmount -= harvestAmount;
+			resourceNode.resourceAmount -= harvestAmount;
 
 			//If the resource is empty destroy it, we must do this before deciding whether to continue harvesting or go deposit
-			if (resource.resourceAmount <= 0)
+			if (resourceNode.resourceAmount <= 0)
 			{
-				//Debug.Log("Fully harvested resource");
+				Debug.Log("Fully harvested resource");
 				ecb2.DestroyEntity(entityInQueryIndex, currentTarget.targetData.targetEntity);
 			}
 			else //If the resource isn't being destroyed then update its values
 			{
-				ecb2.SetComponent(entityInQueryIndex, currentTarget.targetData.targetEntity, resource);
+				ecb2.SetComponent(entityInQueryIndex, currentTarget.targetData.targetEntity, resourceNode);
 			}
 
 			//If we are at capacity go back to deposit
@@ -109,7 +116,7 @@ public class HarvestingSystem : KodeboldJobSystem
 			}
 
 			//If the resource is empty find a new one
-			if (resource.resourceAmount <= 0)
+			if (resourceNode.resourceAmount <= 0)
 			{
 				currentTarget.findTargetOfType = currentTarget.targetData.targetType;
 				return;

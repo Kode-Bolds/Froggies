@@ -15,6 +15,7 @@ public enum AITargetType
 }
 
 [Serializable]
+[GenerateAuthoringComponent]
 public struct TargetableByAI : IComponentData
 {
     public AITargetType targetType;

@@ -13,8 +13,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
-    m_Keys: []
-    m_Values: 
+    m_Keys:
+    - Assets/Prefabs/Harvester.prefab
+    - Assets/Scenes/SampleScene.unity
+    - Assets/Scenes/SampleScene/SomeSubScene.unity
+    - Assets/Scripts/Commands.cs
+    - Assets/Scripts/Components/AITargetComponent.cs
+    - Assets/Scripts/Components/Authoring/UnitAuthoringComponent.cs
+    - Assets/Scripts/Core/GameInit.cs
+    - Assets/Scripts/Systems/FindAITargetSystem.cs
+    - Assets/Scripts/Systems/FindNearestTargetSystem.cs
+    - Assets/Scripts/Systems/HarvestingSystem.cs
+    - Assets/Scripts/Systems/StateTransitionSystem.cs
+    - Assets/Scripts/Systems/UnitMoveSystem.cs
+    - ProjectSettings/ProjectSettings.asset
+    - ProjectSettings/UnityConnectSettings.asset
+    - 
+    m_Values: 000000000000000000000000000000
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 

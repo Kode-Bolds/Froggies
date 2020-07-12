@@ -28,10 +28,19 @@ public class UnitAuthoringComponent : MonoBehaviour, IConvertGameObjectToEntity
 
 		dstManager.AddComponentData(entity, new CurrentTarget{ findTargetOfType = AITargetType.None, targetData = new TargetData()});
 		dstManager.AddComponentData(entity, new PreviousTarget{ targetData = new TargetData()});
+
 		if((unitType & UnitType.Harvester) != 0)
+		{
 			dstManager.AddComponentData(entity, harvester);
+		}
 
 		if (isEnemy)
+		{
 			dstManager.AddComponentData(entity, new EnemyTag());
+		}
+		else
+		{
+			dstManager.AddBuffer<Command>(entity);
+		}
 	}
 }

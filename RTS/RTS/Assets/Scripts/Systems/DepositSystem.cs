@@ -42,11 +42,11 @@ public class DepositSystem : KodeboldJobSystem
 				{
                     StateTransitionSystem.RequestStateChange(AIState.Idle, ecb, entityInQueryIndex, entity);
 
-                    //Debug.Log(" Nothing to deposit, requesting switch to Idle state");
+                    Debug.Log(" Nothing to deposit, requesting switch to Idle state");
                     return;
                 }
 
-                //Debug.Log($"Deposited { harvester.currentlyCarryingAmount } of { harvester.currentlyCarryingType }");
+                Debug.Log($"Deposited { harvester.currentlyCarryingAmount } of { harvester.currentlyCarryingType }");
 
                 //Drop stuff
                 harvester.currentlyCarryingAmount = 0;
@@ -59,13 +59,13 @@ public class DepositSystem : KodeboldJobSystem
                 {
                     StateTransitionSystem.RequestStateChange(AIState.MovingToHarvest, ecb, entityInQueryIndex, entity, previousTarget.targetData.targetType, previousTarget.targetData.targetPos, previousTarget.targetData.targetEntity);
 
-                    //Debug.Log($"Requesting switch to MoveToHarvest state for previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType}");
+                    Debug.Log($"Requesting switch to MoveToHarvest state for previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType}");
                 }
                 else
                 {
                     currentTarget.findTargetOfType = previousTarget.targetData.targetType;
 
-                    //Debug.Log($"Previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType} no longer exists, requesting switch to MovingToHarvest state");
+                    Debug.Log($"Previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType} no longer exists, requesting switch to MovingToHarvest state");
                 }
             }
 
