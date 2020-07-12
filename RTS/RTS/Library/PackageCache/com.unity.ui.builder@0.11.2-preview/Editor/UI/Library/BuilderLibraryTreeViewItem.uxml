@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="root" class="unity-builder-library__tree-item">
+        <ui:VisualElement name="item-icon" class="unity-builder-library__tree-item-icon"/>
+        <ui:Label name="item-name-label" class="unity-builder-library__tree-item-label unity-builder-code-label--element-type"/>
+        <ui:Label name="item-editor-only-label" text="Editor Only" class="unity-builder-library__tree-item-editor-only-label"/>
+        <ui:Button name="item-open-button" class="unity-builder-library__tree-item-edit-button"/>
+    </ui:VisualElement>
+</ui:UXML>

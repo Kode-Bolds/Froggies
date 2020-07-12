@@ -1,0 +1,4 @@
+.unity-button-strip__button:checked {
+    background-color: #6F6F6F;
+    color: #FFFFFF;
+}

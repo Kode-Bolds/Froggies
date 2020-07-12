@@ -1,0 +1,25 @@
+.plain-view__item-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+.plain-view__item {
+    width: 70px;
+    height: 70px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.plain-view__item--no-hover:hover {
+    background-color: initial;
+}
+
+.plain-view__label {
+    margin-top: 5px;
+    -unity-font-style: normal;
+    font-size: 10px;
+    white-space: normal;
+    -unity-text-align: upper-center;
+}

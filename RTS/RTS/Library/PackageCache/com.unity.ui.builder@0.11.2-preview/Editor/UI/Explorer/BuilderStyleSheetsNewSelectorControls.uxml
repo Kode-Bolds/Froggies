@@ -1,0 +1,10 @@
+<UXML xmlns="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <uie:Toolbar name="new-selector-item" class="unity-builder-explorer__new-selector-item">
+        <uie:ToolbarMenu name="add-uss-menu" text="+" class="unity-builder-stylesheets__toolbar-add-uss-menu" />
+        <VisualElement class="unity-builder-explorer__new-selector-field-container">
+            <TextField name="new-selector-field" class="unity-builder-explorer__new-selector-field" />
+        </VisualElement>
+        <uie:ToolbarMenu name="add-pseudo-state-menu" text="States" class="unity-builder-stylesheets__toolbar-add-pseudo-state-menu" />
+        <uie:ToolbarMenu name="add-new-selector-menu" text="Add" class="unity-builder-stylesheets__toolbar-add-new-selector" />
+    </uie:Toolbar>
+</UXML>

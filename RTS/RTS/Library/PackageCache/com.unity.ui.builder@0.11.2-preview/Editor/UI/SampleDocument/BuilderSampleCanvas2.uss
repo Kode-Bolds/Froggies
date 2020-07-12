@@ -1,0 +1,8 @@
+.section-field {
+    width: 400px;
+}
+
+.hidden-label {
+    height: 200px;
+    display: none;
+}

@@ -1,0 +1,51 @@
+﻿.unity-builder-library__controls-category-foldout > .unity-foldout__header > .unity-toggle {
+    border-color: rgb(117, 117, 117);
+    background-color: rgb(146, 146, 146);
+}
+
+/* In 2019.3, N*, all labels are washed out. Not sure why. This is a the fix. */
+.unity-builder-inspector__category-foldout > .unity-foldout__header > .unity-toggle .unity-label {
+    color: rgb(1, 1, 1);
+}
+
+.unity-builder-library__header-button-strip {
+    border-color: #757575;
+}
+
+.plain-view__item--selected {
+    background-color: #3B72AC;
+}
+
+.plain-view__item--selected-no-focus {
+    background-color: #AEAEAE;
+}
+
+.plain-view__item:hover {
+    background-color: #B2B2B2 /*env(--theme-line-background-color-hover);*/
+}
+
+.plain-view__item--selected > .plain-view__label {
+    color: #FFFFFF;
+}
+
+.plain-view__item--selected:hover {
+    background-color: #3B72AC;
+}
+
+.unity-builder-library__tree-item-edit-button {
+    background-image: resource("com.unity.ui.builder/Icons/Light/CodePreview/GoToDashboard");
+}
+
+.unity-builder-library__tree-item-edit-button:hover {
+    background-image: resource("com.unity.ui.builder/Icons/Selected/CodePreview/GoToDashboard");
+}
+
+.unity-builder-library__tree-item-editor-only-label {
+    border-color: #000000;
+    color: #000000;
+}
+
+.unity-list-view:focus > .unity-list-view__item--selected .unity-builder-library__tree-item-editor-only-label {
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+}

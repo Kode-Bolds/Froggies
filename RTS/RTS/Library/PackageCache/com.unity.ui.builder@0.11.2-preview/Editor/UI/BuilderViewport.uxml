@@ -1,0 +1,37 @@
+<UXML xmlns="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:uib="Unity.UI.Builder">
+    <VisualElement name="toolbar" class="unity-builder-viewport__toolbar" />
+    <VisualElement name="viewport-wrapper" class="unity-builder-viewport__viewport-wrapper">
+        <VisualElement name="viewport" class="unity-builder-viewport__viewport">
+            <VisualElement name="viewport-surface" class="unity-builder-viewport__viewport-surface">
+                <uib:BuilderCanvas name="canvas" view-data-key="unity-buidler-viewport__canvas" class="unity-builder-viewport__canvas">
+                    <VisualElement name="shared-styles-and-document" class="unity-builder-viewport__shared-styles-and-document unity-builder-viewport__canvas-layer">
+                        <VisualElement name="__unity-selector-container-element" class="unity-builder-viewport__shared-styles">
+
+                        </VisualElement>
+                        <VisualElement name="document" class="unity-builder-viewport__document unity-builder-viewport__canvas-layer">
+
+                        </VisualElement>
+                    </VisualElement>
+                    <VisualElement name="pick-overlay" class="unity-builder-viewport__pick-overlay unity-builder-viewport__canvas-layer">
+                        <uib:BuilderParentTracker name="parent-tracker" />
+                        <uib:BuilderSelectionIndicator name="selection-indicator" />
+                        <uib:BuilderAnchorer name="anchorer" />
+                        <uib:BuilderResizer name="resizer" />
+                        <uib:BuilderMover name="mover" />
+                    </VisualElement>
+                    <uib:OverlayPainterHelperElement
+                        name="highlight-overlay"
+                        class="unity-builder-viewport__highlight-overlay"
+                        picking-mode="Ignore">
+
+                    </uib:OverlayPainterHelperElement>
+                    <VisualElement name="__unity-editor-layer" class="unity-builder-viewport__editor-container unity-builder-viewport__canvas-layer" picking-mode="Ignore">
+                        <VisualElement name="__unity-text-editor-container" class="unity-builder-viewport__text-editor-container">
+                            <TextField name="__unity-text-editor" class="unity-builder-viewport__text-editor" />
+                        </VisualElement>
+                    </VisualElement>
+                </uib:BuilderCanvas>
+             </VisualElement>
+        </VisualElement>
+    </VisualElement>
+</UXML>

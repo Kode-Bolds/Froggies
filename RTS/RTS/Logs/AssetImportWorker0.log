@@ -1,0 +1,1056 @@
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-User"
+Entitlement-based licensing initiated
+[LicensingClient] Licenses updated successfully
+
+LICENSE SYSTEM [2020712 16:24:9] Next license update check is after 2020-07-13T14:10:24
+
+Built from '2020.1/staging' branch; Version is '2020.1.0b14 (69bacbd35688) revision 6929099'; Using compiler version '192227905'; Build Type 'Release'
+OS: 'Windows 10  (10.0.0) 64bit' Language: 'en' Physical Memory: 32678 MB
+[Licensing::Module] Serial number assigned to: "F4-XHXR-CVVM-6ZRP-JNSQ-XXXX"
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\2020.1.0b14\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+E:/Documents/Game Projects/Github/Froggies/RTS/RTS
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+1998
+Successfully changed project path to: E:/Documents/Game Projects/Github/Froggies/RTS/RTS
+E:/Documents/Game Projects/Github/Froggies/RTS/RTS
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 49.10 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.1.0b14 (69bacbd35688)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/2020.1.0b14/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path E:/Documents/Game Projects/Github/Froggies/RTS/RTS/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 2070 SUPER (ID=0x1e84)
+    Vendor:   
+    VRAM:     8011 MB
+    Driver:   26.21.14.4587
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/2020.1.0b14/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/2020.1.0b14/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/2020.1.0b14/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56272
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/2020.1.0b14/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001692 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 42.75 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.481 seconds
+Registering precompiled user dll's ...
+Registered in 0.456572 seconds.
+Platform modules already initialized, skipping
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 57.20 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.338 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Refreshing native plugins compatible for Editor in 0.47 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3477 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 143.8 MB.
+System memory in use after: 143.8 MB.
+
+Unloading 23 unused Assets to reduce memory usage. Loaded Objects now: 3875.
+Total: 3.846200 ms (FindLiveObjects: 0.462300 ms CreateObjectMapping: 0.190400 ms MarkObjects: 3.144300 ms  DeleteObjects: 0.046300 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/SceneDependencyCache/06dd9b028b7a8df8e57d0b00cfae57dd.sceneWithBuildSettings
+  artifactKey: Guid(06dd9b028b7a8df8e57d0b00cfae57dd) Importer(2089858483,52bed625d08a7023a15481c3fbd73797)
+Start importing Assets/SceneDependencyCache/06dd9b028b7a8df8e57d0b00cfae57dd.sceneWithBuildSettings using Guid(06dd9b028b7a8df8e57d0b00cfae57dd) Importer(2089858483,52bed625d08a7023a15481c3fbd73797) Diagnostics callstack to track who triggered the sub-import:
+0x00007FF639E9FB46 (Unity) ImporterAssetResolver::ResolveAsset
+0x00007FF639ED6C23 (Unity) ResolveArtifactV2
+0x00007FF639ED0EBB (Unity) MetaDataPathFromGUIDV2
+0x00007FF639E3B9C7 (Unity) AssetDatabase::MetaDataPathFromGUID
+0x00007FF6396F0C5F (Unity) CollectAllDependencies
+0x00007FF63A4F6C85 (Unity) AssetDatabaseBindings::GetDependencies
+0x00007FF63A4D62C3 (Unity) AssetDatabase_CUSTOM_GetDependencies
+0x0000012F8EBE88B7 (Mono JIT Code) (wrapper managed-to-native) UnityEditor.AssetDatabase:GetDependencies (string[],bool)
+0x0000012F8EBE870B (Mono JIT Code) UnityEditor.AssetDatabase:GetDependencies (string,bool)
+0x0000012F8EBE8543 (Mono JIT Code) UnityEditor.AssetDatabase:GetDependencies (string)
+0x0000012F8EBE32F3 (Mono JIT Code) [SubSceneImporter.cs:99] Unity.Scenes.Editor.SubSceneImporter:OnImportAsset (UnityEditor.Experimental.AssetImporters.AssetImportContext) 
+0x0000012F8EBE2895 (Mono JIT Code) UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData (UnityEditor.Experimental.AssetImporters.AssetImportContext)
+0x0000012F8EBE2A76 (Mono JIT Code) (wrapper runtime-invoke) <Module>:runtime_invoke_void__this___object (object,intptr,intptr,intptr)
+0x00007FFB5BE1D870 (mono-2.0-bdwgc) [mini-runtime.c:2809] mono_jit_runtime_invoke 
+0x00007FFB5BDA28E2 (mono-2.0-bdwgc) [object.c:2921] do_runtime_invoke 
+0x00007FFB5BDAB93F (mono-2.0-bdwgc) [object.c:2968] mono_runtime_invoke 
+0x00007FF6389B3194 (Unity) scripting_method_invoke
+0x00007FF6389ACCFB (Unity) ScriptingInvocation::Invoke
+0x00007FF639FB64E2 (Unity) ScriptedImporter::GenerateAssetData
+0x00007FF639F47A1A (Unity) ImportToObjects
+0x00007FF639F46D67 (Unity) AssetImportWorker::Import
+0x00007FF639EDE3FB (Unity) `AssetImportWorkerClient::HandleMessage'::`2'::<lambda_1>::operator()
+0x00007FF639F6DEB8 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)> >::do_complete
+0x00007FF639F6FF29 (Unity) asio::detail::win_iocp_io_service::do_one
+0x00007FF639F731AE (Unity) asio::io_service::run
+0x00007FF639ED7172 (Unity) RunAssetImportWorkerClientV2
+0x00007FF639ED71C0 (Unity) RunAssetImporterV2
+0x00007FF639599101 (Unity) Application::InitializeProject
+0x00007FF639DA7ABB (Unity) WinMain
+0x00007FF63BA01B56 (Unity) __scrt_common_main_seh
+0x00007FFBDAC57BD4 (KERNEL32) BaseThreadInitThunk
+0x00007FFBDB16CE51 (ntdll) RtlUserThreadStart
+
+Requesting import of Guid(b047d261d62b4d647ad09da3705ae277) Importer(-1,00000000000000000000000000000000), Assets/Prefabs/ResourceNodeBuilding.prefab from editor
+Resuming Guid(b047d261d62b4d647ad09da3705ae277) Importer(-1,00000000000000000000000000000000) -> e0937e66cd348b1689e08622aa6c1be4 
+Assertion failed on expression: 'state.state == kUpToDate'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/ImporterAssetResolver.cpp line 57] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Assertion failed on expression: 'state.targetHash == result'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/ImporterAssetResolver.cpp line 58] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Diagnostics callstack to track who triggered the sub-import:
+0x00007FF639E9FB46 (Unity) ImporterAssetResolver::ResolveAsset
+0x00007FF639ED6C23 (Unity) ResolveArtifactV2
+0x00007FF639ED0EBB (Unity) MetaDataPathFromGUIDV2
+0x00007FF639E3B9C7 (Unity) AssetDatabase::MetaDataPathFromGUID
+0x00007FF6396F0C5F (Unity) CollectAllDependencies
+0x00007FF63A4F6C85 (Unity) AssetDatabaseBindings::GetDependencies
+0x00007FF63A4D62C3 (Unity) AssetDatabase_CUSTOM_GetDependencies
+0x0000012F8EBE88B7 (Mono JIT Code) (wrapper managed-to-native) UnityEditor.AssetDatabase:GetDependencies (string[],bool)
+0x0000012F8EBE870B (Mono JIT Code) UnityEditor.AssetDatabase:GetDependencies (string,bool)
+0x0000012F8EBE8543 (Mono JIT Code) UnityEditor.AssetDatabase:GetDependencies (string)
+0x0000012F8EBE32F3 (Mono JIT Code) [SubSceneImporter.cs:99] Unity.Scenes.Editor.SubSceneImporter:OnImportAsset (UnityEditor.Experimental.AssetImporters.AssetImportContext) 
+0x0000012F8EBE2895 (Mono JIT Code) UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData (UnityEditor.Experimental.AssetImporters.AssetImportContext)
+0x0000012F8EBE2A76 (Mono JIT Code) (wrapper runtime-invoke) <Module>:runtime_invoke_void__this___object (object,intptr,intptr,intptr)
+0x00007FFB5BE1D870 (mono-2.0-bdwgc) [mini-runtime.c:2809] mono_jit_runtime_invoke 
+0x00007FFB5BDA28E2 (mono-2.0-bdwgc) [object.c:2921] do_runtime_invoke 
+0x00007FFB5BDAB93F (mono-2.0-bdwgc) [object.c:2968] mono_runtime_invoke 
+0x00007FF6389B3194 (Unity) scripting_method_invoke
+0x00007FF6389ACCFB (Unity) ScriptingInvocation::Invoke
+0x00007FF639FB64E2 (Unity) ScriptedImporter::GenerateAssetData
+0x00007FF639F47A1A (Unity) ImportToObjects
+0x00007FF639F46D67 (Unity) AssetImportWorker::Import
+0x00007FF639EDE3FB (Unity) `AssetImportWorkerClient::HandleMessage'::`2'::<lambda_1>::operator()
+0x00007FF639F6DEB8 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)> >::do_complete
+0x00007FF639F6FF29 (Unity) asio::detail::win_iocp_io_service::do_one
+0x00007FF639F731AE (Unity) asio::io_service::run
+0x00007FF639ED7172 (Unity) RunAssetImportWorkerClientV2
+0x00007FF639ED71C0 (Unity) RunAssetImporterV2
+0x00007FF639599101 (Unity) Application::InitializeProject
+0x00007FF639DA7ABB (Unity) WinMain
+0x00007FF63BA01B56 (Unity) __scrt_common_main_seh
+0x00007FFBDAC57BD4 (KERNEL32) BaseThreadInitThunk
+0x00007FFBDB16CE51 (ntdll) RtlUserThreadStart
+
+Requesting import of Guid(ff1eba15f8716404fb39162d008b7612) Importer(-1,00000000000000000000000000000000), Assets/Prefabs/ResourceNodeRare.prefab from editor
+Resuming Guid(ff1eba15f8716404fb39162d008b7612) Importer(-1,00000000000000000000000000000000) -> 7782eb70d1ab9184135be3f9c56ba8b5 
+Assertion failed on expression: 'state.state == kUpToDate'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/ImporterAssetResolver.cpp line 57] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Assertion failed on expression: 'state.targetHash == result'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/ImporterAssetResolver.cpp line 58] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Diagnostics callstack to track who triggered the sub-import:
+0x00007FF639E9FB46 (Unity) ImporterAssetResolver::ResolveAsset
+0x00007FF639ED6C23 (Unity) ResolveArtifactV2
+0x00007FF639ED0EBB (Unity) MetaDataPathFromGUIDV2
+0x00007FF639E3B9C7 (Unity) AssetDatabase::MetaDataPathFromGUID
+0x00007FF6396F0C5F (Unity) CollectAllDependencies
+0x00007FF63A4F6C85 (Unity) AssetDatabaseBindings::GetDependencies
+0x00007FF63A4D62C3 (Unity) AssetDatabase_CUSTOM_GetDependencies
+0x0000012F8EBE88B7 (Mono JIT Code) (wrapper managed-to-native) UnityEditor.AssetDatabase:GetDependencies (string[],bool)
+0x0000012F8EBE870B (Mono JIT Code) UnityEditor.AssetDatabase:GetDependencies (string,bool)
+0x0000012F8EBE8543 (Mono JIT Code) UnityEditor.AssetDatabase:GetDependencies (string)
+0x0000012F8EBE32F3 (Mono JIT Code) [SubSceneImporter.cs:99] Unity.Scenes.Editor.SubSceneImporter:OnImportAsset (UnityEditor.Experimental.AssetImporters.AssetImportContext) 
+0x0000012F8EBE2895 (Mono JIT Code) UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData (UnityEditor.Experimental.AssetImporters.AssetImportContext)
+0x0000012F8EBE2A76 (Mono JIT Code) (wrapper runtime-invoke) <Module>:runtime_invoke_void__this___object (object,intptr,intptr,intptr)
+0x00007FFB5BE1D870 (mono-2.0-bdwgc) [mini-runtime.c:2809] mono_jit_runtime_invoke 
+0x00007FFB5BDA28E2 (mono-2.0-bdwgc) [object.c:2921] do_runtime_invoke 
+0x00007FFB5BDAB93F (mono-2.0-bdwgc) [object.c:2968] mono_runtime_invoke 
+0x00007FF6389B3194 (Unity) scripting_method_invoke
+0x00007FF6389ACCFB (Unity) ScriptingInvocation::Invoke
+0x00007FF639FB64E2 (Unity) ScriptedImporter::GenerateAssetData
+0x00007FF639F47A1A (Unity) ImportToObjects
+0x00007FF639F46D67 (Unity) AssetImportWorker::Import
+0x00007FF639EDE3FB (Unity) `AssetImportWorkerClient::HandleMessage'::`2'::<lambda_1>::operator()
+0x00007FF639F6DEB8 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)> >::do_complete
+0x00007FF639F6FF29 (Unity) asio::detail::win_iocp_io_service::do_one
+0x00007FF639F731AE (Unity) asio::io_service::run
+0x00007FF639ED7172 (Unity) RunAssetImportWorkerClientV2
+0x00007FF639ED71C0 (Unity) RunAssetImporterV2
+0x00007FF639599101 (Unity) Application::InitializeProject
+0x00007FF639DA7ABB (Unity) WinMain
+0x00007FF63BA01B56 (Unity) __scrt_common_main_seh
+0x00007FFBDAC57BD4 (KERNEL32) BaseThreadInitThunk
+0x00007FFBDB16CE51 (ntdll) RtlUserThreadStart
+
+Requesting import of Guid(86a3b5367dec5004db48f013dec0513f) Importer(-1,00000000000000000000000000000000), Assets/Prefabs/ResourceNodeFood.prefab from editor
+Resuming Guid(86a3b5367dec5004db48f013dec0513f) Importer(-1,00000000000000000000000000000000) -> 0eecccd88204b2ce9549af765298e65e 
+Assertion failed on expression: 'state.state == kUpToDate'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/ImporterAssetResolver.cpp line 57] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Assertion failed on expression: 'state.targetHash == result'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/ImporterAssetResolver.cpp line 58] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Diagnostics callstack to track who triggered the sub-import:
+0x00007FF639E9FB46 (Unity) ImporterAssetResolver::ResolveAsset
+0x00007FF639ED6C23 (Unity) ResolveArtifactV2
+0x00007FF639ED0EBB (Unity) MetaDataPathFromGUIDV2
+0x00007FF639E3B9C7 (Unity) AssetDatabase::MetaDataPathFromGUID
+0x00007FF6396F0C5F (Unity) CollectAllDependencies
+0x00007FF63A4F6C85 (Unity) AssetDatabaseBindings::GetDependencies
+0x00007FF63A4D62C3 (Unity) AssetDatabase_CUSTOM_GetDependencies
+0x0000012F8EBE88B7 (Mono JIT Code) (wrapper managed-to-native) UnityEditor.AssetDatabase:GetDependencies (string[],bool)
+0x0000012F8EBE870B (Mono JIT Code) UnityEditor.AssetDatabase:GetDependencies (string,bool)
+0x0000012F8EBE8543 (Mono JIT Code) UnityEditor.AssetDatabase:GetDependencies (string)
+0x0000012F8EBE32F3 (Mono JIT Code) [SubSceneImporter.cs:99] Unity.Scenes.Editor.SubSceneImporter:OnImportAsset (UnityEditor.Experimental.AssetImporters.AssetImportContext) 
+0x0000012F8EBE2895 (Mono JIT Code) UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData (UnityEditor.Experimental.AssetImporters.AssetImportContext)
+0x0000012F8EBE2A76 (Mono JIT Code) (wrapper runtime-invoke) <Module>:runtime_invoke_void__this___object (object,intptr,intptr,intptr)
+0x00007FFB5BE1D870 (mono-2.0-bdwgc) [mini-runtime.c:2809] mono_jit_runtime_invoke 
+0x00007FFB5BDA28E2 (mono-2.0-bdwgc) [object.c:2921] do_runtime_invoke 
+0x00007FFB5BDAB93F (mono-2.0-bdwgc) [object.c:2968] mono_runtime_invoke 
+0x00007FF6389B3194 (Unity) scripting_method_invoke
+0x00007FF6389ACCFB (Unity) ScriptingInvocation::Invoke
+0x00007FF639FB64E2 (Unity) ScriptedImporter::GenerateAssetData
+0x00007FF639F47A1A (Unity) ImportToObjects
+0x00007FF639F46D67 (Unity) AssetImportWorker::Import
+0x00007FF639EDE3FB (Unity) `AssetImportWorkerClient::HandleMessage'::`2'::<lambda_1>::operator()
+0x00007FF639F6DEB8 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)> >::do_complete
+0x00007FF639F6FF29 (Unity) asio::detail::win_iocp_io_service::do_one
+0x00007FF639F731AE (Unity) asio::io_service::run
+0x00007FF639ED7172 (Unity) RunAssetImportWorkerClientV2
+0x00007FF639ED71C0 (Unity) RunAssetImporterV2
+0x00007FF639599101 (Unity) Application::InitializeProject
+0x00007FF639DA7ABB (Unity) WinMain
+0x00007FF63BA01B56 (Unity) __scrt_common_main_seh
+0x00007FFBDAC57BD4 (KERNEL32) BaseThreadInitThunk
+0x00007FFBDB16CE51 (ntdll) RtlUserThreadStart
+
+Requesting import of Guid(bc2ebe0856cc58843af64a5ead4bdf4c) Importer(-1,00000000000000000000000000000000), Assets/Prefabs/HarvesterEnemy.prefab from editor
+Resuming Guid(bc2ebe0856cc58843af64a5ead4bdf4c) Importer(-1,00000000000000000000000000000000) -> d7afee1c5cbce873b36a2b4bc1258475 
+Assertion failed on expression: 'state.state == kUpToDate'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/ImporterAssetResolver.cpp line 57] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Assertion failed on expression: 'state.targetHash == result'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/ImporterAssetResolver.cpp line 58] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Diagnostics callstack to track who triggered the sub-import:
+0x00007FF639E9FB46 (Unity) ImporterAssetResolver::ResolveAsset
+0x00007FF639ED6C23 (Unity) ResolveArtifactV2
+0x00007FF639ED0EBB (Unity) MetaDataPathFromGUIDV2
+0x00007FF639E3B9C7 (Unity) AssetDatabase::MetaDataPathFromGUID
+0x00007FF6396F0C5F (Unity) CollectAllDependencies
+0x00007FF63A4F6C85 (Unity) AssetDatabaseBindings::GetDependencies
+0x00007FF63A4D62C3 (Unity) AssetDatabase_CUSTOM_GetDependencies
+0x0000012F8EBE88B7 (Mono JIT Code) (wrapper managed-to-native) UnityEditor.AssetDatabase:GetDependencies (string[],bool)
+0x0000012F8EBE870B (Mono JIT Code) UnityEditor.AssetDatabase:GetDependencies (string,bool)
+0x0000012F8EBE8543 (Mono JIT Code) UnityEditor.AssetDatabase:GetDependencies (string)
+0x0000012F8EBE32F3 (Mono JIT Code) [SubSceneImporter.cs:99] Unity.Scenes.Editor.SubSceneImporter:OnImportAsset (UnityEditor.Experimental.AssetImporters.AssetImportContext) 
+0x0000012F8EBE2895 (Mono JIT Code) UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData (UnityEditor.Experimental.AssetImporters.AssetImportContext)
+0x0000012F8EBE2A76 (Mono JIT Code) (wrapper runtime-invoke) <Module>:runtime_invoke_void__this___object (object,intptr,intptr,intptr)
+0x00007FFB5BE1D870 (mono-2.0-bdwgc) [mini-runtime.c:2809] mono_jit_runtime_invoke 
+0x00007FFB5BDA28E2 (mono-2.0-bdwgc) [object.c:2921] do_runtime_invoke 
+0x00007FFB5BDAB93F (mono-2.0-bdwgc) [object.c:2968] mono_runtime_invoke 
+0x00007FF6389B3194 (Unity) scripting_method_invoke
+0x00007FF6389ACCFB (Unity) ScriptingInvocation::Invoke
+0x00007FF639FB64E2 (Unity) ScriptedImporter::GenerateAssetData
+0x00007FF639F47A1A (Unity) ImportToObjects
+0x00007FF639F46D67 (Unity) AssetImportWorker::Import
+0x00007FF639EDE3FB (Unity) `AssetImportWorkerClient::HandleMessage'::`2'::<lambda_1>::operator()
+0x00007FF639F6DEB8 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)> >::do_complete
+0x00007FF639F6FF29 (Unity) asio::detail::win_iocp_io_service::do_one
+0x00007FF639F731AE (Unity) asio::io_service::run
+0x00007FF639ED7172 (Unity) RunAssetImportWorkerClientV2
+0x00007FF639ED71C0 (Unity) RunAssetImporterV2
+0x00007FF639599101 (Unity) Application::InitializeProject
+0x00007FF639DA7ABB (Unity) WinMain
+0x00007FF63BA01B56 (Unity) __scrt_common_main_seh
+0x00007FFBDAC57BD4 (KERNEL32) BaseThreadInitThunk
+0x00007FFBDB16CE51 (ntdll) RtlUserThreadStart
+
+Requesting import of Guid(e5fa7789d4caad3f0a154cd7c92d3238) Importer(-1,00000000000000000000000000000000), Assets/Prefabs/Store.prefab from editor
+Resuming Guid(e5fa7789d4caad3f0a154cd7c92d3238) Importer(-1,00000000000000000000000000000000) -> 79f477462abbe3002618b05d6f66a8b2 
+Assertion failed on expression: 'state.state == kUpToDate'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/ImporterAssetResolver.cpp line 57] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Assertion failed on expression: 'state.targetHash == result'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/ImporterAssetResolver.cpp line 58] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.AssetDatabase:GetDependencies(String[], Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String, Boolean)
+UnityEditor.AssetDatabase:GetDependencies(String)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:99)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 99)
+
+Opening scene 'Assets/Scenes/SampleScene/SomeSubScene.unity additively'
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Assertion failed on expression: 'ins.second || ins.first->second == targetHash || (ins.first->second == CircularDependencyHash() && !targetHash.IsValid()) || GetPathFromAssetGuidV2(key.GetGUID()).ends_with(".cs")'
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene_Injected(String, OpenSceneMode, Scene&)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene(String, OpenSceneMode)
+Unity.Scenes.Editor.SubSceneImporter:OnImportAsset(AssetImportContext) (at E:\Documents\Game Projects\Unity\RTS\RTS\Packages\com.unity.entities@0.11.0-preview.7\Unity.Scenes.Editor\SubSceneImporter.cs:108)
+UnityEditor.Experimental.AssetImporters.ScriptedImporter:GenerateAssetData(AssetImportContext)
+
+[C:\buildslave\unity\build\Modules/AssetDatabase/Editor/V2/AssetResolveTracker.cpp line 27] 
+(Filename: E:/Documents/Game Projects/Unity/RTS/RTS/Packages/com.unity.entities@0.11.0-preview.7/Unity.Scenes.Editor/SubSceneImporter.cs Line: 108)
+
+Loaded scene 'Assets/Scenes/SampleScene/SomeSubScene.unity'
+	Deserialize:            2.739 ms
+	Integration:            31.875 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       16.552 ms
+	Total Operation Time:   51.169 ms
+ -> (target hash: 'cd8e96bfc8394ead652b90ca1e7291d6') in 3.033460 seconds
+  Import took 3.044596 seconds .
+
+========================================================================
+Received Prepare
+Reloading mono domain
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/2020.1.0b14/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001603 seconds.
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 60.53 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.044 seconds
+Registering precompiled user dll's ...
+Registered in 0.694184 seconds.
+Platform modules already initialized, skipping
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.65 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.864 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.43 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 22 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.8 MB.
+System memory in use after: 78.0 MB.
+
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 3892.
+Total: 4.551100 ms (FindLiveObjects: 0.502100 ms CreateObjectMapping: 0.192000 ms MarkObjects: 3.837000 ms  DeleteObjects: 0.018800 ms)
+
+========================================================================
+Received Prepare
+Reloading mono domain
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/2020.1.0b14/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001573 seconds.
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 47.69 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.124 seconds
+Registering precompiled user dll's ...
+Registered in 0.490782 seconds.
+Platform modules already initialized, skipping
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.71 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.208 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.49 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 16 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.6 MB.
+System memory in use after: 77.9 MB.
+
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 3900.
+Total: 4.610800 ms (FindLiveObjects: 0.522800 ms CreateObjectMapping: 0.215200 ms MarkObjects: 3.848500 ms  DeleteObjects: 0.023000 ms)
+
+========================================================================
+Received Prepare
+Reloading mono domain
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/2020.1.0b14/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001834 seconds.
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 50.43 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.299 seconds
+Registering precompiled user dll's ...
+Registered in 0.486292 seconds.
+Platform modules already initialized, skipping
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.99 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.297 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.39 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 16 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.6 MB.
+System memory in use after: 77.9 MB.
+
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 3908.
+Total: 4.779000 ms (FindLiveObjects: 0.696300 ms CreateObjectMapping: 0.301200 ms MarkObjects: 3.759700 ms  DeleteObjects: 0.020800 ms)
+
+========================================================================
+Received Prepare
+Reloading mono domain
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/2020.1.0b14/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002071 seconds.
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 48.82 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.349 seconds
+Registering precompiled user dll's ...
+Registered in 0.484143 seconds.
+Platform modules already initialized, skipping
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.69 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.202 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.37 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 16 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.7 MB.
+System memory in use after: 77.9 MB.
+
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 3916.
+Total: 4.643900 ms (FindLiveObjects: 0.466100 ms CreateObjectMapping: 0.173700 ms MarkObjects: 3.981400 ms  DeleteObjects: 0.021500 ms)
+
+========================================================================
+Received Prepare
+Reloading mono domain
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/2020.1.0b14/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002078 seconds.
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 45.44 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.364 seconds
+Registering precompiled user dll's ...
+Registered in 0.659713 seconds.
+Platform modules already initialized, skipping
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.74 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.324 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.36 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 16 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.7 MB.
+System memory in use after: 77.9 MB.
+
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 3924.
+Total: 4.501900 ms (FindLiveObjects: 0.460900 ms CreateObjectMapping: 0.177900 ms MarkObjects: 3.842500 ms  DeleteObjects: 0.020200 ms)
+
+========================================================================
+Received Prepare
+Reloading mono domain
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/2020.1.0b14/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002020 seconds.
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 49.60 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.567 seconds
+Registering precompiled user dll's ...
+Registered in 0.562371 seconds.
+Platform modules already initialized, skipping
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.67 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.271 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.53 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 16 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.7 MB.
+System memory in use after: 77.9 MB.
+
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 3932.
+Total: 3.900800 ms (FindLiveObjects: 0.483300 ms CreateObjectMapping: 0.188000 ms MarkObjects: 3.206400 ms  DeleteObjects: 0.022400 ms)
+
+========================================================================
+Received Prepare
+Reloading mono domain
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/2020.1.0b14/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002112 seconds.
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 45.47 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.521 seconds
+Registering precompiled user dll's ...
+Registered in 0.655400 seconds.
+Platform modules already initialized, skipping
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image E:\Documents\Game Projects\Github\Froggies\RTS\RTS\Library\PackageCache\com.unity.ext.nunit@1.0.0\net35\unity-custom\nunit.framework.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.67 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.422 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.41 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 16 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.7 MB.
+System memory in use after: 77.9 MB.
+
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 3940.
+Total: 3.988100 ms (FindLiveObjects: 0.506300 ms CreateObjectMapping: 0.183900 ms MarkObjects: 3.279600 ms  DeleteObjects: 0.017900 ms)
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

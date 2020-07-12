@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Label text="LabelWithMultipleUSS">
+        <Style path="Packages/com.unity.ui.builder/Tests/Editor/TestFiles/ColorsTestStyleSheet.uss" />
+        <Style path="Packages/com.unity.ui.builder/Tests/Editor/TestFiles/LayoutTestStyleSheet.uss" />
+    </ui:Label>
+</ui:UXML>
