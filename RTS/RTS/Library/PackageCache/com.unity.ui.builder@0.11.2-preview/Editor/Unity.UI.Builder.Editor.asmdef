@@ -1,0 +1,21 @@
+{
+    "name": "Unity.UI.Builder.Editor",
+    "references": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.vectorgraphics",
+            "expression": "1.0.0",
+            "define": "VECTOR_GRAPHICS"
+        }
+    ],
+    "noEngineReferences": false
+}

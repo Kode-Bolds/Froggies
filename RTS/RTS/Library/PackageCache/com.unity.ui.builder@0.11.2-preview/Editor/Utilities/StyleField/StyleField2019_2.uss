@@ -1,0 +1,11 @@
+.unity-style-field__options-popup > .unity-base-field__input {
+    -unity-slice-right: 1;
+    -unity-slice-top: 0;
+    -unity-slice-bottom: 0;
+    -unity-slice-left: 1;
+    padding-top: 0;
+    padding-right: 0;
+    padding-left: 0;
+    padding-bottom: 2px;
+    margin: 1px;
+}

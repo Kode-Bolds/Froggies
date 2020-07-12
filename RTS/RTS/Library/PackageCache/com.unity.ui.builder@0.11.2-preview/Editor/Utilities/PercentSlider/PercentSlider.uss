@@ -1,0 +1,12 @@
+.unity-percent-slider__visual-input {
+    flex-direction: row;
+}
+
+.unity-percent-slider__slider {
+    flex-grow: 1;
+}
+
+.unity-percent-slider__field {
+    width: 40px;
+    margin-left: 5px;
+}

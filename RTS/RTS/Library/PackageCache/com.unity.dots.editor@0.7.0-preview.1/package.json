@@ -1,0 +1,30 @@
+{
+  "name": "com.unity.dots.editor",
+  "displayName": "DOTS Editor",
+  "version": "0.7.0-preview.1",
+  "unity": "2019.3",
+  "unityRelease": "12f1",
+  "description": "Provides data analysis and visualization tools that are built on top of the ECS architecture.",
+  "dependencies": {
+    "com.unity.entities": "0.11.0-preview.7",
+    "com.unity.properties": "1.2.0-preview",
+    "com.unity.serialization": "1.2.0-preview",
+    "com.unity.properties.ui": "1.2.0-preview",
+    "com.unity.jobs": "0.2.10-preview.11",
+    "com.unity.burst": "1.3.0-preview.12",
+    "com.unity.test-framework.performance": "2.0.8-preview"
+  },
+  "keywords": [
+    "entities",
+    "dots",
+    "unity"
+  ],
+  "upmCi": {
+    "footprint": "440a2afdc5d7a5a72f390e75491510e1ec1ee9bd"
+  },
+  "repository": {
+    "url": "https://github.com/Unity-Technologies/com.unity.dots.editor.git",
+    "type": "git",
+    "revision": "585877e7394af476028517b4957ade1a8899af8c"
+  }
+}
