@@ -1,4 +1,0 @@
-<UXML xmlns="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:uib="Unity.UI.Builder">
-    <uib:ToggleButtonStrip class="unity-builder-library__header-button-strip" />
-    <VisualElement name="content" class="unity-builder-library__content"/>
-</UXML>
