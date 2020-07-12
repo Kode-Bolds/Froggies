@@ -1,5 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
-    <ui:ScrollView view-data-key="scroll-view" class="unity-builder-library__plain-view">
-        <ui:VisualElement name="content" class="plain-view__content"/>
-    </ui:ScrollView>
-</ui:UXML>

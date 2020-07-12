@@ -1,6 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
-    <ui:VisualElement class="plain-view__item">
-        <ui:VisualElement name="icon" class="plain-view__item-icon"/>
-        <ui:Label text="Toolbar Popup Search Field" class="plain-view__label"/>
-    </ui:VisualElement>
-</ui:UXML>
