@@ -164,7 +164,8 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 	private static void MovingToHarvest(EntityCommandBuffer.Concurrent ecb, int entityInQueryIndex, in Entity entity,
 		AITargetType resourceTargetType, in float3 resourceTranslation, in Entity resourceEntity, ref CurrentTarget currentTarget)
 	{
-		StateTransitionSystem.RequestStateChange(AIState.MovingToHarvest, ecb, entityInQueryIndex, entity, resourceTargetType, resourceTranslation, resourceEntity);
+ 		TargetData targetData = new TargetData{ targetType = resourceTargetType, targetPos = resourceTranslation, targetEntity = resourceEntity };
+		StateTransitionSystem.RequestStateChange(AIState.MovingToHarvest, ecb, entityInQueryIndex, entity, targetData);
 
 		Debug.Log("Request switch to MovingToHarvest state");
 
@@ -174,7 +175,8 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 	private static void MovingToAttack(EntityCommandBuffer.Concurrent ecb, int entityInQueryIndex, in Entity entity,
 		AITargetType enemyTargetType, in float3 enemyTranslation, in Entity enemyEntity, ref CurrentTarget currentTarget)
 	{
-		StateTransitionSystem.RequestStateChange(AIState.MovingToAttack, ecb, entityInQueryIndex, entity, enemyTargetType, enemyTranslation, enemyEntity);
+		TargetData targetData = new TargetData{ targetType = enemyTargetType, targetPos = enemyTranslation, targetEntity = enemyEntity };
+		StateTransitionSystem.RequestStateChange(AIState.MovingToAttack, ecb, entityInQueryIndex, entity, targetData);
 
 		Debug.Log("Request switch to MovingToAttack state");
 
@@ -184,7 +186,8 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 	private static void MovingToDeposit(EntityCommandBuffer.Concurrent ecb, int entityInQueryIndex, in Entity entity,
 		AITargetType storeTargetType, in float3 storeTranslation, in Entity storeEntity, ref CurrentTarget currentTarget)
 	{
-		StateTransitionSystem.RequestStateChange(AIState.MovingToDeposit, ecb, entityInQueryIndex, entity, storeTargetType, storeTranslation, storeEntity);
+		TargetData targetData = new TargetData{ targetType = storeTargetType, targetPos = storeTranslation, targetEntity = storeEntity };
+		StateTransitionSystem.RequestStateChange(AIState.MovingToDeposit, ecb, entityInQueryIndex, entity, targetData);
 
 		Debug.Log("Request switch to MovingToDeposit state");
 

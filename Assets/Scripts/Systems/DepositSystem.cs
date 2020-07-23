@@ -57,7 +57,7 @@ public class DepositSystem : KodeboldJobSystem
 
                 if (resourceNodeLookup.Exists(previousTarget.targetData.targetEntity))
                 {
-                    StateTransitionSystem.RequestStateChange(AIState.MovingToHarvest, ecb, entityInQueryIndex, entity, previousTarget.targetData.targetType, previousTarget.targetData.targetPos, previousTarget.targetData.targetEntity);
+                    StateTransitionSystem.RequestStateChange(AIState.MovingToHarvest, ecb, entityInQueryIndex, entity, previousTarget.targetData);
 
                     Debug.Log($"Requesting switch to MoveToHarvest state for previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType}");
                 }

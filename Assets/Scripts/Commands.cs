@@ -27,10 +27,23 @@ public class CommandProcessSystem : KodeboldJobSystem
 
 		EntityCommandBuffer.Concurrent ecb = m_preStateTransECBsystem.CreateCommandBuffer().ToConcurrent();
 
+		Entities.WithAll<IdleState>().ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer) =>
+		{
+			if (commandBuffer.Length <= 0)
+				return;
+			
+			Command command = commandBuffer[0];
+			commandBuffer.RemoveAt(0);
+			UnityEngine.Debug.Log($"Processing { command.CommandType } command from queue");
+			ProcessCommand(ecb, entityInQueryIndex, entity, command);
+
+		}).ScheduleParallel();
+
 		Entities.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer, in SwitchToState switchToState) =>
 		{
 			if (commandBuffer.Length <= 0)
 				return;
+
 
 			switch (switchToState.aiState)
 			{
@@ -44,37 +57,64 @@ public class CommandProcessSystem : KodeboldJobSystem
 				case AIState.MovingToPosition:
 					{
 						Command command = commandBuffer[0];
-						switch (command.commandType)
-						{
-							case CommandType.Move:
-								MoveCommandData moveCommandData = command.CommandData<MoveCommandData>();
-								StateTransitionSystem.RequestStateChange(AIState.MovingToPosition, ecb, entityInQueryIndex, entity,
-									moveCommandData.targetData.targetType, moveCommandData.targetData.targetPos, moveCommandData.targetData.targetEntity);
-								break;
-							case CommandType.Harvest:
-								HarvestCommandData harvestCommandData = command.CommandData<HarvestCommandData>();
-								StateTransitionSystem.RequestStateChange(AIState.MovingToHarvest, ecb, entityInQueryIndex, entity,
-									harvestCommandData.targetData.targetType, harvestCommandData.targetData.targetPos, harvestCommandData.targetData.targetEntity);
-								break;
-							case CommandType.Attack:
-								AttackCommandData attackCommandData = command.CommandData<AttackCommandData>();
-								StateTransitionSystem.RequestStateChange(AIState.MovingToAttack, ecb, entityInQueryIndex, entity,
-									attackCommandData.targetData.targetType, attackCommandData.targetData.targetPos, attackCommandData.targetData.targetEntity);
-								break;
-							case CommandType.Deposit:
-								DepositCommandData depositCommandData = command.CommandData<DepositCommandData>();
-								StateTransitionSystem.RequestStateChange(AIState.MovingToDeposit, ecb, entityInQueryIndex, entity,
-									depositCommandData.targetData.targetType, depositCommandData.targetData.targetPos, depositCommandData.targetData.targetEntity);
-								break;
-						}
+						commandBuffer.RemoveAt(0);
+						UnityEngine.Debug.Log($"Processing { command.CommandType } command from queue");
+						ProcessCommand(ecb, entityInQueryIndex, entity, command);
 						break;
 					}
 			}
+
 		}).ScheduleParallel();
 
 		m_preStateTransECBsystem.AddJobHandleForProducer(Dependency);
 	}
+
+	private static void ProcessCommand(EntityCommandBuffer.Concurrent ecb, int entityInQueryIndex, Entity entity, Command command)
+	{
+		switch (command.CommandType)
+		{
+			case CommandType.Move:
+				MoveCommandData moveCommandData = command.GetCommandData<MoveCommandData>();
+				StateTransitionSystem.RequestStateChange(AIState.MovingToPosition, ecb, entityInQueryIndex, entity,
+					moveCommandData.TargetData);
+				break;
+			case CommandType.Harvest:
+				HarvestCommandData harvestCommandData = command.GetCommandData<HarvestCommandData>();
+				StateTransitionSystem.RequestStateChange(AIState.MovingToHarvest, ecb, entityInQueryIndex, entity,
+					harvestCommandData.TargetData);
+				break;
+			case CommandType.Attack:
+				AttackCommandData attackCommandData = command.GetCommandData<AttackCommandData>();
+				StateTransitionSystem.RequestStateChange(AIState.MovingToAttack, ecb, entityInQueryIndex, entity,
+					attackCommandData.TargetData);
+				break;
+			case CommandType.Deposit:
+				DepositCommandData depositCommandData = command.GetCommandData<DepositCommandData>();
+				StateTransitionSystem.RequestStateChange(AIState.MovingToDeposit, ecb, entityInQueryIndex, entity,
+					depositCommandData.TargetData);
+				break;
+		}
+	}
+	public static void QueueCommand<T>(CommandType commandType, in TargetData targetData, in DynamicBuffer<Command> commandBuffer) where T : struct, ICommandData
+	{
+		Command newCommand = new Command
+		{
+			CommandType = commandType,
+		};
+
+		T commandData = new T
+		{
+			TargetData = targetData
+		};
+
+		newCommand.AddCommandData(commandData);
+		
+		commandBuffer.Add(newCommand);
+		UnityEngine.Debug.Log($"Added { commandType } command to the queue");
+
+	}
 }
+
 
 public enum CommandType
 {
@@ -86,24 +126,25 @@ public enum CommandType
 
 public interface ICommandData
 {
-	TargetData targetData { get; set; }
+	TargetData TargetData { get; set; }
 }
 
-public interface ICommand
-{
-	CommandType commandType { get; set; }
 
-	T CommandData<T>() where T : ICommandData;
-}
 
 [StructLayout(LayoutKind.Explicit)]
-public struct Command : IBufferElementData, ICommand
+public struct Command : IBufferElementData
 {
-	public CommandType commandType { get => commandType; set => commandType = value; }
+	[FieldOffset(0)]private CommandType commandType;
+	[FieldOffset(4)] private MoveCommandData moveCommandData;
+	[FieldOffset(4)] private HarvestCommandData harvestCommandData;
+	[FieldOffset(4)] private AttackCommandData attackCommandData;
+	[FieldOffset(4)] private DepositCommandData depositCommandData;
 
-	public T CommandData<T>() where T : ICommandData
+	public CommandType CommandType { get => commandType; set => commandType = value; }
+
+	public T GetCommandData<T>() where T : struct, ICommandData
 	{
-		switch (commandType)
+		switch (CommandType)
 		{
 			case CommandType.Move:
 				return (T)(ICommandData)moveCommandData;
@@ -118,28 +159,54 @@ public struct Command : IBufferElementData, ICommand
 		}
 	}
 
-	[FieldOffset(4)] private MoveCommandData moveCommandData;
-	[FieldOffset(4)] private HarvestCommandData harvestCommandData;
-	[FieldOffset(4)] private AttackCommandData attackCommandData;
-	[FieldOffset(4)] private DepositCommandData depositCommandData;
+	public void AddCommandData<T>(T commandData) where T : struct, ICommandData
+	{
+		if (commandData is MoveCommandData moveCommand)
+		{
+			moveCommandData = moveCommand;
+			return;
+		}
+		if (commandData is HarvestCommandData harvestCommand)
+		{
+			harvestCommandData = harvestCommand;
+			return;
+		}
+		if (commandData is AttackCommandData attackCommand)
+		{
+			attackCommandData = attackCommand;
+			return;
+		}
+		if (commandData is DepositCommandData depositCommand)
+		{
+			depositCommandData = depositCommand;
+			return;
+		}
+		throw new Exception("Invalid command type");
+	}
+
 }
 
 public struct MoveCommandData : ICommandData
 {
-	public TargetData targetData { get => targetData; set => targetData = value; }
+	private TargetData targetData;
+	public TargetData TargetData { get => targetData; set => targetData = value; }
+
 }
 
 public struct HarvestCommandData : ICommandData
 {
-	public TargetData targetData { get => targetData; set => targetData = value; }
+	private TargetData targetData;
+	public TargetData TargetData { get => targetData; set => targetData = value; }
 }
 
 public struct AttackCommandData : ICommandData
 {
-	public TargetData targetData { get => targetData; set => targetData = value; }
+	private TargetData targetData;
+	public TargetData TargetData { get => targetData; set => targetData = value; }
 }
 
 public struct DepositCommandData : ICommandData
 {
-	public TargetData targetData { get => targetData; set => targetData = value; }
+	private TargetData targetData;
+	public TargetData TargetData { get => targetData; set => targetData = value; }
 }

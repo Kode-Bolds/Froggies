@@ -47,7 +47,7 @@ public class HarvestingSystem : KodeboldJobSystem
 			if (dist <= range)
 			{
 				StateTransitionSystem.RequestStateChange(AIState.Harvesting, ecb, entityInQueryIndex, entity,
-					currentTarget.targetData.targetType, currentTarget.targetData.targetPos, currentTarget.targetData.targetEntity);
+					currentTarget.targetData);
 				Debug.Log("Request switch to Harvesting state");
 
 				//Set type we are harvesting + empty inventory if type is different

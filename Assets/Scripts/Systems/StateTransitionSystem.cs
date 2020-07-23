@@ -105,18 +105,14 @@ public class StateTransitionSystem : KodeboldJobSystem
 
 	}
 
-	public static void RequestStateChange(AIState aiState, EntityCommandBuffer.Concurrent ecb, int entityInQueryIndex, in Entity entity,
-		AITargetType aiTargetType = AITargetType.None, in float3 targetPos = default, in Entity targetNode = default)
+	public static void RequestStateChange(	
+		AIState aiState, EntityCommandBuffer.Concurrent ecb, int entityInQueryIndex, in Entity entity, 
+		in TargetData targetData = default )
 	{
 		SwitchToState switchToState = new SwitchToState
 		{
 			aiState = aiState,
-			target = new TargetData
-			{
-				targetPos = targetPos,
-				targetEntity = targetNode,
-				targetType = aiTargetType
-			}
+			target = targetData
 		};
 
 		ecb.AddComponent(entityInQueryIndex, entity, switchToState);
