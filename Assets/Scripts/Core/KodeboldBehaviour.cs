@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class KodeboldBehaviour : MonoBehaviour, IDependant, IDependency
 {
@@ -17,6 +15,8 @@ public abstract class KodeboldBehaviour : MonoBehaviour, IDependant, IDependency
 	}
 
 	public abstract void InitBehaviour();
+
+	public abstract void UpdateBehaviour();
 
 	public void Free()
 	{

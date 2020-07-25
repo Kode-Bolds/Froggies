@@ -1,4 +1,6 @@
-﻿using Unity.Entities;
+﻿using Unity.Collections;
+using Unity.Entities;
+using Unity.Jobs;
 
 public static class NativeContainerExtensionMethods
 {
