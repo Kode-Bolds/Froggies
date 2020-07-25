@@ -70,9 +70,6 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 		.WithDeallocateOnJobCompletion(storeEntities)
 		.ForEach((int entityInQueryIndex, Entity entity, ref CurrentTarget currentTarget, in DynamicBuffer<Command> commandBuffer, in Translation unitTranslation) =>
 		{
-			if (commandBuffer.Length > 0)
-				currentTarget.findTargetOfType = AITargetType.None;
-
 			if (currentTarget.findTargetOfType == AITargetType.None)
 				return;
 

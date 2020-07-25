@@ -26,16 +26,16 @@ public class HarvestingSystem : KodeboldJobSystem
 		JobHandle movingToHarvestHandle = Entities
 		.WithReadOnly(resourceNodeLookup)
 		.WithAll<MovingToHarvestState>()
-		.ForEach((Entity entity, int entityInQueryIndex, ref Harvester harvester, ref CurrentTarget currentTarget, in Translation translation) =>
+		.ForEach((Entity entity, int entityInQueryIndex, ref Harvester harvester, ref CurrentTarget currentTarget, in DynamicBuffer<Command> commandBuffer, in Translation translation) =>
 		{
-			if (currentTarget.findTargetOfType != AITargetType.None)
-				return;
+			//if (currentTarget.findTargetOfType != AITargetType.None)
+			//	return;
 
 			if (!resourceNodeLookup.TryGetComponentDataFromEntity(currentTarget.targetData.targetEntity, out ResourceNode resourceNode))
 			{
 				Debug.Log($"Harvest node {currentTarget.targetData.targetEntity} destroyed when moving to it, finding nearby resource node of type {currentTarget.targetData.targetType} instead");
 
-				currentTarget.findTargetOfType = currentTarget.targetData.targetType;
+				CommandProcessSystem.QueueCommandWithoutTarget<HarvestCommandWithoutTarget>(CommandType.HarvestWithoutTarget, currentTarget.targetData.targetType, commandBuffer);
 				return;
 			}
 
@@ -48,6 +48,7 @@ public class HarvestingSystem : KodeboldJobSystem
 			{
 				StateTransitionSystem.RequestStateChange(AIState.Harvesting, ecb, entityInQueryIndex, entity,
 					currentTarget.targetData);
+				CommandProcessSystem.QueueCommandWithTarget<HarvestCommandWithTarget>(CommandType.HarvestWithTarget, currentTarget.targetData, )
 				Debug.Log("Request switch to Harvesting state");
 
 				//Set type we are harvesting + empty inventory if type is different
@@ -68,7 +69,7 @@ public class HarvestingSystem : KodeboldJobSystem
 		Dependency = Entities
 		.WithReadOnly(resourceNodeLookup)
 		.WithAll<HarvestingState>()
-		.ForEach((Entity entity, int entityInQueryIndex, ref Harvester harvester, ref CurrentTarget currentTarget) =>
+		.ForEach((Entity entity, int entityInQueryIndex, ref Harvester harvester, ref CurrentTarget currentTarget, ref DynamicBuffer<Command> commandBuffer) =>
 		{
 			if (!resourceNodeLookup.TryGetComponentDataFromEntity(currentTarget.targetData.targetEntity, out ResourceNode resourceNode))
 			{
@@ -111,7 +112,7 @@ public class HarvestingSystem : KodeboldJobSystem
 			//If we are at capacity go back to deposit
 			if (harvester.currentlyCarryingAmount >= harvester.carryCapacity)
 			{
-				currentTarget.findTargetOfType = AITargetType.Store;
+				CommandProcessSystem.QueueCommandWithoutTarget<DepositCommandWithoutTarget>(CommandType.DepositWithoutTarget, AITargetType.Store, commandBuffer);
 				return;
 			}
 

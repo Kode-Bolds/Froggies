@@ -43,13 +43,12 @@ public class FindAITargetSystem : KodeboldJobSystem
 
 					if (shiftPressed)
 					{
-						CommandProcessSystem.QueueCommand<MoveCommandData>(CommandType.Move, targetData, commandBuffer);
+						CommandProcessSystem.QueueCommandWithTarget<MoveCommandWithTarget>(CommandType.MoveWithTarget, targetData, commandBuffer);
 					}
 					else
 					{
-						StateTransitionSystem.RequestStateChange(AIState.MovingToPosition, ecb, entityInQueryIndex, entity, targetData);
-						currentTarget.findTargetOfType = AITargetType.None;
 						commandBuffer.Clear();
+						CommandProcessSystem.QueueCommandWithTarget<MoveCommandWithTarget>(CommandType.MoveWithTarget, targetData, commandBuffer);
 						UnityEngine.Debug.Log("Request switch to MovingToPosition state");
 					}
 
@@ -70,13 +69,12 @@ public class FindAITargetSystem : KodeboldJobSystem
 					
 					if (shiftPressed)
 					{
-						CommandProcessSystem.QueueCommand<HarvestCommandData>(CommandType.Harvest, targetData, commandBuffer);
+						CommandProcessSystem.QueueCommandWithTarget<HarvestCommandWithTarget>(CommandType.HarvestWithTarget, targetData, commandBuffer);
 					}
 					else
 					{
-						StateTransitionSystem.RequestStateChange(AIState.MovingToHarvest, ecb, entityInQueryIndex, entity, targetData); 
-						currentTarget.findTargetOfType = AITargetType.None;
 						commandBuffer.Clear();
+						CommandProcessSystem.QueueCommandWithTarget<HarvestCommandWithTarget>(CommandType.HarvestWithTarget, targetData, commandBuffer);
 						UnityEngine.Debug.Log("Request switch to MovingToHarvest state");
 					}
 					return;
@@ -93,14 +91,13 @@ public class FindAITargetSystem : KodeboldJobSystem
 					
 					if (shiftPressed)
 					{
-						CommandProcessSystem.QueueCommand<AttackCommandData>(CommandType.Attack, targetData, commandBuffer);
+						CommandProcessSystem.QueueCommandWithTarget<AttackCommandWithTarget>(CommandType.AttackWithTarget, targetData, commandBuffer);
 					}
 					else
 					{
-						StateTransitionSystem.RequestStateChange(AIState.MovingToAttack, ecb, entityInQueryIndex, entity, targetData);
-						currentTarget.findTargetOfType = AITargetType.None;
 						commandBuffer.Clear();
-						UnityEngine.Debug.Log("Request switch to MovingToHarvest state");
+						CommandProcessSystem.QueueCommandWithTarget<AttackCommandWithTarget>(CommandType.AttackWithTarget, targetData, commandBuffer);
+						UnityEngine.Debug.Log("Request switch to MovingToAttack state");
 					}
 
 					return;

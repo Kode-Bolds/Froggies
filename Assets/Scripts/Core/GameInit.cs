@@ -153,8 +153,8 @@ public class GameInit : MonoBehaviour
 
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<RaycastSystem>());
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<FindAITargetSystem>());
-			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<FindNearestTargetSystem>());
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<CommandProcessSystem>());
+			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<FindNearestTargetSystem>());
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<PreStateTransitionEntityCommandBufferSystem>());
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<StateTransitionSystem>());
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<PostStateTransitionEntityCommandBufferSystem>());
