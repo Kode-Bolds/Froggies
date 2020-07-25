@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   KodeboldBehaviours:
   - {fileID: 7853641952059455958, guid: 99992b5e0f59b614d978ce625a3da9af, type: 3}
+  - {fileID: 426819377528110083, guid: cab6736a2919fd74ebec7cec644c2887, type: 3}
 --- !u!4 &371896420
 Transform:
   m_ObjectHideFlags: 0
