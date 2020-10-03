@@ -34,7 +34,7 @@ public class DepositSystem : KodeboldJobSystem
 	{
 		ComponentDataFromEntity<Store> storeLookup = GetComponentDataFromEntity<Store>();
 		ComponentDataFromEntity<ResourceNode> resourceNodeLookup = GetComponentDataFromEntity<ResourceNode>();
-		EntityCommandBuffer.Concurrent ecb = m_EndSimECBSystem.CreateCommandBuffer().ToConcurrent();
+		EntityCommandBuffer.ParallelWriter ecb = m_EndSimECBSystem.CreateCommandBuffer().AsParallelWriter();
 		NativeQueue<ResourceTypeValuePair>.ParallelWriter resourceQueueParallel = m_resourcesQueue.AsParallelWriter();
 
 		Dependency = Entities
@@ -67,7 +67,7 @@ public class DepositSystem : KodeboldJobSystem
 				harvester.currentlyCarryingAmount = 0;
 				harvester.currentlyCarryingType = ResourceType.None;
 
-				if (resourceNodeLookup.Exists(previousTarget.targetData.targetEntity))
+				if (resourceNodeLookup.HasComponent(previousTarget.targetData.targetEntity))
 				{
 					StateTransitionSystem.RequestStateChange(AIState.MovingToHarvest, ecb, entityInQueryIndex, entity, previousTarget.targetData.targetType, previousTarget.targetData.targetPos, previousTarget.targetData.targetEntity);
 
@@ -103,5 +103,6 @@ public class DepositSystem : KodeboldJobSystem
 
 	public override void FreeSystem()
 	{
+		m_resourcesQueue.Dispose();
 	}
 }

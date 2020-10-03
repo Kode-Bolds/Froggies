@@ -145,7 +145,7 @@ public class RaycastSystem : KodeboldJobSystem
                 };
                 raycastResult[0] = result;
             }
-		}).Schedule(JobHandle.CombineDependencies(Dependency, endFramePhysicsSystem.FinalJobHandle));
+		}).Schedule(JobHandle.CombineDependencies(Dependency, endFramePhysicsSystem.GetOutputDependency()));
 
 
 		CollisionFilter selectionFilter = m_selectionCollisionFilter;

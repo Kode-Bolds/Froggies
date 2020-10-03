@@ -66,6 +66,7 @@ public class GameInit : MonoBehaviour
 		Unity.Entities.ScriptBehaviourUpdateOrder.UpdatePlayerLoop(null);
 	}
 
+#if UNITY_EDITOR
 	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
 	private static void CreateEditorSystems()
 	{
@@ -80,6 +81,7 @@ public class GameInit : MonoBehaviour
 			liveLinkEditorSystemGroup.AddSystemToUpdateList(World.GetExistingSystem<Unity.Scenes.Editor.EditorSubSceneLiveLinkSystem>());
 		}
 	}
+#endif
 
 	[Unity.Entities.UpdateAfter(typeof(Unity.Physics.Systems.EndFramePhysicsSystem))]
 	public class PostPhysicsSystemsGroup : Unity.Entities.ComponentSystemGroup { }

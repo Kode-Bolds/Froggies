@@ -19,7 +19,7 @@ public class HarvestingSystem : KodeboldJobSystem
 
 	public override void UpdateSystem()
 	{
-		EntityCommandBuffer.Concurrent ecb = m_endSimECBSystem.CreateCommandBuffer().ToConcurrent();
+		EntityCommandBuffer.ParallelWriter ecb = m_endSimECBSystem.CreateCommandBuffer().AsParallelWriter();
 
 		ComponentDataFromEntity<ResourceNode> resourceNodeLookup = GetComponentDataFromEntity<ResourceNode>();
 
@@ -63,7 +63,7 @@ public class HarvestingSystem : KodeboldJobSystem
 		}).ScheduleParallel(Dependency);
 
 		float dt = Time.DeltaTime;
-		EntityCommandBuffer.Concurrent ecb2 = m_endSimECBSystem.CreateCommandBuffer().ToConcurrent();
+		EntityCommandBuffer.ParallelWriter ecb2 = m_endSimECBSystem.CreateCommandBuffer().AsParallelWriter();
 
 		Dependency = Entities
 		.WithReadOnly(resourceNodeLookup)
