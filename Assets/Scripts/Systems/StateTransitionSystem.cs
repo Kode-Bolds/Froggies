@@ -25,7 +25,7 @@ public class StateTransitionSystem : KodeboldJobSystem
 
 	public override void UpdateSystem()
 	{
-		EntityCommandBuffer.Concurrent ecb = m_endInitECBSystem.CreateCommandBuffer().ToConcurrent();
+		EntityCommandBuffer.ParallelWriter ecb = m_endInitECBSystem.CreateCommandBuffer().AsParallelWriter();
 
 		Entities.ForEach((Entity entity, int entityInQueryIndex, ref CurrentTarget target, ref PreviousTarget previousTarget, in SwitchToState switchToState) =>
 		{
@@ -105,7 +105,7 @@ public class StateTransitionSystem : KodeboldJobSystem
 
 	}
 
-	public static void RequestStateChange(AIState aiState, EntityCommandBuffer.Concurrent ecb, int entityInQueryIndex, in Entity entity,
+	public static void RequestStateChange(AIState aiState, EntityCommandBuffer.ParallelWriter ecb, int entityInQueryIndex, in Entity entity,
 		AITargetType aiTargetType = AITargetType.None, in float3 targetPos = default, in Entity targetNode = default)
 	{
 		SwitchToState switchToState = new SwitchToState

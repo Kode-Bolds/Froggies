@@ -47,7 +47,7 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 
 		JobHandle dataQueries = JobHandle.CombineDependencies(resourceQueries, enemyQueries, storeQueries);
 
-		EntityCommandBuffer.Concurrent ecb = m_postFindTargetECBSystem.CreateCommandBuffer().ToConcurrent();
+		EntityCommandBuffer.ParallelWriter ecb = m_postFindTargetECBSystem.CreateCommandBuffer().AsParallelWriter();
 
 		Dependency = Entities
 		.WithReadOnly(resourceTranslations)
@@ -161,7 +161,7 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 		return closestIndex;
 	}
 
-	private static void MovingToHarvest(EntityCommandBuffer.Concurrent ecb, int entityInQueryIndex, in Entity entity,
+	private static void MovingToHarvest(EntityCommandBuffer.ParallelWriter ecb, int entityInQueryIndex, in Entity entity,
 		AITargetType resourceTargetType, in float3 resourceTranslation, in Entity resourceEntity, ref CurrentTarget currentTarget)
 	{
 		StateTransitionSystem.RequestStateChange(AIState.MovingToHarvest, ecb, entityInQueryIndex, entity, resourceTargetType, resourceTranslation, resourceEntity);
@@ -171,7 +171,7 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 		currentTarget.findTargetOfType = AITargetType.None;
 	}
 
-	private static void MovingToAttack(EntityCommandBuffer.Concurrent ecb, int entityInQueryIndex, in Entity entity,
+	private static void MovingToAttack(EntityCommandBuffer.ParallelWriter ecb, int entityInQueryIndex, in Entity entity,
 		AITargetType enemyTargetType, in float3 enemyTranslation, in Entity enemyEntity, ref CurrentTarget currentTarget)
 	{
 		StateTransitionSystem.RequestStateChange(AIState.MovingToAttack, ecb, entityInQueryIndex, entity, enemyTargetType, enemyTranslation, enemyEntity);
@@ -181,7 +181,7 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 		currentTarget.findTargetOfType = AITargetType.None;
 	}
 
-	private static void MovingToDeposit(EntityCommandBuffer.Concurrent ecb, int entityInQueryIndex, in Entity entity,
+	private static void MovingToDeposit(EntityCommandBuffer.ParallelWriter ecb, int entityInQueryIndex, in Entity entity,
 		AITargetType storeTargetType, in float3 storeTranslation, in Entity storeEntity, ref CurrentTarget currentTarget)
 	{
 		StateTransitionSystem.RequestStateChange(AIState.MovingToDeposit, ecb, entityInQueryIndex, entity, storeTargetType, storeTranslation, storeEntity);

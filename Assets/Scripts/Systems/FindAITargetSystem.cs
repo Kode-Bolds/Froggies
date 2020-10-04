@@ -27,7 +27,7 @@ public class FindAITargetSystem : KodeboldJobSystem
 		if (m_inputManagementSystem.InputData.mouseInput.rightClickPressed)
 		{
 			NativeArray<RaycastResult> raycastResult = m_raycastSystem.RaycastResult;
-			EntityCommandBuffer.Concurrent ecb = m_endSimECBSystem.CreateCommandBuffer().ToConcurrent();
+			EntityCommandBuffer.ParallelWriter ecb = m_endSimECBSystem.CreateCommandBuffer().AsParallelWriter();
 
 			Dependency = Entities.WithReadOnly(raycastResult).WithAll<SelectedTag>().ForEach((Entity entity, int entityInQueryIndex, ref CurrentTarget currentTarget, ref DynamicBuffer<Command> commandBuffer) =>
 			{

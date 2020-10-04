@@ -56,7 +56,7 @@ public class SelectionSystem : KodeboldJobSystem
                 boxBoundsSorted[1] = math.max(boxBounds[0], boxBounds[1]);
             }).Schedule(Dependency);
         
-            EntityCommandBuffer.Concurrent ecbConcurrent = m_entityCommandBuffer.CreateCommandBuffer().ToConcurrent();
+            EntityCommandBuffer.ParallelWriter ecbConcurrent = m_entityCommandBuffer.CreateCommandBuffer().AsParallelWriter();
 
             //Remove previous selections
             if (leftClickReleased)
