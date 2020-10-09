@@ -9,190 +9,182 @@ using Unity.Mathematics;
 public class FindNearestTargetSystem : KodeboldJobSystem
 {
 
-	private EntityQuery m_resourceQuery;
-	private EntityQuery m_enemyQuery;
-	private EntityQuery m_storeQuery;
-	private GameInit.PreStateTransitionEntityCommandBufferSystem m_postFindTargetECBSystem;
+    private EntityQuery m_resourceQuery;
+    private EntityQuery m_enemyQuery;
+    private EntityQuery m_storeQuery;
+    private GameInit.PreStateTransitionEntityCommandBufferSystem m_postFindTargetECBSystem;
 
-	public override void GetSystemDependencies(Dependencies dependencies)
-	{
+    public override void GetSystemDependencies(Dependencies dependencies)
+    {
 
-	}
+    }
 
-	public override void InitSystem()
-	{
-		m_resourceQuery = GetEntityQuery(ComponentType.ReadOnly<ResourceNode>(), ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
-		m_enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
-		m_storeQuery = GetEntityQuery(ComponentType.ReadOnly<Store>(), ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
+    public override void InitSystem()
+    {
+        m_resourceQuery = GetEntityQuery(ComponentType.ReadOnly<ResourceNode>(), ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
+        m_enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
+        m_storeQuery = GetEntityQuery(ComponentType.ReadOnly<Store>(), ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
 
-		m_postFindTargetECBSystem = World.GetOrCreateSystem<GameInit.PreStateTransitionEntityCommandBufferSystem>();
-	}
+        m_postFindTargetECBSystem = World.GetOrCreateSystem<GameInit.PreStateTransitionEntityCommandBufferSystem>();
+    }
 
-	public override void UpdateSystem()
-	{
-		NativeArray<Translation> resourceTranslations = m_resourceQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out JobHandle getResourceTranslations);
-		NativeArray<TargetableByAI> resourceTargets = m_resourceQuery.ToComponentDataArrayAsync<TargetableByAI>(Allocator.TempJob, out JobHandle getResourceTargets);
-		NativeArray<Entity> resourceEntities = m_resourceQuery.ToEntityArrayAsync(Allocator.TempJob, out JobHandle getResourceEntities);
-		JobHandle resourceQueries = JobHandle.CombineDependencies(getResourceTranslations, getResourceTargets, getResourceEntities);
+    public override void UpdateSystem()
+    {
+        NativeArray<Translation> resourceTranslations = m_resourceQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out JobHandle getResourceTranslations);
+        NativeArray<TargetableByAI> resourceTargets = m_resourceQuery.ToComponentDataArrayAsync<TargetableByAI>(Allocator.TempJob, out JobHandle getResourceTargets);
+        NativeArray<Entity> resourceEntities = m_resourceQuery.ToEntityArrayAsync(Allocator.TempJob, out JobHandle getResourceEntities);
+        JobHandle resourceQueries = JobHandle.CombineDependencies(getResourceTranslations, getResourceTargets, getResourceEntities);
 
-		NativeArray<Translation> enemyTranslations = m_resourceQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out JobHandle getEnemyTranslations);
-		NativeArray<TargetableByAI> enemyTargets = m_enemyQuery.ToComponentDataArrayAsync<TargetableByAI>(Allocator.TempJob, out JobHandle getEnemyTargets);
-		NativeArray<Entity> enemyEntities = m_resourceQuery.ToEntityArrayAsync(Allocator.TempJob, out JobHandle getEnemyEntites);
-		JobHandle enemyQueries = JobHandle.CombineDependencies(getEnemyTranslations, getEnemyTargets, getEnemyEntites);
+        NativeArray<Translation> enemyTranslations = m_resourceQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out JobHandle getEnemyTranslations);
+        NativeArray<TargetableByAI> enemyTargets = m_enemyQuery.ToComponentDataArrayAsync<TargetableByAI>(Allocator.TempJob, out JobHandle getEnemyTargets);
+        NativeArray<Entity> enemyEntities = m_resourceQuery.ToEntityArrayAsync(Allocator.TempJob, out JobHandle getEnemyEntites);
+        JobHandle enemyQueries = JobHandle.CombineDependencies(getEnemyTranslations, getEnemyTargets, getEnemyEntites);
 
-		NativeArray<Translation> storeTranslations = m_storeQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out JobHandle getStoreTranslations);
-		NativeArray<TargetableByAI> storeTargets = m_storeQuery.ToComponentDataArrayAsync<TargetableByAI>(Allocator.TempJob, out JobHandle getStoreTargets);
-		NativeArray<Entity> storeEntities = m_storeQuery.ToEntityArrayAsync(Allocator.TempJob, out JobHandle getStoreEntities);
-		JobHandle storeQueries = JobHandle.CombineDependencies(getStoreTranslations, getStoreTargets, getStoreEntities);
+        NativeArray<Translation> storeTranslations = m_storeQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out JobHandle getStoreTranslations);
+        NativeArray<TargetableByAI> storeTargets = m_storeQuery.ToComponentDataArrayAsync<TargetableByAI>(Allocator.TempJob, out JobHandle getStoreTargets);
+        NativeArray<Entity> storeEntities = m_storeQuery.ToEntityArrayAsync(Allocator.TempJob, out JobHandle getStoreEntities);
+        JobHandle storeQueries = JobHandle.CombineDependencies(getStoreTranslations, getStoreTargets, getStoreEntities);
 
-		JobHandle dataQueries = JobHandle.CombineDependencies(resourceQueries, enemyQueries, storeQueries);
+        JobHandle dataQueries = JobHandle.CombineDependencies(resourceQueries, enemyQueries, storeQueries);
 
-		EntityCommandBuffer.Concurrent ecb = m_postFindTargetECBSystem.CreateCommandBuffer().ToConcurrent();
+        EntityCommandBuffer.Concurrent ecb = m_postFindTargetECBSystem.CreateCommandBuffer().ToConcurrent();
 
-		Dependency = Entities
-		.WithReadOnly(resourceTranslations)
-		.WithReadOnly(resourceTargets)
-		.WithReadOnly(resourceEntities)
-		.WithReadOnly(enemyTranslations)
-		.WithReadOnly(enemyTargets)
-		.WithReadOnly(enemyEntities)
-		.WithReadOnly(storeTranslations)
-		.WithReadOnly(storeTargets)
-		.WithReadOnly(storeEntities)
-		.WithDeallocateOnJobCompletion(resourceTranslations)
-		.WithDeallocateOnJobCompletion(resourceTargets)
-		.WithDeallocateOnJobCompletion(resourceEntities)
-		.WithDeallocateOnJobCompletion(enemyTranslations)
-		.WithDeallocateOnJobCompletion(enemyTargets)
-		.WithDeallocateOnJobCompletion(enemyEntities)
-		.WithDeallocateOnJobCompletion(storeTranslations)
-		.WithDeallocateOnJobCompletion(storeTargets)
-		.WithDeallocateOnJobCompletion(storeEntities)
-		.ForEach((int entityInQueryIndex, Entity entity, ref CurrentTarget currentTarget, in DynamicBuffer<Command> commandBuffer, in Translation unitTranslation) =>
-		{
-			if (currentTarget.findTargetOfType == AITargetType.None)
-				return;
+        Dependency = Entities
+        .WithReadOnly(resourceTranslations)
+        .WithReadOnly(resourceTargets)
+        .WithReadOnly(resourceEntities)
+        .WithReadOnly(enemyTranslations)
+        .WithReadOnly(enemyTargets)
+        .WithReadOnly(enemyEntities)
+        .WithReadOnly(storeTranslations)
+        .WithReadOnly(storeTargets)
+        .WithReadOnly(storeEntities)
+        .WithDeallocateOnJobCompletion(resourceTranslations)
+        .WithDeallocateOnJobCompletion(resourceTargets)
+        .WithDeallocateOnJobCompletion(resourceEntities)
+        .WithDeallocateOnJobCompletion(enemyTranslations)
+        .WithDeallocateOnJobCompletion(enemyTargets)
+        .WithDeallocateOnJobCompletion(enemyEntities)
+        .WithDeallocateOnJobCompletion(storeTranslations)
+        .WithDeallocateOnJobCompletion(storeTargets)
+        .WithDeallocateOnJobCompletion(storeEntities)
+        .ForEach((int entityInQueryIndex, Entity entity, ref CurrentTarget currentTarget, ref DynamicBuffer<Command> commandBuffer, in Translation unitTranslation) =>
+        {
+            if (currentTarget.findTargetOfType == AITargetType.None)
+                return;
 
-			Debug.Log($"Finding nearest target of type { currentTarget.findTargetOfType }");
+            Debug.Log($"Finding nearest target of type { currentTarget.findTargetOfType }");
 
-			int closestTargetIndex = -1;
-			switch (currentTarget.findTargetOfType)
-			{
-				case AITargetType.FoodResource:
-				case AITargetType.BuildingResource:
-				case AITargetType.RareResource:
+		    commandBuffer.RemoveAt(0);
 
-					closestTargetIndex = FindTarget(resourceTargets, resourceTranslations, resourceEntities, currentTarget.findTargetOfType, unitTranslation);
+            int closestTargetIndex = -1;
+            switch (currentTarget.findTargetOfType)
+            {
+                case AITargetType.FoodResource:
+                case AITargetType.BuildingResource:
+                case AITargetType.RareResource:
 
-					//If we don't find a nearby resource node, then find the nearest store to deposit at and request a state change to MovingToDeposit instead.
-					if (closestTargetIndex == -1)
-					{
-						Debug.Log($"Finding nearest target of type { AITargetType.Store }");
+                    closestTargetIndex = FindTarget(resourceTargets, resourceTranslations, resourceEntities, currentTarget.findTargetOfType, unitTranslation);
 
-						closestTargetIndex = FindTarget(storeTargets, storeTranslations, storeEntities, AITargetType.Store, unitTranslation);
+                    //If we don't find a nearby resource node, then find the nearest store to deposit at and queue a deposit command with the new target.
+                    if (closestTargetIndex == -1)
+                    {
+                        Debug.Log($"Finding nearest target of type { AITargetType.Store }");
 
-						MovingToDeposit(ecb, entityInQueryIndex, entity, storeTargets[closestTargetIndex].targetType,
-							storeTranslations[closestTargetIndex].Value, storeEntities[closestTargetIndex], ref currentTarget);
-					}
-					//Request state change to MovingToHarvest.
-					else
-					{
-						MovingToHarvest(ecb, entityInQueryIndex, entity, resourceTargets[closestTargetIndex].targetType,
-							resourceTranslations[closestTargetIndex].Value, resourceEntities[closestTargetIndex], ref currentTarget);
-					}
-					break;
-				case AITargetType.Enemy:
+                        closestTargetIndex = FindTarget(storeTargets, storeTranslations, storeEntities, AITargetType.Store, unitTranslation);
 
-					closestTargetIndex = FindTarget(enemyTargets, enemyTranslations, enemyEntities, currentTarget.findTargetOfType, unitTranslation);
+                        if (closestTargetIndex != -1)
+                        {
+                            TargetData targetData = new TargetData
+                            {
+                                targetEntity = storeEntities[closestTargetIndex],
+                                targetType = AITargetType.Store,
+                                targetPos = storeTranslations[closestTargetIndex].Value
+                            };
 
-					if (closestTargetIndex == -1)
-					{
+                            CommandProcessSystem.QueueCommandWithTarget<DepositCommandWithTarget>(CommandType.DepositWithTarget, targetData, commandBuffer);
+                        }
+                    }
+                    //Set targetData on current command
+                    else
+                    {
+						TargetData target = new TargetData
+                        {
+                            targetEntity = resourceEntities[closestTargetIndex],
+                            targetType = currentTarget.findTargetOfType,
+                            targetPos = resourceTranslations[closestTargetIndex].Value
+                        };
+						CommandProcessSystem.QueueCommandWithTarget<HarvestCommandWithTarget>(CommandType.HarvestWithTarget, target, commandBuffer);
+                    }
+                    break;
+                case AITargetType.Enemy:
 
-					}
-					else
-					{
-						MovingToAttack(ecb, entityInQueryIndex, entity, enemyTargets[closestTargetIndex].targetType,
-							enemyTranslations[closestTargetIndex].Value, enemyEntities[closestTargetIndex], ref currentTarget);
-					}
-					break;
-				case AITargetType.Store:
+                    closestTargetIndex = FindTarget(enemyTargets, enemyTranslations, enemyEntities, currentTarget.findTargetOfType, unitTranslation);
 
-					closestTargetIndex = FindTarget(storeTargets, storeTranslations, storeEntities, currentTarget.findTargetOfType, unitTranslation);
+                    if (closestTargetIndex == -1)
+                    {
+                    }
+                    else
+                    {
+                        TargetData target = new TargetData
+                        {
+                            targetEntity = enemyEntities[closestTargetIndex],
+                            targetType = currentTarget.findTargetOfType,
+                            targetPos = enemyTranslations[closestTargetIndex].Value
+                        };
+						CommandProcessSystem.QueueCommandWithTarget<AttackCommandWithTarget>(CommandType.AttackWithTarget, target, commandBuffer);
+                    }
+                    break;
+                case AITargetType.Store:
 
-					if (closestTargetIndex == -1)
-					{
+                    closestTargetIndex = FindTarget(storeTargets, storeTranslations, storeEntities, currentTarget.findTargetOfType, unitTranslation);
 
-					}
-					else
-					{
-						MovingToDeposit(ecb, entityInQueryIndex, entity, storeTargets[closestTargetIndex].targetType,
-							storeTranslations[closestTargetIndex].Value, storeEntities[closestTargetIndex], ref currentTarget);
-					}
-					break;
-			}
+                    if (closestTargetIndex == -1)
+                    {
+                    }
+                    else
+                    {
+						TargetData target = new TargetData
+                        {
+                            targetEntity = storeEntities[closestTargetIndex],
+                            targetType = currentTarget.findTargetOfType,
+                            targetPos = storeTranslations[closestTargetIndex].Value
+                        };
+						CommandProcessSystem.QueueCommandWithTarget<DepositCommandWithTarget>(CommandType.DepositWithTarget, target, commandBuffer);
+                    }
+                    break;
+            }
 
-		}).ScheduleParallel(JobHandle.CombineDependencies(Dependency, dataQueries));
+            currentTarget.findTargetOfType = AITargetType.None;
+        }).ScheduleParallel(JobHandle.CombineDependencies(Dependency, dataQueries));
 
-		m_postFindTargetECBSystem.AddJobHandleForProducer(Dependency);
-	}
+        m_postFindTargetECBSystem.AddJobHandleForProducer(Dependency);
+    }
 
-	private static int FindTarget(in NativeArray<TargetableByAI> targets, in NativeArray<Translation> targetTranslations, in NativeArray<Entity> targetEntities, in AITargetType targetType, in Translation unitTranslation)
-	{
-		int closestIndex = -1;
-		float smallestDistanceSq = -1.0f;
-		for (int i = 0; i < targets.Length; ++i)
-		{
-			float distanceSq = math.distancesq(unitTranslation.Value, targetTranslations[i].Value);
-			if (targets[i].targetType == targetType && (closestIndex == -1 || distanceSq < smallestDistanceSq))
-			{
-				smallestDistanceSq = distanceSq;
-				closestIndex = i;
-			}
-		}
+    private static int FindTarget(in NativeArray<TargetableByAI> targets, in NativeArray<Translation> targetTranslations, in NativeArray<Entity> targetEntities, in AITargetType targetType, in Translation unitTranslation)
+    {
+        int closestIndex = -1;
+        float smallestDistanceSq = -1.0f;
+        for (int i = 0; i < targets.Length; ++i)
+        {
+            float distanceSq = math.distancesq(unitTranslation.Value, targetTranslations[i].Value);
+            if (targets[i].targetType == targetType && (closestIndex == -1 || distanceSq < smallestDistanceSq))
+            {
+                smallestDistanceSq = distanceSq;
+                closestIndex = i;
+            }
+        }
 
-		if (closestIndex != -1)
-			Debug.Log($"Closest target at index { closestIndex } with entity id { targetEntities[closestIndex].Index }");
-		else
-			Debug.Log("Target not found");
+        if (closestIndex != -1)
+            Debug.Log($"Closest target at index { closestIndex } with entity id { targetEntities[closestIndex].Index }");
+        else
+            Debug.Log("Target not found");
 
-		return closestIndex;
-	}
+        return closestIndex;
+    }
 
-	private static void MovingToHarvest(EntityCommandBuffer.Concurrent ecb, int entityInQueryIndex, in Entity entity,
-		AITargetType resourceTargetType, in float3 resourceTranslation, in Entity resourceEntity, ref CurrentTarget currentTarget)
-	{
- 		TargetData targetData = new TargetData{ targetType = resourceTargetType, targetPos = resourceTranslation, targetEntity = resourceEntity };
-		StateTransitionSystem.RequestStateChange(AIState.MovingToHarvest, ecb, entityInQueryIndex, entity, targetData);
+    public override void FreeSystem()
+    {
 
-		Debug.Log("Request switch to MovingToHarvest state");
-
-		currentTarget.findTargetOfType = AITargetType.None;
-	}
-
-	private static void MovingToAttack(EntityCommandBuffer.Concurrent ecb, int entityInQueryIndex, in Entity entity,
-		AITargetType enemyTargetType, in float3 enemyTranslation, in Entity enemyEntity, ref CurrentTarget currentTarget)
-	{
-		TargetData targetData = new TargetData{ targetType = enemyTargetType, targetPos = enemyTranslation, targetEntity = enemyEntity };
-		StateTransitionSystem.RequestStateChange(AIState.MovingToAttack, ecb, entityInQueryIndex, entity, targetData);
-
-		Debug.Log("Request switch to MovingToAttack state");
-
-		currentTarget.findTargetOfType = AITargetType.None;
-	}
-
-	private static void MovingToDeposit(EntityCommandBuffer.Concurrent ecb, int entityInQueryIndex, in Entity entity,
-		AITargetType storeTargetType, in float3 storeTranslation, in Entity storeEntity, ref CurrentTarget currentTarget)
-	{
-		TargetData targetData = new TargetData{ targetType = storeTargetType, targetPos = storeTranslation, targetEntity = storeEntity };
-		StateTransitionSystem.RequestStateChange(AIState.MovingToDeposit, ecb, entityInQueryIndex, entity, targetData);
-
-		Debug.Log("Request switch to MovingToDeposit state");
-
-		currentTarget.findTargetOfType = AITargetType.None;
-	}
-
-	public override void FreeSystem()
-	{
-
-	}
+    }
 }

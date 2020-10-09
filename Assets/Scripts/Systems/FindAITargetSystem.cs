@@ -49,7 +49,6 @@ public class FindAITargetSystem : KodeboldJobSystem
 					{
 						commandBuffer.Clear();
 						CommandProcessSystem.QueueCommandWithTarget<MoveCommandWithTarget>(CommandType.MoveWithTarget, targetData, commandBuffer);
-						UnityEngine.Debug.Log("Request switch to MovingToPosition state");
 					}
 
 					return;
@@ -75,7 +74,6 @@ public class FindAITargetSystem : KodeboldJobSystem
 					{
 						commandBuffer.Clear();
 						CommandProcessSystem.QueueCommandWithTarget<HarvestCommandWithTarget>(CommandType.HarvestWithTarget, targetData, commandBuffer);
-						UnityEngine.Debug.Log("Request switch to MovingToHarvest state");
 					}
 					return;
 				}
@@ -97,7 +95,6 @@ public class FindAITargetSystem : KodeboldJobSystem
 					{
 						commandBuffer.Clear();
 						CommandProcessSystem.QueueCommandWithTarget<AttackCommandWithTarget>(CommandType.AttackWithTarget, targetData, commandBuffer);
-						UnityEngine.Debug.Log("Request switch to MovingToAttack state");
 					}
 
 					return;

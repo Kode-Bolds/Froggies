@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
-[GenerateAuthoringComponent]
-public struct StateTransitionQueue : IBufferElementData
+
+public struct StateTransition : IBufferElementData
 {
+    public Entity entity;
 	public AIState aiState;
 	public TargetData target;
 }

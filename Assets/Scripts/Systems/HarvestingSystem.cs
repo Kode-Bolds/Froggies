@@ -26,7 +26,7 @@ public class HarvestingSystem : KodeboldJobSystem
 		JobHandle movingToHarvestHandle = Entities
 		.WithReadOnly(resourceNodeLookup)
 		.WithAll<MovingToHarvestState>()
-		.ForEach((Entity entity, int entityInQueryIndex, ref Harvester harvester, ref CurrentTarget currentTarget, in DynamicBuffer<Command> commandBuffer, in Translation translation) =>
+		.ForEach((Entity entity, int entityInQueryIndex, ref Harvester harvester, ref CurrentTarget currentTarget, ref DynamicBuffer<Command> commandBuffer, in Translation translation) =>
 		{
 			//if (currentTarget.findTargetOfType != AITargetType.None)
 			//	return;
@@ -46,10 +46,11 @@ public class HarvestingSystem : KodeboldJobSystem
 			//Are we close enough to harvest yet?
 			if (dist <= range)
 			{
-				StateTransitionSystem.RequestStateChange(AIState.Harvesting, ecb, entityInQueryIndex, entity,
-					currentTarget.targetData);
-				CommandProcessSystem.QueueCommandWithTarget<HarvestCommandWithTarget>(CommandType.HarvestWithTarget, currentTarget.targetData, )
-				Debug.Log("Request switch to Harvesting state");
+				//Move the command onto the execution phase
+				Command currentCommand = commandBuffer[0];
+				currentCommand.commandStatus = CommandStatus.ExecutionPhase;
+				commandBuffer[0] = currentCommand;
+				Debug.Log("Begin execution of harvest command");
 
 				//Set type we are harvesting + empty inventory if type is different
 				ResourceNode resource = GetComponent<ResourceNode>(currentTarget.targetData.targetEntity);
@@ -75,7 +76,7 @@ public class HarvestingSystem : KodeboldJobSystem
 			{
 				Debug.Log($"Harvest node {currentTarget.targetData.targetEntity} destroyed while harvesting it, finding nearby resource node of type {currentTarget.targetData.targetType} instead");
 
-				currentTarget.findTargetOfType = currentTarget.targetData.targetType;
+				CommandProcessSystem.QueueCommandWithoutTarget<HarvestCommandWithoutTarget>(CommandType.HarvestWithoutTarget, currentTarget.targetData.targetType, commandBuffer);
 				return;
 			}
 
@@ -119,7 +120,7 @@ public class HarvestingSystem : KodeboldJobSystem
 			//If the resource is empty find a new one
 			if (resourceNode.resourceAmount <= 0)
 			{
-				currentTarget.findTargetOfType = currentTarget.targetData.targetType;
+				CommandProcessSystem.QueueCommandWithoutTarget<HarvestCommandWithoutTarget>(CommandType.HarvestWithoutTarget, currentTarget.targetData.targetType, commandBuffer);
 				return;
 			}
 

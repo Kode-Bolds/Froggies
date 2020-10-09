@@ -20,7 +20,7 @@ public class SelectionBoxRenderer : KodeboldBehaviour
 		
 	}
 
-	private void Update()
+	public override void UpdateBehaviour()
 	{
 		if (m_inputManagementSystem.InputData.mouseInput.leftClickPressed)
 		{

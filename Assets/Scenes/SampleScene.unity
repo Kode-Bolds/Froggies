@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   KodeboldBehaviours:
   - {fileID: 7853641952059455958, guid: 99992b5e0f59b614d978ce625a3da9af, type: 3}
+  - {fileID: 426819377528110083, guid: cab6736a2919fd74ebec7cec644c2887, type: 3}
 --- !u!4 &371896420
 Transform:
   m_ObjectHideFlags: 0
@@ -591,7 +592,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f39c2465c4a6b408cd2b66adb587d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlPoints: {fileID: 7483808661620158970, guid: 8b02b7ef83620ce43b7293af28688a97, type: 3}
+  resources: {fileID: 8298403794239398424, guid: 4577b10244587834495770b63c41819f, type: 3}
+  stateTransitionQueue: {fileID: 6438835506329870834, guid: 7250262a2f43a49b3a01d6c2f14bdc93, type: 3}
 --- !u!4 &1297448084
 Transform:
   m_ObjectHideFlags: 0

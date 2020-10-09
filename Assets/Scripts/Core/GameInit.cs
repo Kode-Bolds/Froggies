@@ -11,6 +11,8 @@ public class GameInit : MonoBehaviour
 	private List<IDependant> m_dependants;
 	private GameStateManager m_gameStateManager;
 
+	private static BehaviourUpdaterSystem m_behaviourUpdaterSystem;
+
 	public List<KodeboldBehaviour> KodeboldBehaviours = new List<KodeboldBehaviour>();
 	//TODO: Add capability for other dependencies such as SO's.
 
@@ -90,6 +92,9 @@ public class GameInit : MonoBehaviour
 
 	[Unity.Entities.UpdateAfter(typeof(PostStateTransitionEntityCommandBufferSystem))]
 	public class PostStateTransitionSystemsGroup : Unity.Entities.ComponentSystemGroup { }
+
+	[Unity.Entities.UpdateAfter(typeof(Unity.Transforms.TransformSystemGroup))]
+	public class BehaviourUpdaterSystemsGroup : Unity.Entities.ComponentSystemGroup { }
 
 
 	private static Unity.Entities.World GetOrCreateWorld()
@@ -190,6 +195,15 @@ public class GameInit : MonoBehaviour
 			transformSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<Unity.Transforms.EndFrameWorldToLocalSystem>());
 		}
 
+		{
+			BehaviourUpdaterSystemsGroup behaviourUpdaterSystemsGroup = world.GetOrCreateSystem<BehaviourUpdaterSystemsGroup>();
+			simSystemGroup.AddSystemToUpdateList(behaviourUpdaterSystemsGroup);
+
+			m_behaviourUpdaterSystem = world.GetOrCreateSystem<BehaviourUpdaterSystem>();
+
+			behaviourUpdaterSystemsGroup.AddSystemToUpdateList(m_behaviourUpdaterSystem);
+		}
+
 		simSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<Unity.Entities.EndSimulationEntityCommandBufferSystem>());
 
 
@@ -229,7 +243,9 @@ public class GameInit : MonoBehaviour
 		gameStateManager = new GameStateManager();
 		dependencies.Add(gameStateManager);
 
-		dependencies.AddRange(CreateBehaviours());
+		List<KodeboldBehaviour> kodeboldBehaviours = CreateBehaviours();
+		m_behaviourUpdaterSystem.SetBehavioursList(kodeboldBehaviours);
+		dependencies.AddRange(kodeboldBehaviours);
 
 		//Get all our created Kodebold systems and add them into the dependencies
 		Unity.Entities.World world = Unity.Entities.World.DefaultGameObjectInjectionWorld;

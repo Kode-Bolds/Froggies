@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.Entities;
-using UnityEngine;
+﻿using Unity.Entities;
 
 [GenerateAuthoringComponent]
 public struct OnStartPrefabData : IComponentData
 {
-    public Entity controlPoints;
+    public Entity resources;
+    public Entity stateTransitionQueue;
 }
