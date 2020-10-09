@@ -27,7 +27,7 @@ public class StateTransitionSystem : KodeboldJobSystem
 
     public override void UpdateSystem()
     {
-        EntityCommandBuffer.Concurrent ecb = m_endInitECBSystem.CreateCommandBuffer().ToConcurrent();
+		EntityCommandBuffer.ParallelWriter ecb = m_endInitECBSystem.CreateCommandBuffer().AsParallelWriter();
         BufferFromEntity<StateTransition> stateTransitionQueueLookup = GetBufferFromEntity<StateTransition>();
         Entity stateTransitionQueueEntity = m_stateTransitionQueueQuery.GetSingletonEntity();
         DynamicBuffer<StateTransition> stateTransitionQueue = stateTransitionQueueLookup[stateTransitionQueueEntity];

@@ -34,7 +34,7 @@ public class DepositSystem : KodeboldJobSystem
 	{
 		ComponentDataFromEntity<Store> storeLookup = GetComponentDataFromEntity<Store>();
 		ComponentDataFromEntity<ResourceNode> resourceNodeLookup = GetComponentDataFromEntity<ResourceNode>();
-		EntityCommandBuffer.Concurrent ecb = m_EndSimECBSystem.CreateCommandBuffer().ToConcurrent();
+		EntityCommandBuffer.ParallelWriter ecb = m_EndSimECBSystem.CreateCommandBuffer().AsParallelWriter();
 		NativeQueue<ResourceTypeValuePair>.ParallelWriter resourceQueueParallel = m_resourcesQueue.AsParallelWriter();
 
 		Dependency = Entities
@@ -100,5 +100,6 @@ public class DepositSystem : KodeboldJobSystem
 
 	public override void FreeSystem()
 	{
+		m_resourcesQueue.Dispose();
 	}
 }

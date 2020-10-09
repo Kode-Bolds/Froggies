@@ -47,7 +47,7 @@ public class FindNearestTargetSystem : KodeboldJobSystem
 
         JobHandle dataQueries = JobHandle.CombineDependencies(resourceQueries, enemyQueries, storeQueries);
 
-        EntityCommandBuffer.Concurrent ecb = m_postFindTargetECBSystem.CreateCommandBuffer().ToConcurrent();
+        EntityCommandBuffer.ParallelWriter ecb = m_postFindTargetECBSystem.CreateCommandBuffer().AsParallelWriter();
 
         Dependency = Entities
         .WithReadOnly(resourceTranslations)

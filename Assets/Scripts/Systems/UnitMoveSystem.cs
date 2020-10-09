@@ -36,7 +36,7 @@ public class UnitMoveSystem : KodeboldJobSystem
 			.WithReadOnly(targetableByAILookup)
 			.ForEach((ref PhysicsVelocity velocity, in LocalToWorld transform, in UnitMove unitMove, in CurrentTarget currentTarget) =>
 			{
-				if (!targetableByAILookup.Exists(currentTarget.targetData.targetEntity))
+				if (!targetableByAILookup.HasComponent(currentTarget.targetData.targetEntity))
 					return;
 #if UNITY_EDITOR
 				debugDrawCommandQueue.Enqueue(new DebugDrawCommand
@@ -58,7 +58,7 @@ public class UnitMoveSystem : KodeboldJobSystem
 		m_debugDrawer.debugDrawDependencies = Dependency;
 #endif
 
-		EntityCommandBuffer.Concurrent ecb = m_endSimECBSystem.CreateCommandBuffer().ToConcurrent();
+		EntityCommandBuffer.ParallelWriter ecb = m_endSimECBSystem.CreateCommandBuffer().AsParallelWriter();
 
 		Dependency = Entities
 			.WithAll<MovingToPositionState>()

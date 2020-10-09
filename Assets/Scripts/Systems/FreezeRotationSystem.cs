@@ -18,7 +18,7 @@ public class FreezeRotationSystem : KodeboldJobSystem
 
 	public override void UpdateSystem()
 	{
-		EntityCommandBuffer.Concurrent ecb = m_entityCommandBuffer.CreateCommandBuffer().ToConcurrent();
+		EntityCommandBuffer.ParallelWriter ecb = m_entityCommandBuffer.CreateCommandBuffer().AsParallelWriter();
 
 		JobHandle freezeRotationJobHandle = Entities.ForEach((Entity entity, int entityInQueryIndex, ref PhysicsMass physicsMass, in FreezeRotation freezeRotation) =>
 		{
