@@ -41,7 +41,7 @@ public class DepositSystem : KodeboldJobSystem
 			.WithReadOnly(storeLookup)
 			.WithReadOnly(resourceNodeLookup)
 			.WithAll<MovingToDepositState>()
-			.ForEach((Entity entity, int entityInQueryIndex, ref Harvester harvester, ref CurrentTarget currentTarget, in Translation translation, in PreviousTarget previousTarget) =>
+			.ForEach((Entity entity, int entityInQueryIndex, ref Harvester harvester, ref CurrentTarget currentTarget, ref DynamicBuffer<Command> commandBuffer, in Translation translation, in PreviousTarget previousTarget) =>
 		{
 			Store storeComponent = storeLookup[currentTarget.targetData.targetEntity];
 
@@ -53,9 +53,8 @@ public class DepositSystem : KodeboldJobSystem
 			{
 				if (harvester.currentlyCarryingAmount == 0)
 				{
-					StateTransitionSystem.RequestStateChange(AIState.Idle, ecb, entityInQueryIndex, entity);
 
-					Debug.Log(" Nothing to deposit, requesting switch to Idle state");
+                    Debug.Log(" Nothing to deposit, empty command queue will return us to Idle state");
 					return;
 				}
 
@@ -67,20 +66,18 @@ public class DepositSystem : KodeboldJobSystem
 				harvester.currentlyCarryingAmount = 0;
 				harvester.currentlyCarryingType = ResourceType.None;
 
-				if (resourceNodeLookup.HasComponent(previousTarget.targetData.targetEntity))
-				{
-					StateTransitionSystem.RequestStateChange(AIState.MovingToHarvest, ecb, entityInQueryIndex, entity, previousTarget.targetData.targetType, previousTarget.targetData.targetPos, previousTarget.targetData.targetEntity);
-
-					Debug.Log($"Requesting switch to MoveToHarvest state for previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType}");
-				}
-				else
-				{
-					currentTarget.findTargetOfType = previousTarget.targetData.targetType;
+                if (resourceNodeLookup.Exists(previousTarget.targetData.targetEntity))
+                {
+                    CommandProcessSystem.QueueCommandWithTarget<HarvestCommandWithTarget>(CommandType.HarvestWithTarget, previousTarget.targetData, commandBuffer);
+                    Debug.Log($"Requesting switch to MoveToHarvest state for previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType}");
+                }
+                else
+                {
+                    CommandProcessSystem.QueueCommandWithoutTarget<HarvestCommandWithoutTarget>(CommandType.HarvestWithoutTarget, previousTarget.targetData.targetType, commandBuffer);
 
 					Debug.Log($"Previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType} no longer exists, requesting switch to MovingToHarvest state");
 				}
 			}
-
 		}).ScheduleParallel(Dependency);
 
 		m_EndSimECBSystem.AddJobHandleForProducer(Dependency);

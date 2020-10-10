@@ -8,6 +8,7 @@ public struct InputData
 {
 	public InputActions inputActions;
 	public MouseInput mouseInput;
+	public KeyboardInput keyboardInput;
 }
 
 public struct InputActions
@@ -34,6 +35,11 @@ public struct MouseInput
 	public bool middleClickPressed;
 	public bool middleClickDown;
 	public bool middleClickReleased;
+}
+
+public struct KeyboardInput
+{
+	public bool shiftDown;
 }
 
 public class InputManagementSystem : KodeboldJobSystem
@@ -77,6 +83,8 @@ public class InputManagementSystem : KodeboldJobSystem
 		m_inputData.mouseInput.middleClickPressed = Mouse.current.middleButton.wasPressedThisFrame;
 		m_inputData.mouseInput.middleClickDown = Mouse.current.middleButton.isPressed;
 		m_inputData.mouseInput.middleClickReleased = Mouse.current.middleButton.wasReleasedThisFrame;
+
+		m_inputData.keyboardInput.shiftDown = Keyboard.current.shiftKey.isPressed;
 	}
 
 	private float2 GetMouseScreenPos()

@@ -62,15 +62,14 @@ public class UnitMoveSystem : KodeboldJobSystem
 
 		Dependency = Entities
 			.WithAll<MovingToPositionState>()
-			.ForEach((Entity entity, int entityInQueryIndex, in Translation translation, in CurrentTarget currentTarget) =>
+			.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer, in Translation translation, in CurrentTarget currentTarget) =>
 		{
 			float distance = math.distance(translation.Value, currentTarget.targetData.targetPos);
 
 			if (distance < 0.1f)
 			{
-				StateTransitionSystem.RequestStateChange(AIState.Idle, ecb, entityInQueryIndex, entity);
-
-				Debug.Log("Reached target position, requesting switch to Idle state");
+				commandBuffer.RemoveAt(0);
+				Debug.Log("Reached target position, move to next command");
 			}
 		}).ScheduleParallel(Dependency);
 

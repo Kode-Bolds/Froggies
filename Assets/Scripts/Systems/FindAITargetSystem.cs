@@ -28,6 +28,7 @@ public class FindAITargetSystem : KodeboldJobSystem
 		{
 			NativeArray<RaycastResult> raycastResult = m_raycastSystem.RaycastResult;
 			EntityCommandBuffer.ParallelWriter ecb = m_endSimECBSystem.CreateCommandBuffer().AsParallelWriter();
+			bool shiftPressed = m_inputManagementSystem.InputData.keyboardInput.shiftDown;
 
 			Dependency = Entities.WithReadOnly(raycastResult).WithAll<SelectedTag>().ForEach((Entity entity, int entityInQueryIndex, ref CurrentTarget currentTarget, ref DynamicBuffer<Command> commandBuffer) =>
 			{
@@ -40,12 +41,15 @@ public class FindAITargetSystem : KodeboldJobSystem
 						targetPos = raycastResult[0].hitPosition
 					};
 
-					ecb.AddComponent(entityInQueryIndex, entity, new SwitchToState { aiState = AIState.MovingToPosition, target = targetData });
-
-					UnityEngine.Debug.Log("Request switch to MovingToPosition state");
-
-					currentTarget.findTargetOfType = AITargetType.None;
-					commandBuffer.Clear();
+					if (shiftPressed)
+					{
+						CommandProcessSystem.QueueCommandWithTarget<MoveCommandWithTarget>(CommandType.MoveWithTarget, targetData, commandBuffer);
+					}
+					else
+					{
+						commandBuffer.Clear();
+						CommandProcessSystem.QueueCommandWithTarget<MoveCommandWithTarget>(CommandType.MoveWithTarget, targetData, commandBuffer);
+					}
 
 					return;
 				}
@@ -61,14 +65,16 @@ public class FindAITargetSystem : KodeboldJobSystem
 						targetType = target.targetType,
 						targetPos = targetPos.Value
 					};
-
-					ecb.AddComponent(entityInQueryIndex, entity, new SwitchToState { aiState = AIState.MovingToHarvest, target = targetData }); 
-
-					UnityEngine.Debug.Log("Request switch to MovingToHarvest state");
-
-					currentTarget.findTargetOfType = AITargetType.None;
-					commandBuffer.Clear();
-
+					
+					if (shiftPressed)
+					{
+						CommandProcessSystem.QueueCommandWithTarget<HarvestCommandWithTarget>(CommandType.HarvestWithTarget, targetData, commandBuffer);
+					}
+					else
+					{
+						commandBuffer.Clear();
+						CommandProcessSystem.QueueCommandWithTarget<HarvestCommandWithTarget>(CommandType.HarvestWithTarget, targetData, commandBuffer);
+					}
 					return;
 				}
 
@@ -80,16 +86,20 @@ public class FindAITargetSystem : KodeboldJobSystem
 						targetType = target.targetType,
 						targetPos = targetPos.Value
 					};
-
-					ecb.AddComponent(entityInQueryIndex, entity, new SwitchToState { aiState = AIState.MovingToAttack, target = targetData });
-
-					UnityEngine.Debug.Log("Request switch to MovingToAttack state");
-
-					currentTarget.findTargetOfType = AITargetType.None;
-					commandBuffer.Clear();
+					
+					if (shiftPressed)
+					{
+						CommandProcessSystem.QueueCommandWithTarget<AttackCommandWithTarget>(CommandType.AttackWithTarget, targetData, commandBuffer);
+					}
+					else
+					{
+						commandBuffer.Clear();
+						CommandProcessSystem.QueueCommandWithTarget<AttackCommandWithTarget>(CommandType.AttackWithTarget, targetData, commandBuffer);
+					}
 
 					return;
 				}
+
 			}).ScheduleParallel(Dependency);
 
 			m_endSimECBSystem.AddJobHandleForProducer(Dependency);
