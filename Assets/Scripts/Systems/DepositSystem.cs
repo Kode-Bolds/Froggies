@@ -66,16 +66,19 @@ public class DepositSystem : KodeboldJobSystem
 				harvester.currentlyCarryingAmount = 0;
 				harvester.currentlyCarryingType = ResourceType.None;
 
-                if (resourceNodeLookup.Exists(previousTarget.targetData.targetEntity))
+				//Complete the command as this command doesn't have an execution phase.
+				CommandProcessSystem.CompleteCommand(ref commandBuffer);
+
+				if (resourceNodeLookup.HasComponent(previousTarget.targetData.targetEntity))
                 {
-                    CommandProcessSystem.QueueCommandWithTarget<HarvestCommandWithTarget>(CommandType.HarvestWithTarget, previousTarget.targetData, commandBuffer);
+                    CommandProcessSystem.QueueCommand(CommandType.Harvest, commandBuffer, previousTarget.targetData, true);
                     Debug.Log($"Requesting switch to MoveToHarvest state for previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType}");
                 }
                 else
                 {
-                    CommandProcessSystem.QueueCommandWithoutTarget<HarvestCommandWithoutTarget>(CommandType.HarvestWithoutTarget, previousTarget.targetData.targetType, commandBuffer);
+					Debug.Log($"Previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType} no longer exists, queueing new harvest command.");
 
-					Debug.Log($"Previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType} no longer exists, requesting switch to MovingToHarvest state");
+					CommandProcessSystem.QueueCommand(CommandType.Harvest, commandBuffer, new TargetData { targetType = previousTarget.targetData.targetType }, true);
 				}
 			}
 		}).ScheduleParallel(Dependency);

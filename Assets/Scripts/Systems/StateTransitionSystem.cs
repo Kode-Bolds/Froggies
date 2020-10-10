@@ -8,7 +8,7 @@ public struct SwitchToState : IComponentData
     public TargetData target;
 }
 
-[UpdateAfter(typeof(GameInit.PreStateTransitionEntityCommandBufferSystem))]
+[UpdateAfter(typeof(CommandProcessSystem))]
 public class StateTransitionSystem : KodeboldJobSystem
 {
     private GameInit.PostStateTransitionEntityCommandBufferSystem m_endInitECBSystem;
@@ -30,10 +30,11 @@ public class StateTransitionSystem : KodeboldJobSystem
 		EntityCommandBuffer.ParallelWriter ecb = m_endInitECBSystem.CreateCommandBuffer().AsParallelWriter();
         BufferFromEntity<StateTransition> stateTransitionQueueLookup = GetBufferFromEntity<StateTransition>();
         Entity stateTransitionQueueEntity = m_stateTransitionQueueQuery.GetSingletonEntity();
-        DynamicBuffer<StateTransition> stateTransitionQueue = stateTransitionQueueLookup[stateTransitionQueueEntity];
 
         Entities.ForEach((Entity entity, int entityInQueryIndex, ref CurrentTarget target, ref PreviousTarget previousTarget) =>
         {
+            DynamicBuffer<StateTransition> stateTransitionQueue = stateTransitionQueueLookup[stateTransitionQueueEntity];
+
             for (int i = 0; i < stateTransitionQueue.Length; ++i)
             {
                 StateTransition stateTransition = stateTransitionQueue[i];

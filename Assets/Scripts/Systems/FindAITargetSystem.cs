@@ -43,12 +43,12 @@ public class FindAITargetSystem : KodeboldJobSystem
 
 					if (shiftPressed)
 					{
-						CommandProcessSystem.QueueCommandWithTarget<MoveCommandWithTarget>(CommandType.MoveWithTarget, targetData, commandBuffer);
+						CommandProcessSystem.QueueCommand(CommandType.Move, commandBuffer, targetData, false);
 					}
 					else
 					{
 						commandBuffer.Clear();
-						CommandProcessSystem.QueueCommandWithTarget<MoveCommandWithTarget>(CommandType.MoveWithTarget, targetData, commandBuffer);
+						CommandProcessSystem.QueueCommand(CommandType.Move, commandBuffer, targetData, true);
 					}
 
 					return;
@@ -68,12 +68,12 @@ public class FindAITargetSystem : KodeboldJobSystem
 					
 					if (shiftPressed)
 					{
-						CommandProcessSystem.QueueCommandWithTarget<HarvestCommandWithTarget>(CommandType.HarvestWithTarget, targetData, commandBuffer);
+						CommandProcessSystem.QueueCommand(CommandType.Harvest, commandBuffer, targetData, false);
 					}
 					else
 					{
 						commandBuffer.Clear();
-						CommandProcessSystem.QueueCommandWithTarget<HarvestCommandWithTarget>(CommandType.HarvestWithTarget, targetData, commandBuffer);
+						CommandProcessSystem.QueueCommand(CommandType.Harvest, commandBuffer, targetData, true);
 					}
 					return;
 				}
@@ -89,12 +89,12 @@ public class FindAITargetSystem : KodeboldJobSystem
 					
 					if (shiftPressed)
 					{
-						CommandProcessSystem.QueueCommandWithTarget<AttackCommandWithTarget>(CommandType.AttackWithTarget, targetData, commandBuffer);
+						CommandProcessSystem.QueueCommand(CommandType.Attack, commandBuffer, targetData, false);
 					}
 					else
 					{
 						commandBuffer.Clear();
-						CommandProcessSystem.QueueCommandWithTarget<AttackCommandWithTarget>(CommandType.AttackWithTarget, targetData, commandBuffer);
+						CommandProcessSystem.QueueCommand(CommandType.Attack, commandBuffer, targetData, true);
 					}
 
 					return;
