@@ -3,7 +3,6 @@ using Unity.Mathematics;
 
 public struct CurrentTarget : IComponentData
 {
-	public AITargetType findTargetOfType;
 	public TargetData targetData;
 }
 

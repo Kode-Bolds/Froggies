@@ -28,14 +28,11 @@ public class HarvestingSystem : KodeboldJobSystem
 		.WithAll<MovingToHarvestState>()
 		.ForEach((Entity entity, int entityInQueryIndex, ref Harvester harvester, ref CurrentTarget currentTarget, ref DynamicBuffer<Command> commandBuffer, in Translation translation) =>
 		{
-			//if (currentTarget.findTargetOfType != AITargetType.None)
-			//	return;
-
 			if (!resourceNodeLookup.TryGetComponentDataFromEntity(currentTarget.targetData.targetEntity, out ResourceNode resourceNode))
 			{
 				Debug.Log($"Harvest node {currentTarget.targetData.targetEntity} destroyed when moving to it, finding nearby resource node of type {currentTarget.targetData.targetType} instead");
 
-				CommandProcessSystem.QueueCommandWithoutTarget<HarvestCommandWithoutTarget>(CommandType.HarvestWithoutTarget, currentTarget.targetData.targetType, commandBuffer);
+				CommandProcessSystem.QueueCommand(CommandType.Harvest, commandBuffer, new TargetData { targetType = currentTarget.targetData.targetType }, true);
 				return;
 			}
 
@@ -47,10 +44,7 @@ public class HarvestingSystem : KodeboldJobSystem
 			if (dist <= range)
 			{
 				//Move the command onto the execution phase
-				Command currentCommand = commandBuffer[0];
-				currentCommand.commandStatus = CommandStatus.ExecutionPhase;
-				commandBuffer[0] = currentCommand;
-				Debug.Log("Begin execution of harvest command");
+				CommandProcessSystem.ExecuteCommand(ref commandBuffer);
 
 				//Set type we are harvesting + empty inventory if type is different
 				ResourceNode resource = GetComponent<ResourceNode>(currentTarget.targetData.targetEntity);
@@ -76,7 +70,10 @@ public class HarvestingSystem : KodeboldJobSystem
 			{
 				Debug.Log($"Harvest node {currentTarget.targetData.targetEntity} destroyed while harvesting it, finding nearby resource node of type {currentTarget.targetData.targetType} instead");
 
-				CommandProcessSystem.QueueCommandWithoutTarget<HarvestCommandWithoutTarget>(CommandType.HarvestWithoutTarget, currentTarget.targetData.targetType, commandBuffer);
+				//Complete the harvest command.
+				CommandProcessSystem.CompleteCommand(ref commandBuffer);
+
+				CommandProcessSystem.QueueCommand(CommandType.Harvest, commandBuffer, new TargetData { targetType = currentTarget.targetData.targetType }, true);
 				return;
 			}
 
@@ -113,14 +110,20 @@ public class HarvestingSystem : KodeboldJobSystem
 			//If we are at capacity go back to deposit
 			if (harvester.currentlyCarryingAmount >= harvester.carryCapacity)
 			{
-				CommandProcessSystem.QueueCommandWithoutTarget<DepositCommandWithoutTarget>(CommandType.DepositWithoutTarget, AITargetType.Store, commandBuffer);
+				//Complete the harvest command.
+				CommandProcessSystem.CompleteCommand(ref commandBuffer);
+
+				CommandProcessSystem.QueueCommand(CommandType.Deposit, commandBuffer, new TargetData { targetType = AITargetType.Store }, true);
 				return;
 			}
 
 			//If the resource is empty find a new one
 			if (resourceNode.resourceAmount <= 0)
 			{
-				CommandProcessSystem.QueueCommandWithoutTarget<HarvestCommandWithoutTarget>(CommandType.HarvestWithoutTarget, currentTarget.targetData.targetType, commandBuffer);
+				//Complete the harvest command.
+				CommandProcessSystem.CompleteCommand(ref commandBuffer);
+
+				CommandProcessSystem.QueueCommand(CommandType.Harvest, commandBuffer, new TargetData { targetType = currentTarget.targetData.targetType }, true);
 				return;
 			}
 

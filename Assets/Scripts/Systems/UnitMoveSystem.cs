@@ -25,7 +25,7 @@ public class UnitMoveSystem : KodeboldJobSystem
 	{
 		ComponentDataFromEntity<TargetableByAI> targetableByAILookup = GetComponentDataFromEntity<TargetableByAI>(true);
 
-		float deltaTime = Time.DeltaTime;
+		float deltaTime = Time.fixedDeltaTime;
 
 #if UNITY_EDITOR
 		Dependency = JobHandle.CombineDependencies(Dependency, m_debugDrawer.debugDrawDependencies);
@@ -34,6 +34,8 @@ public class UnitMoveSystem : KodeboldJobSystem
 #endif
 		Dependency = Entities
 			.WithReadOnly(targetableByAILookup)
+			.WithAny<MovingToAttackState, MovingToDepositState, MovingToHarvestState>()
+			.WithAny<MovingToPositionState>()
 			.ForEach((ref PhysicsVelocity velocity, in LocalToWorld transform, in UnitMove unitMove, in CurrentTarget currentTarget) =>
 			{
 				if (!targetableByAILookup.HasComponent(currentTarget.targetData.targetEntity))

@@ -86,9 +86,6 @@ public class GameInit : MonoBehaviour
 	[Unity.Entities.UpdateAfter(typeof(Unity.Physics.Systems.EndFramePhysicsSystem))]
 	public class PostPhysicsSystemsGroup : Unity.Entities.ComponentSystemGroup { }
 
-	[Unity.Entities.UpdateAfter(typeof(FindNearestTargetSystem))]
-	public class PreStateTransitionEntityCommandBufferSystem : Unity.Entities.EntityCommandBufferSystem { }
-
 	[Unity.Entities.UpdateAfter(typeof(StateTransitionSystem))]
 	public class PostStateTransitionEntityCommandBufferSystem : Unity.Entities.EntityCommandBufferSystem { }
 
@@ -161,8 +158,6 @@ public class GameInit : MonoBehaviour
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<RaycastSystem>());
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<FindAITargetSystem>());
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<CommandProcessSystem>());
-			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<FindNearestTargetSystem>());
-			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<PreStateTransitionEntityCommandBufferSystem>());
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<StateTransitionSystem>());
 			postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<PostStateTransitionEntityCommandBufferSystem>());
 
