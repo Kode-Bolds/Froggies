@@ -11,7 +11,6 @@ public class SpawningSystem : KodeboldJobSystem
 	private InputManagementSystem m_inputManagementSystem;
 	private RaycastSystem m_raycastSystem;
 	private EndSimulationEntityCommandBufferSystem m_entityCommandBuffer;
-	private bool m_spawnedStartupEntities;
 
 	public override void GetSystemDependencies(Dependencies dependencies)
 	{
@@ -26,19 +25,6 @@ public class SpawningSystem : KodeboldJobSystem
 
 	public override void UpdateSystem()
 	{
-		if(!m_spawnedStartupEntities)
-		{
-			EntityCommandBuffer ecb = m_entityCommandBuffer.CreateCommandBuffer();
-
-			Dependency = Entities.ForEach((ref OnStartPrefabData onStartPrefabData) =>
-			{
-				ecb.Instantiate(onStartPrefabData.resources);
-			}).Schedule(Dependency);
-
-			m_entityCommandBuffer.AddJobHandleForProducer(Dependency);
-			m_spawnedStartupEntities = true;
-		}
-
 		Dependency = JobHandle.CombineDependencies(Dependency, m_raycastSystem.RaycastSystemDependency);
 
 		if (m_inputManagementSystem.InputData.inputActions.spawn)

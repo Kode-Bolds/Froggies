@@ -33,6 +33,14 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ShiftQueue"",
+                    ""type"": ""Button"",
+                    ""id"": ""6068a8ba-10c2-4dfa-9172-05ec5fc226b1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -101,6 +109,17 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                     ""action"": ""Spawn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""856fb138-e765-49c1-a628-2faa58ee1506"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShiftQueue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -111,6 +130,7 @@ public class @ControlScheme : IInputActionCollection, IDisposable
         m_Default = asset.FindActionMap("Default", throwIfNotFound: true);
         m_Default_CameraMovement = m_Default.FindAction("CameraMovement", throwIfNotFound: true);
         m_Default_Spawn = m_Default.FindAction("Spawn", throwIfNotFound: true);
+        m_Default_ShiftQueue = m_Default.FindAction("ShiftQueue", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -162,12 +182,14 @@ public class @ControlScheme : IInputActionCollection, IDisposable
     private IDefaultActions m_DefaultActionsCallbackInterface;
     private readonly InputAction m_Default_CameraMovement;
     private readonly InputAction m_Default_Spawn;
+    private readonly InputAction m_Default_ShiftQueue;
     public struct DefaultActions
     {
         private @ControlScheme m_Wrapper;
         public DefaultActions(@ControlScheme wrapper) { m_Wrapper = wrapper; }
         public InputAction @CameraMovement => m_Wrapper.m_Default_CameraMovement;
         public InputAction @Spawn => m_Wrapper.m_Default_Spawn;
+        public InputAction @ShiftQueue => m_Wrapper.m_Default_ShiftQueue;
         public InputActionMap Get() { return m_Wrapper.m_Default; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -183,6 +205,9 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                 @Spawn.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnSpawn;
                 @Spawn.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnSpawn;
                 @Spawn.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnSpawn;
+                @ShiftQueue.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnShiftQueue;
+                @ShiftQueue.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnShiftQueue;
+                @ShiftQueue.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnShiftQueue;
             }
             m_Wrapper.m_DefaultActionsCallbackInterface = instance;
             if (instance != null)
@@ -193,6 +218,9 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                 @Spawn.started += instance.OnSpawn;
                 @Spawn.performed += instance.OnSpawn;
                 @Spawn.canceled += instance.OnSpawn;
+                @ShiftQueue.started += instance.OnShiftQueue;
+                @ShiftQueue.performed += instance.OnShiftQueue;
+                @ShiftQueue.canceled += instance.OnShiftQueue;
             }
         }
     }
@@ -201,5 +229,6 @@ public class @ControlScheme : IInputActionCollection, IDisposable
     {
         void OnCameraMovement(InputAction.CallbackContext context);
         void OnSpawn(InputAction.CallbackContext context);
+        void OnShiftQueue(InputAction.CallbackContext context);
     }
 }
