@@ -49,6 +49,9 @@ public struct DebugDrawSphereData : IDebugDrawCommandData
 public class DebugDrawer : KodeboldBehaviour
 {
 	public NativeQueue<DebugDrawCommand> DebugDrawCommandQueue => m_debugDrawCommandQueue;
+	public NativeQueue<DebugDrawCommand>.ParallelWriter DebugDrawCommandQueueParallel => m_debugDrawCommandQueueParallel;
+
+	private NativeQueue<DebugDrawCommand>.ParallelWriter m_debugDrawCommandQueueParallel;
 	private NativeQueue<DebugDrawCommand> m_debugDrawCommandQueue;
 
 	public JobHandle debugDrawDependencies;
@@ -61,6 +64,7 @@ public class DebugDrawer : KodeboldBehaviour
 	public override void InitBehaviour()
 	{
 		m_debugDrawCommandQueue = new NativeQueue<DebugDrawCommand>(Allocator.Persistent);
+		m_debugDrawCommandQueueParallel = m_debugDrawCommandQueue.AsParallelWriter();
 	}
 
 	public override void UpdateBehaviour()

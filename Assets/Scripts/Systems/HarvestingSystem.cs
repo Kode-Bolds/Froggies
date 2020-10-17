@@ -32,6 +32,8 @@ public class HarvestingSystem : KodeboldJobSystem
 			{
 				Debug.Log($"Harvest node {currentTarget.targetData.targetEntity} destroyed when moving to it, finding nearby resource node of type {currentTarget.targetData.targetType} instead");
 
+				CommandProcessSystem.CompleteCommand(ref commandBuffer);
+
 				CommandProcessSystem.QueueCommand(CommandType.Harvest, commandBuffer, new TargetData { targetType = currentTarget.targetData.targetType }, true);
 				return;
 			}

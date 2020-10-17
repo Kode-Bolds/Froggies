@@ -30,13 +30,13 @@ public class UnitMoveSystem : KodeboldJobSystem
 #if UNITY_EDITOR
 		Dependency = JobHandle.CombineDependencies(Dependency, m_debugDrawer.debugDrawDependencies);
 
-		NativeQueue<DebugDrawCommand>.ParallelWriter debugDrawCommandQueue = m_debugDrawer.DebugDrawCommandQueue.AsParallelWriter();
+		NativeQueue<DebugDrawCommand>.ParallelWriter debugDrawCommandQueue = m_debugDrawer.DebugDrawCommandQueueParallel;
 #endif
 		Dependency = Entities
 			.WithReadOnly(targetableByAILookup)
 			.WithAny<MovingToAttackState, MovingToDepositState, MovingToHarvestState>()
 			.WithAny<MovingToPositionState>()
-			.ForEach((ref PhysicsVelocity velocity, in LocalToWorld transform, in UnitMove unitMove, in CurrentTarget currentTarget) =>
+			.ForEach((ref PhysicsVelocity velocity, ref LocalToWorld transform, ref Rotation rotation, ref UnitMove unitMove, in CurrentTarget currentTarget, in PreviousTarget previousTarget) =>
 			{
 				if (!targetableByAILookup.HasComponent(currentTarget.targetData.targetEntity))
 					return;
@@ -52,7 +52,39 @@ public class UnitMoveSystem : KodeboldJobSystem
 					}
 				});
 #endif
-				velocity.Linear = math.normalize(currentTarget.targetData.targetPos - transform.Position) * unitMove.moveSpeed * deltaTime;
+
+				float3 pos = transform.Position;
+				pos.y = 0;
+
+				float3 targetPos = currentTarget.targetData.targetPos;
+				targetPos.y = 0;
+
+				float3 targetDir = math.normalize(targetPos - pos);
+
+				float dot = math.dot(targetDir, transform.Forward);
+				float angle = math.acos(dot);
+
+				if (angle > 0.1f)
+				{
+					if (!unitMove.rotating || !previousTarget.targetData.targetPos.Equals(currentTarget.targetData.targetPos))
+					{
+						unitMove.rotating = true;
+
+						if (math.dot(targetDir, transform.Right) < 0)
+							angle = -angle;
+
+						unitMove.angle = angle;
+					}
+
+					rotation.Value = math.mul(rotation.Value, quaternion.RotateY(unitMove.angle * unitMove.turnRate * deltaTime));
+					transform.Value = new float4x4(rotation.Value, transform.Position);
+				}
+				else if (unitMove.rotating)
+				{
+					unitMove.rotating = false;
+				}
+
+				velocity.Linear = targetDir * unitMove.moveSpeed * deltaTime;
 				velocity.Linear.y = 0;
 			}).ScheduleParallel(Dependency);
 
@@ -64,12 +96,14 @@ public class UnitMoveSystem : KodeboldJobSystem
 
 		Dependency = Entities
 			.WithAll<MovingToPositionState>()
-			.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer, in Translation translation, in CurrentTarget currentTarget) =>
+			.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer, ref UnitMove unitMove, ref PhysicsVelocity physicsVelocity, in Translation translation, in CurrentTarget currentTarget) =>
 		{
 			float distance = math.distance(translation.Value, currentTarget.targetData.targetPos);
 
-			if (distance < 0.1f)
+			if (distance < 1.0f)
 			{
+				unitMove.rotating = false;
+				physicsVelocity.Linear = 0;
 				commandBuffer.RemoveAt(0);
 				Debug.Log("Reached target position, move to next command");
 			}

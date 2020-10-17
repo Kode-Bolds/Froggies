@@ -11,7 +11,7 @@ public struct SwitchToState : IComponentData
 [UpdateAfter(typeof(CommandProcessSystem))]
 public class StateTransitionSystem : KodeboldJobSystem
 {
-    private GameInit.PostStateTransitionEntityCommandBufferSystem m_endInitECBSystem;
+    private GameInit.PostStateTransitionEntityCommandBufferSystem m_postStateTransitionECBSystem;
     private EntityQuery m_stateTransitionQueueQuery;
 
     public override void GetSystemDependencies(Dependencies dependencies)
@@ -21,13 +21,13 @@ public class StateTransitionSystem : KodeboldJobSystem
 
     public override void InitSystem()
     {
-        m_endInitECBSystem = World.GetOrCreateSystem<GameInit.PostStateTransitionEntityCommandBufferSystem>();
+        m_postStateTransitionECBSystem = World.GetOrCreateSystem<GameInit.PostStateTransitionEntityCommandBufferSystem>();
         m_stateTransitionQueueQuery = GetEntityQuery(ComponentType.ReadWrite<StateTransition>());
     }
 
     public override void UpdateSystem()
     {
-		EntityCommandBuffer.ParallelWriter ecb = m_endInitECBSystem.CreateCommandBuffer().AsParallelWriter();
+		EntityCommandBuffer.ParallelWriter ecb = m_postStateTransitionECBSystem.CreateCommandBuffer().AsParallelWriter();
         BufferFromEntity<StateTransition> stateTransitionQueueLookup = GetBufferFromEntity<StateTransition>();
         Entity stateTransitionQueueEntity = m_stateTransitionQueueQuery.GetSingletonEntity();
 
@@ -114,7 +114,7 @@ public class StateTransitionSystem : KodeboldJobSystem
             }
         }).Schedule();
 
-        m_endInitECBSystem.AddJobHandleForProducer(Dependency);
+        m_postStateTransitionECBSystem.AddJobHandleForProducer(Dependency);
     }
 
     public override void FreeSystem()

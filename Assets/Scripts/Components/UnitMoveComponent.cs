@@ -6,6 +6,9 @@ using UnityEngine;
 public struct UnitMove : IComponentData
 {
     public float moveSpeed;
+    public bool rotating;
+    public float angle;
+    public float turnRate;
 }
 
 public class UnitMoveComponent : MonoBehaviour, IConvertGameObjectToEntity
