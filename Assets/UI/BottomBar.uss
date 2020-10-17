@@ -1,0 +1,81 @@
+.item {
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    background-color: rgb(53, 53, 53);
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    position: relative;
+    bottom: 0;
+}
+
+.button {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.unit {
+    width: 45px;
+    height: 45px;
+    background-image: url('/Assets/Textures/264212_animal_512x512.png');
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.unitGrid {
+    flex-direction: row;
+    width: 75%;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    -unity-text-align: upper-left;
+}
+
+.buttonGrid {
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    -unity-text-align: upper-left;
+}
+
+.button {
+    width: 30%;
+    height: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    max-height: -3px;
+    color: rgba(255, 255, 255, 255);
+    background-color: rgba(29, 29, 29, 255);
+}
