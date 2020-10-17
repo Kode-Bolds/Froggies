@@ -1,0 +1,17 @@
+.TopBar {
+    height: 5%;
+    background-color: rgba(37, 44, 79, 255);
+}
+
+.Resource {
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 5%;
+    flex-wrap: nowrap;
+    height: 100%;
+    margin-left: 2%;
+    margin-right: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
