@@ -7,7 +7,7 @@ public class FindAITargetSystem : KodeboldJobSystem
 {
 	private InputManagementSystem m_inputManagementSystem;
 	private RaycastSystem m_raycastSystem;
-	private EndSimulationEntityCommandBufferSystem m_endSimECBSystem;
+	private GameInit.PostStateTransitionEntityCommandBufferSystem m_postStateTransitionECBSystem;
 
 	public override void GetSystemDependencies(Dependencies dependencies)
 	{
@@ -17,7 +17,7 @@ public class FindAITargetSystem : KodeboldJobSystem
 
 	public override void InitSystem()
 	{
-		m_endSimECBSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+		m_postStateTransitionECBSystem = World.GetOrCreateSystem<GameInit.PostStateTransitionEntityCommandBufferSystem>();
 	}
 
 	public override void UpdateSystem()
@@ -27,7 +27,7 @@ public class FindAITargetSystem : KodeboldJobSystem
 		if (m_inputManagementSystem.InputData.mouseInput.rightClickPressed)
 		{
 			NativeArray<RaycastResult> raycastResult = m_raycastSystem.RaycastResult;
-			EntityCommandBuffer.ParallelWriter ecb = m_endSimECBSystem.CreateCommandBuffer().AsParallelWriter();
+			EntityCommandBuffer.ParallelWriter ecb = m_postStateTransitionECBSystem.CreateCommandBuffer().AsParallelWriter();
 			bool shiftPressed = m_inputManagementSystem.InputData.keyboardInput.shiftDown;
 
 			Dependency = Entities.WithReadOnly(raycastResult).WithAll<SelectedTag>().ForEach((Entity entity, int entityInQueryIndex, ref CurrentTarget currentTarget, ref DynamicBuffer<Command> commandBuffer) =>
@@ -102,7 +102,7 @@ public class FindAITargetSystem : KodeboldJobSystem
 
 			}).ScheduleParallel(Dependency);
 
-			m_endSimECBSystem.AddJobHandleForProducer(Dependency);
+			m_postStateTransitionECBSystem.AddJobHandleForProducer(Dependency);
 		}
 	}
 

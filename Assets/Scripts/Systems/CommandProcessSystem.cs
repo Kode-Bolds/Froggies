@@ -63,7 +63,7 @@ public class CommandProcessSystem : KodeboldJobSystem
 #if UNITY_EDITOR
 		Dependency = JobHandle.CombineDependencies(Dependency, m_debugDrawer.debugDrawDependencies);
 
-		NativeQueue<DebugDrawCommand>.ParallelWriter debugDrawCommandQueue = m_debugDrawer.DebugDrawCommandQueue.AsParallelWriter();
+		NativeQueue<DebugDrawCommand>.ParallelWriter debugDrawCommandQueue = m_debugDrawer.DebugDrawCommandQueueParallel;
 #endif
 
 		Dependency = Entities
@@ -100,7 +100,7 @@ public class CommandProcessSystem : KodeboldJobSystem
 			}
 
 #if UNITY_EDITOR
-			for(int commandIndex = 1; commandIndex < commandBuffer.Length; commandIndex++)
+			for (int commandIndex = 1; commandIndex < commandBuffer.Length; commandIndex++)
 			{
 				debugDrawCommandQueue.Enqueue(new DebugDrawCommand
 				{

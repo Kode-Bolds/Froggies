@@ -112,6 +112,7 @@ public class GameInit : MonoBehaviour
 		initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<CameraSyncSystem>());
 		initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<InputManagementSystem>());
 		initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<InstantiationSystem>());
+		initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SpawningSystem>());
 		initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<Unity.Entities.RetainBlobAssetSystem>());
 		initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<Unity.Entities.UpdateWorldTimeSystem>());
 
@@ -165,7 +166,7 @@ public class GameInit : MonoBehaviour
 				PostStateTransitionSystemsGroup postStateTransitionSystemsGroup = world.GetOrCreateSystem<PostStateTransitionSystemsGroup>();
 				postPhysicsSystemsGroup.AddSystemToUpdateList(postStateTransitionSystemsGroup);
 
-				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SpawningSystem>());
+				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SpawningQueueSystem>());
 				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SelectionSystem>());
 				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<CameraControlSystem>());
 				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<HarvestingSystem>());

@@ -2,52 +2,47 @@
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
-using Unity.Physics;
 using Unity.Transforms;
 
-[AlwaysUpdateSystem]
 public class SpawningSystem : KodeboldJobSystem
 {
-	private InputManagementSystem m_inputManagementSystem;
-	private RaycastSystem m_raycastSystem;
-	private EndSimulationEntityCommandBufferSystem m_entityCommandBuffer;
+	private EndInitializationEntityCommandBufferSystem m_entityCommandBuffer;
+
+	private SpawningQueueSystem m_spawningQueueSystem;
 
 	public override void GetSystemDependencies(Dependencies dependencies)
 	{
-		m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();
-		m_raycastSystem = dependencies.GetDependency<RaycastSystem>();
+		m_spawningQueueSystem = dependencies.GetDependency<SpawningQueueSystem>();
 	}
 
 	public override void InitSystem()
 	{
-		m_entityCommandBuffer = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+		m_entityCommandBuffer = World.GetOrCreateSystem<EndInitializationEntityCommandBufferSystem>();
 	}
 
 	public override void UpdateSystem()
 	{
-		Dependency = JobHandle.CombineDependencies(Dependency, m_raycastSystem.RaycastSystemDependency);
+		Dependency = JobHandle.CombineDependencies(Dependency, m_spawningQueueSystem.spawnQueueDependencies);
 
-		if (m_inputManagementSystem.InputData.inputActions.spawn)
+		EntityCommandBuffer ecb = m_entityCommandBuffer.CreateCommandBuffer();
+		NativeQueue<Translation> spawnQueue = m_spawningQueueSystem.spawnQueue;
+
+		Dependency = Entities.ForEach((ref RuntimePrefabData runtimePrefabData) =>
 		{
-			EntityCommandBuffer ecb = m_entityCommandBuffer.CreateCommandBuffer();
-			NativeArray<RaycastResult> raycastResult = m_raycastSystem.RaycastResult;
-
-			Dependency = Entities.WithReadOnly(raycastResult).ForEach((ref RuntimePrefabData runtimePrefabData) =>
+			Translation translation;
+			while (spawnQueue.TryDequeue(out translation))
 			{
-				if (raycastResult[0].raycastTargetType == RaycastTargetType.Ground)
-				{
-					Rotation rotation = GetComponent<Rotation>(runtimePrefabData.aiDrone);
-					Translation translation = new Translation { Value = raycastResult[0].hitPosition + new float3(0, 1, 0) };
+				Rotation rotation = GetComponent<Rotation>(runtimePrefabData.aiDrone);
 
-					Entity e = ecb.Instantiate(runtimePrefabData.aiDrone);
+				Entity e = ecb.Instantiate(runtimePrefabData.aiDrone);
 
-					ecb.SetComponent(e, translation);
-					ecb.SetComponent(e, new LocalToWorld { Value = new float4x4(rotation.Value, translation.Value) });
-				}
-			}).Schedule(Dependency);
+				ecb.SetComponent(e, translation);
+				ecb.SetComponent(e, new LocalToWorld { Value = new float4x4(rotation.Value, translation.Value) });
 
-			m_entityCommandBuffer.AddJobHandleForProducer(Dependency);
-		}
+			}
+		}).Schedule(Dependency);
+
+		m_entityCommandBuffer.AddJobHandleForProducer(Dependency);
 	}
 
 	public override void FreeSystem()

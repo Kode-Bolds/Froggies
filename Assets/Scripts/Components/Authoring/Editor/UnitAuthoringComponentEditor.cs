@@ -31,6 +31,7 @@ public class UnitAuthoringComponentEditor : Editor
 		{
 			EditorGUI.indentLevel++;
 			unitAuthoring.unitMove.moveSpeed = EditorGUILayout.FloatField("Movement Speed", unitAuthoring.unitMove.moveSpeed);
+			unitAuthoring.unitMove.turnRate = EditorGUILayout.FloatField("Turn Rate", unitAuthoring.unitMove.turnRate);
 			EditorGUI.indentLevel--;
 		}
 
