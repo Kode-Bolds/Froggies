@@ -25,4 +25,26 @@
     padding-right: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
+    color: rgb(255, 255, 255);
+    align-items: center;
+    width: auto;
+    justify-content: center;
+    -unity-text-align: upper-center;
+}
+
+.resourceText {
+    color: rgba(217, 217, 217, 255);
+    -unity-font-style: bold;
+    -unity-text-align: middle-left;
+    font-size: 20px;
+}
+
+.resourceIcon {
+    background-image: url('/Packages/com.unity.entities/Unity.Entities.Editor/Styles/ReadOnly.png');
+    width: 25px;
+    height: 20px;
+    -unity-text-align: middle-left;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
 }

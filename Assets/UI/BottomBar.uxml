@@ -3,38 +3,23 @@
         <Style src="BottomBar.uss" />
         <ui:VisualElement name="MiniMap" class="item" style="width: 25%; margin-left: 0; margin-right: 10px;">
             <ui:VisualElement name="Title" style="height: 20%; justify-content: flex-start; align-items: center;">
-                <ui:Label text="Minimap" display-tooltip-when-elided="True" name="Label" style="font-size: 30px; -unity-text-align: upper-center; color: rgba(255, 255, 255, 255);" />
+                <ui:Label text="Minimap" display-tooltip-when-elided="True" name="Label" style="font-size: 30px; -unity-text-align: upper-center; color: rgb(255, 255, 255);" />
             </ui:VisualElement>
-            <ui:VisualElement name="Map" style="height: 80%; border-left-color: rgba(255, 255, 255, 255); border-right-color: rgba(255, 255, 255, 255); border-top-color: rgba(255, 255, 255, 255); border-bottom-color: rgba(255, 255, 255, 255); margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px;" />
+            <ui:VisualElement name="Map" style="height: 80%; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px;" />
         </ui:VisualElement>
         <ui:VisualElement name="Main" class="item" style="width: 50%; margin-top: 20px; flex-direction: row;">
             <ui:VisualElement name="MainUnitArea" style="width: 25%;">
-                <ui:VisualElement name="MainUnit" style="width: 100%; height: 100%; background-image: url(&apos;/Assets/Textures/264212_animal_512x512.png&apos;); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgba(255, 255, 255, 255); border-right-color: rgba(255, 255, 255, 255); border-top-color: rgba(255, 255, 255, 255); border-bottom-color: rgba(255, 255, 255, 255); padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" />
+                <ui:VisualElement name="MainUnit" style="width: 100%; height: 100%; background-image: url(&apos;/Assets/Textures/264212_animal_512x512.png&apos;); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" />
             </ui:VisualElement>
             <ui:VisualElement name="UnitGrid" class="unitGrid" style="padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
-                <ui:VisualElement name="Unit" class="unit" />
-                <ui:VisualElement name="Unit" class="unit" />
-                <ui:VisualElement name="Unit" class="unit" />
-                <ui:VisualElement name="Unit" class="unit" />
-                <ui:VisualElement name="Unit" class="unit" />
-                <ui:VisualElement name="Unit" class="unit" />
-                <ui:VisualElement name="Unit" class="unit" />
-                <ui:VisualElement name="Unit" class="unit" />
-                <ui:VisualElement name="Unit" class="unit" />
-                <ui:VisualElement name="Unit" class="unit" />
-                <ui:VisualElement name="Unit" class="unit" />
                 <ui:VisualElement name="Unit" class="unit" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="Actions" class="item" style="width: 25%; margin-left: 10px; flex-direction: column;">
             <ui:VisualElement name="Title" style="align-items: center; margin-top: 0; margin-bottom: 30px;">
-                <ui:Label text="Actions" display-tooltip-when-elided="True" name="Label" style="font-size: 30px; background-color: rgba(0, 0, 0, 0); color: rgba(255, 255, 255, 255);" />
+                <ui:Label text="Actions" display-tooltip-when-elided="True" name="Label" style="font-size: 30px; background-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255);" />
             </ui:VisualElement>
             <ui:VisualElement name="ButtonGrid" class="buttonGrid">
-                <ui:Button text="Button" display-tooltip-when-elided="True" class="button" />
-                <ui:Button text="Button" display-tooltip-when-elided="True" class="button" />
-                <ui:Button text="Button" display-tooltip-when-elided="True" class="button" />
-                <ui:Button text="Button" display-tooltip-when-elided="True" class="button" />
                 <ui:Button text="Button" display-tooltip-when-elided="True" class="button" />
             </ui:VisualElement>
         </ui:VisualElement>
