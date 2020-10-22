@@ -22,6 +22,11 @@ public class GameScreen : MonoBehaviour
     public VisualElement mainUnit;
 
 
+    public Image minimap;
+    public RenderTexture miniMapRenderTexture;
+
+
+
     void OnEnable()
     {
         var rootVisualElement = GetComponent<UIDocument>().rootVisualElement;
@@ -56,6 +61,17 @@ public class GameScreen : MonoBehaviour
         // hoveredUnit = TODO: implemented when an onHover is implemented on a UI "unit"
         mainUnit = GetComponent<UIDocument>().rootVisualElement.Q("MainUnit");
 
+
+
+        // Minimap Test - RenderTexture
+        minimap = rootVisualElement.Q<Image>("MapImage");
+        minimap.image = miniMapRenderTexture;
+
+    }
+
+    private void Update()
+    {
+        minimap.image = miniMapRenderTexture;
     }
 
 
