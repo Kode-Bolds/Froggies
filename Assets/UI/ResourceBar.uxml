@@ -1,17 +1,17 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:VisualElement name="ResourceBar" class="TopBar" style="align-items: auto; flex-direction: row; flex-wrap: nowrap; justify-content: flex-end;">
+    <ui:VisualElement name="ResourceBar" class="mainBar">
         <Style src="ResourceBar.uss" />
-        <ui:VisualElement name="Resource" class="Resource">
-            <ui:VisualElement name="ResourceIcon" style="height: 100%; width: 100%; background-image: url(&apos;/Packages/com.unity.entities/Unity.Entities.Editor/Styles/ReadWrite@2x.png&apos;);" />
-            <ui:Label text="46" display-tooltip-when-elided="True" name="Amount" />
-        </ui:VisualElement>
-        <ui:VisualElement name="Resource" class="Resource" style="background-image: none;">
-            <ui:VisualElement name="ResourceIcon" style="height: 100%; width: 100%; background-image: url(&apos;/Packages/com.unity.entities/Unity.Entities.Editor/Styles/Subtractive@2x.png&apos;);" />
-            <ui:Label text="200" display-tooltip-when-elided="True" name="Amount" />
-        </ui:VisualElement>
-        <ui:VisualElement name="Resource" class="Resource">
-            <ui:VisualElement name="ResourceIcon" style="height: 100%; width: 100%; background-image: url(&apos;/Packages/com.unity.entities/Unity.Entities.Editor/Styles/ReadOnly@2x.png&apos;);" />
-            <ui:Label text="12" display-tooltip-when-elided="True" name="Amount" />
+        <ui:VisualElement name="Menu" class="menuSection" />
+        <ui:VisualElement name="Resources" class="resourcesSection" style="justify-content: flex-end;">
+            <ui:VisualElement name="Resource1" class="resource">
+                <ui:Label text="100" display-tooltip-when-elided="True" name="Resource1Text" class="resourceText" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Resource2" class="resource">
+                <ui:Label text="100" display-tooltip-when-elided="True" name="Resource2Text" class="resourceText" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Resource3" class="resource">
+                <ui:Label text="100" display-tooltip-when-elided="True" name="Resource3Text" class="resourceText" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
