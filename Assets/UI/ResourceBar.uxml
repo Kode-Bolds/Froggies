@@ -3,17 +3,14 @@
         <Style src="ResourceBar.uss" />
         <ui:VisualElement name="Menu" class="menuSection" />
         <ui:VisualElement name="Resources" class="resourcesSection" style="justify-content: flex-end;">
-            <ui:VisualElement name="Resource" class="resource">
-                <ui:VisualElement name="Icon" style="background-image: url(&apos;/Packages/com.unity.entities/Unity.Entities.Editor/Styles/ReadOnly.png&apos;); width: 18px; height: 15px;" />
-                <ui:Label text="100" display-tooltip-when-elided="True" name="Amount" />
+            <ui:VisualElement name="Resource1" class="resource">
+                <ui:Label text="100" display-tooltip-when-elided="True" name="Resource1Text" class="resourceText" />
             </ui:VisualElement>
-            <ui:VisualElement name="Resource" class="resource">
-                <ui:VisualElement name="Icon" style="background-image: url(&apos;/Packages/com.unity.entities/Unity.Entities.Editor/Styles/Subtractive.png&apos;); width: 18px; height: 15px;" />
-                <ui:Label text="100" display-tooltip-when-elided="True" name="Amount" />
+            <ui:VisualElement name="Resource2" class="resource">
+                <ui:Label text="100" display-tooltip-when-elided="True" name="Resource2Text" class="resourceText" />
             </ui:VisualElement>
-            <ui:VisualElement name="Resource" class="resource">
-                <ui:VisualElement name="Icon" style="background-image: url(&apos;/Packages/com.unity.entities/Unity.Entities.Editor/Styles/ReadWrite.png&apos;); width: 18px; height: 15px;" />
-                <ui:Label text="100" display-tooltip-when-elided="True" name="Amount" />
+            <ui:VisualElement name="Resource3" class="resource">
+                <ui:Label text="100" display-tooltip-when-elided="True" name="Resource3Text" class="resourceText" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
