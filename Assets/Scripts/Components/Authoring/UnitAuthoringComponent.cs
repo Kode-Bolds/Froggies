@@ -28,6 +28,7 @@ public class UnitAuthoringComponent : MonoBehaviour, IConvertGameObjectToEntity
 
 		dstManager.AddComponentData(entity, new CurrentTarget{ targetData = new TargetData()});
 		dstManager.AddComponentData(entity, new PreviousTarget{ targetData = new TargetData()});
+		dstManager.AddComponentData(entity, new CurrentAIState { currentAIState = AIState.Idle});
 
 		if((unitType & UnitType.Harvester) != 0)
 		{
