@@ -30,7 +30,6 @@ public class InstantiationSystem : KodeboldJobSystem
         OnStartPrefabData prefabData = m_query.GetSingleton<OnStartPrefabData>();
 
         EntityManager.Instantiate(prefabData.resources);
-        EntityManager.Instantiate(prefabData.stateTransitionQueue);
 
         ////Delete on start prefab data to stop this system from running after prefabs have been instantiated
         Entity entity = m_query.GetSingletonEntity();
