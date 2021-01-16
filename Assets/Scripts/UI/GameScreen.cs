@@ -21,7 +21,7 @@ public class GameScreen : KodeboldBehaviour
     public RenderTexture miniMapRenderTexture;
 
 
-    public void AddToSelectedUnits(int count)
+    public void AddSelectedUnits(int count)
     {
         unitGrid.Clear();
 
@@ -121,7 +121,7 @@ public class GameScreen : KodeboldBehaviour
         var entities = selectedQuery.ToEntityArray(Unity.Collections.Allocator.Persistent);
         if (entities.Length > 0)
         {
-            AddToSelectedUnits(entities.Length);
+            AddSelectedUnits(entities.Length);
         }
         entities.Dispose();
     }
