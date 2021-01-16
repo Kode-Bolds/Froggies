@@ -77,9 +77,8 @@ public class GameScreen : MonoBehaviour
 
     public void AddToSelectedUnits()
     {
-        VisualElement unit = new VisualElement();
+        VisualElement unit = new Button();
         unit.AddToClassList("unit");
-
         //unit.style.backgroundImage = 
 
         unitGrid.Add(unit);
