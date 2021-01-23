@@ -86,7 +86,7 @@ public class CommandProcessSystem : KodeboldJobSystem
 		.WithDisposeOnCompletion(storeTranslations)
 		.WithDisposeOnCompletion(storeTargets)
 		.WithDisposeOnCompletion(storeEntities)
-		.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer, ref CurrentTarget currentTarget, in Translation translation) =>
+		.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer, ref CurrentTarget currentTarget, ref PathFinding pathFinding, in Translation translation) =>
 		{
 			DynamicBuffer<StateTransition> stateTransitionQueue = stateTransitionQueueLookup[stateTransitionQueueEntity];
 
@@ -155,6 +155,7 @@ public class CommandProcessSystem : KodeboldJobSystem
 				}
 
 				currentCommand.commandStatus = CommandStatus.MovingPhase;
+				pathFinding.requestedPath = true;
 				Debug.Log($"Processing the moving phase { currentCommand.commandType } command from queue");
 				ProcessMovingPhaseCommand(stateTransitionQueue, entity, ref currentCommand);
 				//We do not progress state to execution here as we leave the specific systems to tell us when we are in range for the command
@@ -164,7 +165,7 @@ public class CommandProcessSystem : KodeboldJobSystem
 			{
 				Debug.Log($"Processing the execution phase { currentCommand.commandType } command from queue");
 				ProcessExecutionPhaseCommand(stateTransitionQueue, entity, ref currentCommand);
-				//We do not progress state to command here as we leave the specific systems to tell us when we have completed the command.
+				//We do not progress state to complete here as we leave the specific systems to tell us when we have completed the command.
 			}
 
 			currentCommand.previousCommandStatus = currentCommand.commandStatus;

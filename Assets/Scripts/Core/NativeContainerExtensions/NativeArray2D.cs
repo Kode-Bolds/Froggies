@@ -13,9 +13,10 @@ using Unity.Jobs;
 public struct NativeArray2D<T> : IEnumerable<T>, IEnumerable where T : unmanaged
 {
 	private NativeArray<T> m_data;
-
+	public NativeArray<T> FlatArray => m_data;
+	
 #if ENABLE_UNITY_COLLECTIONS_CHECKS
-	private AtomicSafetyHandle m_safety;
+	private AtomicSafetyHandle m_Safety;
 #endif
 
 	public int Length => m_data.Length;
@@ -25,6 +26,8 @@ public struct NativeArray2D<T> : IEnumerable<T>, IEnumerable where T : unmanaged
 
 	private int m_rows;
 	public int Rows => m_rows;
+
+	public bool IsCreated => m_data.IsCreated;
 
 	/// <summary>
 	/// Construct a new 2D Native Array with the given row and column count, and given allocator.
@@ -37,7 +40,7 @@ public struct NativeArray2D<T> : IEnumerable<T>, IEnumerable where T : unmanaged
 		m_data = new NativeArray<T>(columnCount * rowCount, allocator, options);
 
 #if ENABLE_UNITY_COLLECTIONS_CHECKS
-		m_safety = NativeArrayUnsafeUtility.GetAtomicSafetyHandle(m_data);
+		m_Safety = NativeArrayUnsafeUtility.GetAtomicSafetyHandle(m_data);
 #endif
 
 		m_columns = columnCount;
@@ -59,7 +62,7 @@ public struct NativeArray2D<T> : IEnumerable<T>, IEnumerable where T : unmanaged
 		}
 
 #if ENABLE_UNITY_COLLECTIONS_CHECKS
-		m_safety = NativeArrayUnsafeUtility.GetAtomicSafetyHandle(m_data);
+		m_Safety = NativeArrayUnsafeUtility.GetAtomicSafetyHandle(m_data);
 #endif
 
 		m_columns = array.GetLength(0);
@@ -70,20 +73,20 @@ public struct NativeArray2D<T> : IEnumerable<T>, IEnumerable where T : unmanaged
 	{
 		get
 		{
-			if(columnIndex < m_columns)
+			if(columnIndex < 0 || columnIndex >= m_columns)
 				throw new Exception("Column index " + columnIndex + " out of bounds of range " + m_columns);
 
-			if(rowIndex < m_rows)
+			if(rowIndex < 0 ||  rowIndex >= m_rows)
 				throw new Exception("Row index " + rowIndex + " out of bounds of range " + m_rows);
 
 			return m_data[columnIndex + rowIndex * m_columns];
 		}
 		set
 		{
-			if (columnIndex < m_columns)
+			if(columnIndex < 0 || columnIndex >= m_columns)
 				throw new Exception("Column index " + columnIndex + " out of bounds of range " + m_columns);
 
-			if (rowIndex < m_rows)
+			if(rowIndex < 0 ||  rowIndex >= m_rows)
 				throw new Exception("Row index " + rowIndex + " out of bounds of range " + m_rows);
 
 			m_data[columnIndex + rowIndex * m_columns] = value;
@@ -161,6 +164,13 @@ public struct NativeArray2D<T> : IEnumerable<T>, IEnumerable where T : unmanaged
 	{
 		return GetEnumerator();
 	}
+
+	public unsafe void* GetUnsafePtr()
+	{
+		return m_data.GetUnsafePtr();
+	}
+
+
 }
 
 internal class NativeArray2DDebugView<T> where T : unmanaged

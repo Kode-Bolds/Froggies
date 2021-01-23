@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Systems;
 using Unity.Collections;
 using UnityEngine;
 
@@ -169,6 +170,7 @@ public class GameInit : MonoBehaviour
 				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SpawningQueueSystem>());
 				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SelectionSystem>());
 				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<CameraControlSystem>());
+				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<PathFindingSystem>());
 				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<HarvestingSystem>());
 				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<DepositSystem>());
 				postStateTransitionSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<UnitMoveSystem>());
