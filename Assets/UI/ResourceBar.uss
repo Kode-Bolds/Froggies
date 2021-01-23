@@ -1,17 +1,50 @@
-.TopBar {
-    height: 5%;
-    background-color: rgba(37, 44, 79, 255);
+.mainBar {
+    align-items: auto;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    background-color: rgb(79, 79, 79);
 }
 
-.Resource {
-    align-items: center;
-    justify-content: space-between;
+.menuSection {
+    width: 75%;
+}
+
+.resourcesSection {
+    width: 25%;
+    align-items: flex-start;
     flex-direction: row;
-    width: 5%;
-    flex-wrap: nowrap;
-    height: 100%;
-    margin-left: 2%;
-    margin-right: 2px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    justify-content: flex-end;
+    opacity: 1;
+}
+
+.resource {
+    flex-direction: row;
+    margin-left: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: rgb(255, 255, 255);
+    align-items: center;
+    width: auto;
+    justify-content: center;
+    -unity-text-align: upper-center;
+}
+
+.resourceText {
+    color: rgba(217, 217, 217, 255);
+    -unity-font-style: bold;
+    -unity-text-align: middle-left;
+    font-size: 20px;
+}
+
+.resourceIcon {
+    background-image: url('/Packages/com.unity.entities/Unity.Entities.Editor/Styles/ReadOnly.png');
+    width: 25px;
+    height: 20px;
+    -unity-text-align: middle-left;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
 }

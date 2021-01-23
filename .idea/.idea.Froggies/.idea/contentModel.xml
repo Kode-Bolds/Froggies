@@ -17,28 +17,30 @@
                 <e p="UnitAuthoringComponentEditor.cs" t="Include" />
               </e>
               <e p="ResourceNodeAuthoring.cs" t="Include" />
-              <e p="StateTransitionQueueAuthoring.cs" t="Include" />
               <e p="StoreAuthoringComponent.cs" t="Include" />
               <e p="UnitAuthoringComponent.cs" t="Include" />
             </e>
             <e p="BuildingTag.cs" t="Include" />
             <e p="CameraMovement.cs" t="Include" />
+            <e p="CombatUnit.cs" t="Include" />
             <e p="Command.cs" t="Include" />
             <e p="ControlPointsBlobComponent.cs" t="Include" />
+            <e p="CurrentAIState.cs" t="Include" />
             <e p="CurrentTarget.cs" t="Include" />
             <e p="EnemyTag.cs" t="Include" />
             <e p="FreezeRotation.cs" t="Include" />
             <e p="Harvester.cs" t="Include" />
             <e p="Health.cs" t="Include" />
             <e p="MapNode.cs" t="Include" />
+            <e p="MeleeUnit.cs" t="Include" />
             <e p="OnStartPrefabComponent.cs" t="Include" />
             <e p="PathFinding.cs" t="Include" />
             <e p="Placing.cs" t="Include" />
+            <e p="RangedUnit.cs" t="Include" />
             <e p="ResourceNode.cs" t="Include" />
             <e p="Resources.cs" t="Include" />
             <e p="RuntimeSpawningPrefabComponent.cs" t="Include" />
             <e p="SelectedTag.cs" t="Include" />
-            <e p="StateTransitionQueue.cs" t="Include" />
             <e p="StoreComponent.cs" t="Include" />
             <e p="UnitAIStates.cs" t="Include" />
             <e p="UnitMoveComponent.cs" t="Include" />
@@ -70,6 +72,7 @@
           <e p="Systems" t="Include">
             <e p="CameraControlSystem.cs" t="Include" />
             <e p="CameraSyncSystem.cs" t="Include" />
+            <e p="CombatSystem.cs" t="Include" />
             <e p="CommandProcessSystem.cs" t="Include" />
             <e p="DepositSystem.cs" t="Include" />
             <e p="FindAITargetSystem.cs" t="Include" />
@@ -87,10 +90,14 @@
             <e p="UnitMoveSystem.cs" t="Include" />
           </e>
           <e p="UI" t="Include">
-            <e p="ResourceBar.cs" t="Include" />
+            <e p="GameScreen.cs" t="Include" />
+            <e p="UIManager.cs" t="Include" />
           </e>
         </e>
         <e p="UI" t="Include">
+          <e p="BottomBar.uss" t="Include" />
+          <e p="BottomBar.uxml" t="Include" />
+          <e p="GameScreen.uxml" t="Include" />
           <e p="ResourceBar.uss" t="Include" />
           <e p="ResourceBar.uxml" t="Include" />
         </e>

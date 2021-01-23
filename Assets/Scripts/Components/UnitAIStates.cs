@@ -2,13 +2,14 @@
 
 public enum AIState
 {
-	Idle = 0,
-	MovingToPosition = 1,
-	MovingToHarvest = 2,
-	Harvesting = 3,
-	MovingToAttack = 4,
-	Attacking = 5,
-	MovingToDeposit = 6
+	None = 0,
+	Idle = 1,
+	MovingToPosition = 2,
+	MovingToHarvest = 3,
+	Harvesting = 4,
+	MovingToAttack = 5,
+	Attacking = 6,
+	MovingToDeposit = 7
 }
 
 public struct IdleState : IComponentData { }

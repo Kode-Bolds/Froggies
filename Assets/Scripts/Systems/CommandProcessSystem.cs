@@ -7,11 +7,8 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
-[UpdateAfter(typeof(FindAITargetSystem))]
 public class CommandProcessSystem : KodeboldJobSystem
 {
-	private EntityQuery m_stateTransitionQueueQuery;
-
 	private EntityQuery m_resourceQuery;
 	private EntityQuery m_enemyQuery;
 	private EntityQuery m_storeQuery;
@@ -30,8 +27,6 @@ public class CommandProcessSystem : KodeboldJobSystem
 
 	public override void InitSystem()
 	{
-		m_stateTransitionQueueQuery = GetEntityQuery(ComponentType.ReadWrite<StateTransition>());
-
 		m_resourceQuery = GetEntityQuery(ComponentType.ReadOnly<ResourceNode>(), ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
 		m_enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
 		m_storeQuery = GetEntityQuery(ComponentType.ReadOnly<Store>(), ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
@@ -39,10 +34,6 @@ public class CommandProcessSystem : KodeboldJobSystem
 
 	public override void UpdateSystem()
 	{
-		BufferFromEntity<StateTransition> stateTransitionQueueLookup = GetBufferFromEntity<StateTransition>();
-		Entity stateTransitionQueueEntity = m_stateTransitionQueueQuery.GetSingletonEntity();
-		ComponentDataFromEntity<IdleState> idleComponentLookup = GetComponentDataFromEntity<IdleState>(true);
-
 		NativeArray<Translation> resourceTranslations = m_resourceQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out JobHandle getResourceTranslations);
 		NativeArray<TargetableByAI> resourceTargets = m_resourceQuery.ToComponentDataArrayAsync<TargetableByAI>(Allocator.TempJob, out JobHandle getResourceTargets);
 		NativeArray<Entity> resourceEntities = m_resourceQuery.ToEntityArrayAsync(Allocator.TempJob, out JobHandle getResourceEntities);
@@ -67,7 +58,6 @@ public class CommandProcessSystem : KodeboldJobSystem
 #endif
 
 		Dependency = Entities
-		.WithReadOnly(idleComponentLookup)
 		.WithReadOnly(resourceTranslations)
 		.WithReadOnly(resourceTargets)
 		.WithReadOnly(resourceEntities)
@@ -86,15 +76,13 @@ public class CommandProcessSystem : KodeboldJobSystem
 		.WithDisposeOnCompletion(storeTranslations)
 		.WithDisposeOnCompletion(storeTargets)
 		.WithDisposeOnCompletion(storeEntities)
-		.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer, ref CurrentTarget currentTarget, ref PathFinding pathFinding, in Translation translation) =>
+		.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer, ref CurrentTarget currentTarget, ref PathFinding pathFinding, ref CurrentAIState currentAIState, in Translation translation) =>
 		{
-			DynamicBuffer<StateTransition> stateTransitionQueue = stateTransitionQueueLookup[stateTransitionQueueEntity];
-
 			if (commandBuffer.Length <= 0)
 			{
-				if (!idleComponentLookup.HasComponent(entity))
+				if (currentAIState.currentAIState != AIState.Idle)
 				{
-					AddStateTransitionToQueue(ref stateTransitionQueue, entity, new TargetData { }, AIState.Idle);
+					currentAIState.RequestStateChange(AIState.Idle);
 				}
 				return;
 			}
@@ -148,7 +136,7 @@ public class CommandProcessSystem : KodeboldJobSystem
 						}
 						else
 						{
-							AddStateTransitionToQueue(ref stateTransitionQueue, entity, new TargetData { }, AIState.Idle);
+							currentAIState.RequestStateChange(AIState.Idle);
 							return;
 						}
 					}
@@ -157,14 +145,14 @@ public class CommandProcessSystem : KodeboldJobSystem
 				currentCommand.commandStatus = CommandStatus.MovingPhase;
 				pathFinding.requestedPath = true;
 				Debug.Log($"Processing the moving phase { currentCommand.commandType } command from queue");
-				ProcessMovingPhaseCommand(stateTransitionQueue, entity, ref currentCommand);
-				//We do not progress state to execution here as we leave the specific systems to tell us when we are in range for the command
+				ProcessMovingPhaseCommand(entity, ref currentCommand, ref currentAIState);
+				//We do not progress state to execution here as we leave the specific systems to tell us when we are in range for the command.
 
 			}
 			else if (currentCommand.commandStatus == CommandStatus.ExecutionPhase && currentCommand.commandStatus != currentCommand.previousCommandStatus)
 			{
 				Debug.Log($"Processing the execution phase { currentCommand.commandType } command from queue");
-				ProcessExecutionPhaseCommand(stateTransitionQueue, entity, ref currentCommand);
+				ProcessExecutionPhaseCommand(entity, ref currentCommand, ref currentAIState);
 				//We do not progress state to complete here as we leave the specific systems to tell us when we have completed the command.
 			}
 
@@ -303,51 +291,43 @@ public class CommandProcessSystem : KodeboldJobSystem
 		return closestIndex;
 	}
 
-	private static void ProcessMovingPhaseCommand(DynamicBuffer<StateTransition> stateTransitionQueue, Entity entity, ref Command command)
+	private static void ProcessMovingPhaseCommand(Entity entity, ref Command command, ref CurrentAIState currentAIState)
 	{
+		CommandData commandData = command.commandData;
 		switch (command.commandType)
 		{
 			case CommandType.Move:
-				CommandData moveCommand = command.commandData;
-				AddStateTransitionToQueue(ref stateTransitionQueue, entity, moveCommand.targetData, AIState.MovingToPosition);
+				currentAIState.RequestStateChange(AIState.MovingToPosition, commandData.targetData);
 				break;
 			case CommandType.Harvest:
-				CommandData harvestCommand = command.commandData;
-				AddStateTransitionToQueue(ref stateTransitionQueue, entity, harvestCommand.targetData, AIState.MovingToHarvest);
+				currentAIState.RequestStateChange(AIState.MovingToHarvest, commandData.targetData);
 				break;
 			case CommandType.Attack:
-				CommandData attackCommand = command.commandData;
-				AddStateTransitionToQueue(ref stateTransitionQueue, entity, attackCommand.targetData, AIState.MovingToAttack);
+				currentAIState.RequestStateChange(AIState.MovingToAttack, commandData.targetData);
 				break;
 			case CommandType.Deposit:
-				CommandData depositCommand = command.commandData;
-				AddStateTransitionToQueue(ref stateTransitionQueue, entity, depositCommand.targetData, AIState.MovingToDeposit);
+				currentAIState.RequestStateChange(AIState.MovingToDeposit, commandData.targetData);
 				break;
 		}
 	}
-	private static void ProcessExecutionPhaseCommand(DynamicBuffer<StateTransition> stateTransitionQueue, Entity entity, ref Command command)
+	private static void ProcessExecutionPhaseCommand(Entity entity, ref Command command, ref CurrentAIState currentAIState)
 	{
+		CommandData commandData = command.commandData;
 		switch (command.commandType)
 		{
 			case CommandType.Move:
 				Debug.Assert(false, "Moving to target has no execution phase");
 				break;
 			case CommandType.Harvest:
-				CommandData harvestCommand = command.commandData;
-				AddStateTransitionToQueue(ref stateTransitionQueue, entity, harvestCommand.targetData, AIState.Harvesting);
+				currentAIState.RequestStateChange(AIState.Harvesting, commandData.targetData);
 				break;
 			case CommandType.Attack:
-				CommandData attackCommand = command.commandData;
-				AddStateTransitionToQueue(ref stateTransitionQueue, entity, attackCommand.targetData, AIState.Attacking);
+				currentAIState.RequestStateChange(AIState.Attacking, commandData.targetData);
 				break;
 			case CommandType.Deposit:
 				Debug.Assert(false, "Deposit command has no execution phase (deposit is immediate)");
 				break;
 		}
-	}
-	private static void AddStateTransitionToQueue(ref DynamicBuffer<StateTransition> stateTransitionQueue, in Entity entityToTransition, in TargetData targetData, in AIState state)
-	{
-		stateTransitionQueue.Add(new StateTransition { entity = entityToTransition, target = targetData, aiState = state });
 	}
 
 	public static void QueueCommand(CommandType commandType, in DynamicBuffer<Command> commandBuffer, in TargetData targetData, bool onlyQueueIfEmpty)
@@ -384,5 +364,14 @@ public class CommandProcessSystem : KodeboldJobSystem
 		currentCommand.commandStatus = CommandStatus.Complete;
 		commandBuffer[0] = currentCommand;
 		Debug.Log("Complete execution command of type " + currentCommand.commandType);
+	}
+
+	public static void RestartCommand(ref DynamicBuffer<Command> commandBuffer)
+	{
+		Command currentCommand = commandBuffer[0];
+		currentCommand.previousCommandStatus = currentCommand.commandStatus;
+		currentCommand.commandStatus = CommandStatus.Queued;
+		commandBuffer[0] = currentCommand;
+		Debug.Log("Restarting command of type " + currentCommand.commandType);
 	}
 }

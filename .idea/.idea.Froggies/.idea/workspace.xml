@@ -28,38 +28,70 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="349474b5-6a51-4098-8ba4-62336b57384c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/contentModel.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Froggies/riderModule.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Data.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/GridManager.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/GridManager.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Components/MapNode.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Components/MapNode.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Components/PathFinding.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Components/PathFinding.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Editor/GridManagerEditor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Editor/GridManagerEditor.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/GridManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/GridManager.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/PathFindingSystem.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/PathFindingSystem.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ExampleControlScheme.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ExampleControlScheme.inputactions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/GameUIManager.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene_BACKUP_25228.unity" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Components/CombatUnit.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Components/CurrentAIState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Components/MeleeUnit.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Components/RangedUnit.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Components/RangedUnit.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/CombatSystem.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/CombatSystem.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/GameScreen.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/GameScreen.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/UIManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/UIManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Textures/264212_animal_512x512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Textures/264212_animal_512x512.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Textures/MinimapRenderTexture.renderTexture" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Textures/MinimapRenderTexture.renderTexture.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/BottomBar.uss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/BottomBar.uss.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/BottomBar.uxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/BottomBar.uxml.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/GameScreen.uxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/GameScreen.uxml.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/GlobalGameUISettings.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/GlobalGameUISettings.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/UIElements.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/Unity.Cloud.Collaborate.Components.ChangeListEntries.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/Unity.Cloud.Collaborate.Components.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/Unity.Cloud.Collaborate.Views.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/Unity.Editor.Bridge.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/Unity.Properties.UI.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/Unity.UI.Builder.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.PackageManager.UI.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.UIElements.Debugger.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.UIElements.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEngine.UIElements.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Harvester.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Harvester.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ResourceNodeBuilding.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ResourceNodeBuilding.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ResourceNodeFood.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ResourceNodeFood.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ResourceNodeRare.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ResourceNodeRare.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/StateTransitionQueue.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/StateTransitionQueue.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GameUIManager.prefab.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/Authoring/StateTransitionQueueAuthoring.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/Authoring/StateTransitionQueueAuthoring.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/MeleeUnit.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/Authoring/UnitAuthoringComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/Authoring/UnitAuthoringComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/Command.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/Command.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ControlScheme.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ControlScheme.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/OnStartPrefabComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/OnStartPrefabComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/StateTransitionQueue.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/StateTransitionQueue.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/CurrentAIState.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/UnitAIStates.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/UnitAIStates.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/GameInit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/GameInit.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/NativeContainerExtensions/NativeArray2D.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/NativeContainerExtensions/NativeArray2D.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/CommandProcessSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/CommandProcessSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/SpawningSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/SpawningSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/UnitMoveSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/UnitMoveSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/FindAITargetSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/FindAITargetSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/InstantiationSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/InstantiationSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Systems/StateTransitionSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Systems/StateTransitionSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/ResourceBar.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/ResourceBar.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/CombatUnit.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/ResourceBar.uss" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/ResourceBar.uss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/ResourceBar.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/ResourceBar.uxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,16 +124,16 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Components/PathNode.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Core/Editor/GridManagerEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Components/Command.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Systems/CommandProcessSystem.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Core/GridManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Components/MapNode.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Components/Authoring/UnitAuthoringComponent.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Systems/SpawningSystem.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Core/GameInit.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Core/NativeContainerExtensions/NativeArray2D.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Components/PathFinding.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Systems/UnitMoveSystem.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Systems/PathFindingSystem.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Systems/CommandProcessSystem.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Core/NativeContainerExtensions/NativeArray2D.cs" />
       </list>
     </option>
   </component>
@@ -157,7 +189,7 @@
       <workItem from="1603213819289" duration="3023000" />
       <workItem from="1610276538722" duration="16890000" />
       <workItem from="1610797110071" duration="12645000" />
-      <workItem from="1611402281250" duration="4981000" />
+      <workItem from="1611402281250" duration="6180000" />
     </task>
     <servers />
   </component>
@@ -267,10 +299,10 @@
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
     <state x="1421" y="179" key="SettingsEditor/0.0.3840.1080@0.0.3840.1080" timestamp="1602941440879" />
-    <state x="1580" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1611405161468">
+    <state x="1580" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1611410379652">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state x="1580" y="253" width="672" height="678" key="search.everywhere.popup/0.0.3840.1080@0.0.3840.1080" timestamp="1611405161468" />
+    <state x="1580" y="253" width="672" height="678" key="search.everywhere.popup/0.0.3840.1080@0.0.3840.1080" timestamp="1611410379652" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
