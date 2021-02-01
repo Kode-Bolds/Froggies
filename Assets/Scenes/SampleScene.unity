@@ -155,11 +155,8 @@ MonoBehaviour:
   KodeboldBehaviours:
   - {fileID: 7853641952059455958, guid: 99992b5e0f59b614d978ce625a3da9af, type: 3}
   - {fileID: 426819377528110083, guid: cab6736a2919fd74ebec7cec644c2887, type: 3}
-<<<<<<< HEAD
-  - {fileID: 3350258362463165791, guid: e299456f9db2f9ff3a7db9e463d5c9c8, type: 3}
-=======
   - {fileID: 5042200169350864526, guid: 44fe2fb7d7a907646958803f4a37d0c8, type: 3}
->>>>>>> upstream/master
+  - {fileID: 3350258362463165791, guid: e299456f9db2f9ff3a7db9e463d5c9c8, type: 3}
 --- !u!4 &371896420
 Transform:
   m_ObjectHideFlags: 0
@@ -743,7 +740,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resources: {fileID: 8298403794239398424, guid: 4577b10244587834495770b63c41819f, type: 3}
-  stateTransitionQueue: {fileID: 6438835506329870834, guid: 7250262a2f43a49b3a01d6c2f14bdc93, type: 3}
 --- !u!4 &1297448084
 Transform:
   m_ObjectHideFlags: 0
@@ -771,53 +767,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConversionMode: 0
---- !u!1 &1602216339
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1602216341}
-  - component: {fileID: 1602216340}
-  m_Layer: 0
-  m_Name: Grid
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1602216340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602216339}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00df7a0950cc45dc9673b3b2e1a1f4b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_cellSize: 7
-  m_gridSize:
-    x: 48
-    y: 17
---- !u!4 &1602216341
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602216339}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -152.6, y: 1.6, z: -67.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1819324041
 GameObject:
   m_ObjectHideFlags: 0

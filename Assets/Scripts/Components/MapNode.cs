@@ -16,6 +16,16 @@ public unsafe struct MapNode
    public float g;
    public float h;
    public float f;
+
+   public void SetParent(MapNode* newParent)
+   {
+       if (newParent == null)
+           return;
+       
+       parent = newParent;
+       g = newParent->g + math.distancesq(position, newParent->position);
+       f = g + h;
+   }
 }
 
 public enum NodeState

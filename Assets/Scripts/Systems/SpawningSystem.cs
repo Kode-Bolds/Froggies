@@ -40,7 +40,6 @@ public class SpawningSystem : KodeboldJobSystem
 				ecb.SetComponent(e, translation);
 				ecb.SetComponent(e, new LocalToWorld { Value = new float4x4(rotation.Value, translation.Value) });
 				ecb.SetComponent(e, new PathFinding { currentNode = PathFindingSystem.FindNearestNode(translation.Value) });
-
 			}
 		}).Schedule(Dependency);
 

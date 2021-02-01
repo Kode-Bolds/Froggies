@@ -24,7 +24,7 @@ public class GridManager : KodeboldBehaviour
             {
                 Grid[x, z] = new MapNode
                 {
-                    position = new float3(x * m_cellSize, 0, z * m_cellSize),
+                    position = (float3)transform.position + new float3(x * m_cellSize, 0, z * m_cellSize),
                     gridPosition = new int2(x,z)
                 };
             }

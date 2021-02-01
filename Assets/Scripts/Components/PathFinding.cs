@@ -11,13 +11,14 @@ public struct PathFinding : IComponentData
     public bool hasPath;
     public int2 currentNode;
     public int2 targetNode;
-    public FixedList128<PathNode> path;
     public int currentIndexOnPath;
 }
 
-public struct PathNode
+[InternalBufferCapacity(256)]
+public struct PathNode : IBufferElementData
 {
     public float3 position;
+    public int2 gridPosition;
 }
 
 

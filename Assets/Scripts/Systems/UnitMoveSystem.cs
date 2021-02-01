@@ -33,17 +33,18 @@ public class UnitMoveSystem : KodeboldJobSystem
 		Dependency = Entities
 			.WithAny<MovingToAttackState, MovingToDepositState, MovingToHarvestState>()
 			.WithAny<MovingToPositionState>()
-			.ForEach((ref PhysicsVelocity velocity, ref LocalToWorld transform, ref Rotation rotation, ref UnitMove unitMove, in PathFinding pathFinding, in PreviousTarget previousTarget) =>
+			.ForEach((ref PhysicsVelocity velocity, ref LocalToWorld transform, ref Rotation rotation, 
+				ref UnitMove unitMove, in PathFinding pathFinding, in PreviousTarget previousTarget, 
+				in DynamicBuffer<PathNode> path) =>
 			{
 				if (!pathFinding.hasPath)
 					return;
 #if UNITY_EDITOR
-				int nextNodeIndex = 0;
 				float3 pos1 = transform.Position;
 
-				for (int i = 0; i < pathFinding.path.Length; ++i)
+				for (int i = pathFinding.currentIndexOnPath; i < path.Length; ++i)
 				{
-					float3 pos2 = pathFinding.path[i].position;
+					float3 pos2 = path[i].position;
 					
 					debugDrawCommandQueue.Enqueue(new DebugDrawCommand
 					{
@@ -56,16 +57,14 @@ public class UnitMoveSystem : KodeboldJobSystem
 						}
 					});
 
-
 					pos1 = pos2;
 				}
-				
 #endif
 
 				float3 pos = transform.Position;
 				pos.y = 0;
 
-				float3 targetPos = pathFinding.path[pathFinding.currentIndexOnPath].position;
+				float3 targetPos = path[pathFinding.currentIndexOnPath].position;
 				targetPos.y = 0;
 
 				float3 targetDir = math.normalize(targetPos - pos);
@@ -105,19 +104,31 @@ public class UnitMoveSystem : KodeboldJobSystem
 
 		Dependency = Entities
 			.WithAll<MovingToPositionState>()
-			.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer, ref UnitMove unitMove, ref PhysicsVelocity physicsVelocity, in Translation translation, in PathFinding pathFinding) =>
+			.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer, 
+				ref UnitMove unitMove, ref PhysicsVelocity physicsVelocity, ref PathFinding pathfinding,
+				in Translation translation,  in DynamicBuffer<PathNode> path) =>
 			{
-				if (pathFinding.currentIndexOnPath < pathFinding.path.Length - 1)
+				if (!pathfinding.hasPath)
 					return;
+				
+				float distanceSq = math.distancesq(translation.Value.xz,
+					path[pathfinding.currentIndexOnPath].position.xz);
+				
 
-				float distance = math.distance(translation.Value,
-					pathFinding.path[pathFinding.currentIndexOnPath].position);
-
-				if (distance < 1.0f)
+				if (distanceSq < 1.0f)
 				{
+					pathfinding.currentNode = path[pathfinding.currentIndexOnPath].gridPosition;
+					
+					pathfinding.currentIndexOnPath++;
+					
+					if (pathfinding.currentIndexOnPath < path.Length)
+						return;
+
+					
 					unitMove.rotating = false;
 					physicsVelocity.Linear = 0;
 					commandBuffer.RemoveAt(0);
+					pathfinding.hasPath = false;
 					Debug.Log("Reached target position, move to next command");
 				}
 			}).ScheduleParallel(Dependency);

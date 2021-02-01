@@ -26,6 +26,7 @@ public class UnitAuthoringComponent : MonoBehaviour, IConvertGameObjectToEntity
 		dstManager.AddComponentData(entity, freezeRotation);
 		dstManager.AddComponentData(entity, new UnitTag());
 		dstManager.AddComponentData(entity, new PathFinding());
+		dstManager.AddBuffer<PathNode>(entity);
 
 		dstManager.AddComponentData(entity, new CurrentTarget{ targetData = new TargetData()});
 		dstManager.AddComponentData(entity, new PreviousTarget{ targetData = new TargetData()});
