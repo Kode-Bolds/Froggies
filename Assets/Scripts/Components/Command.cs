@@ -7,7 +7,6 @@ public enum CommandType
 	Harvest,
 	Attack,
 	Deposit,
-	FindTarget
 }
 
 public enum CommandStatus

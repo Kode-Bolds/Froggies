@@ -11,7 +11,7 @@ using Unity.Jobs;
 [StructLayout(LayoutKind.Sequential)]
 [NativeContainer]
 [NativeContainerSupportsDeallocateOnJobCompletion]
-[DebuggerDisplay("Length = {Length}, Columns = {Columns}, Rows = {Rows}")]
+[DebuggerDisplay("Length = {Length}, Length0 = {Length0}, Length1 = {Length1}")]
 [DebuggerTypeProxy(typeof(NativeArray2DDebugView<>))]
 public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<NativeArray2D<T>> where T : unmanaged
 {
@@ -21,11 +21,11 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 	private int m_Length;
 	public int Length => m_Length;
 
-	private int m_Columns;
-	public int Columns => m_Columns;
+	private int m_Length0;
+	public int Length0 => m_Length0;
 
-	private int m_Rows;
-	public int Rows => m_Rows;
+	private int m_Length1;
+	public int Length1 => m_Length1;
 
 
 #if ENABLE_UNITY_COLLECTIONS_CHECKS
@@ -38,9 +38,9 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 	private Allocator m_AllocatorLabel;
 
 
-	public NativeArray2D(int columnCount, int rowCount, Allocator allocator, NativeArrayOptions options = NativeArrayOptions.ClearMemory)
+	public NativeArray2D(int length0, int length1, Allocator allocator, NativeArrayOptions options = NativeArrayOptions.ClearMemory)
 	{
-		Allocate(columnCount, rowCount, allocator, out this);
+		Allocate(length0, length1, allocator, out this);
 
 		if (options == NativeArrayOptions.ClearMemory)
 			UnsafeUtility.MemClear(m_Buffer, m_Length * UnsafeUtility.SizeOf<T>());
@@ -48,19 +48,19 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 
 	public NativeArray2D(T[,] array, Allocator allocator)
 	{
-		int columnCount = array.GetLength(0);
-		int rowCount = array.GetLength(1);
-		Allocate(columnCount, rowCount, allocator, out this);
+		int length0 = array.GetLength(0);
+		int length1 = array.GetLength(1);
+		Allocate(length0, length1, allocator, out this);
 		Copy(array, this);
 	}
 
 	public NativeArray2D(NativeArray2D<T> array, Allocator allocator)
 	{
-		Allocate(array.m_Columns, array.m_Rows, allocator, out this);
+		Allocate(array.m_Length0, array.m_Length1, allocator, out this);
 		Copy(array, this);
 	}
 
-	private static void Allocate(int columnCount, int rowCount, Allocator allocator, out NativeArray2D<T> array)
+	private static void Allocate(int length0, int length1, Allocator allocator, out NativeArray2D<T> array)
 	{
 		RequireValidAllocator(allocator);
 
@@ -69,7 +69,7 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 			throw new InvalidOperationException("Only unmanaged types are supported.");
 		}
 
-		int length = columnCount * rowCount;
+		int length = length0 * length1;
 		if (length <= 0)
 		{
 			throw new InvalidOperationException("Total number of elements must be greater than zero.");
@@ -78,9 +78,9 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 		array = new NativeArray2D<T>
 		{
 			m_Buffer = UnsafeUtility.Malloc(length * UnsafeUtility.SizeOf<T>(), UnsafeUtility.AlignOf<T>(), allocator),
-			m_Columns = columnCount,
-			m_Rows = rowCount,
-			m_Length = rowCount * columnCount,
+			m_Length0 = length0,
+			m_Length1 = length1,
+			m_Length = length1 * length0,
 			m_AllocatorLabel = allocator
 		};
 
@@ -89,24 +89,32 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 #endif
 	}
 
-	public T this[int columnIndex, int rowIndex]
+	public T this[int index0, int index1]
 	{
 		get
 		{
 			RequireReadAccess();
-			RequireIndexInBounds(columnIndex, rowIndex);
+			RequireIndexInBounds(index0, index1);
 
-			return UnsafeUtility.ReadArrayElement<T>(m_Buffer, columnIndex + rowIndex * m_Columns);
+			return UnsafeUtility.ReadArrayElement<T>(m_Buffer, index1 * m_Length0 + index0);
 		}
 
 		[WriteAccessRequired]
 		set
 		{
 			RequireWriteAccess();
-			RequireIndexInBounds(columnIndex, rowIndex);
+			RequireIndexInBounds(index0, index1);
 
-			UnsafeUtility.WriteArrayElement(m_Buffer, columnIndex + rowIndex * m_Columns, value);
+			UnsafeUtility.WriteArrayElement(m_Buffer, index1 * m_Length0 + index0, value);
 		}
+	}
+
+	public T* GetPointerToElement(int index0, int index1)
+	{
+		RequireReadAccess();
+		RequireIndexInBounds(index0, index1);
+		
+		return (T*)m_Buffer + index1 * m_Length0 + index0;
 	}
 
 	[Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS")]
@@ -131,13 +139,13 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 	}
 
 	[Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS")]
-	private void RequireIndexInBounds(int columnIndex, int rowIndex)
+	private void RequireIndexInBounds(int index0, int index1)
 	{
-		if (columnIndex < 0 || columnIndex >= m_Columns)
-			throw new IndexOutOfRangeException("Column index " + columnIndex + " out of bounds of range " + m_Columns);
+		if (index0 < 0 || index0 >= m_Length0)
+			throw new IndexOutOfRangeException("Index0 " + index0 + " out of bounds of range " + m_Length0);
 
-		if (rowIndex < 0 || rowIndex >= m_Rows)
-			throw new IndexOutOfRangeException("Row index " + rowIndex + " out of bounds of range " + m_Rows);
+		if (index1 < 0 || index1 >= m_Length1)
+			throw new IndexOutOfRangeException("Index1 " + index1 + " out of bounds of range " + m_Length1);
 	}
 
 	public AtomicSafetyHandle GetAtomicSafetyHandle()
@@ -176,8 +184,8 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 
 		UnsafeUtility.Free(m_Buffer, m_AllocatorLabel);
 		m_Buffer = null;
-		m_Columns = 0;
-		m_Rows = 0;
+		m_Length0 = 0;
+		m_Length1 = 0;
 	}
 
 	public JobHandle Dispose(JobHandle inputDeps)
@@ -201,8 +209,8 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 		AtomicSafetyHandle.Release(m_Safety);
 
 		m_Buffer = null;
-		m_Columns = 0;
-		m_Rows = 0;
+		m_Length0 = 0;
+		m_Length1 = 0;
 
 		return jobHandle;
 	}
@@ -226,17 +234,17 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 		src.RequireReadAccess();
 		dest.RequireWriteAccess();
 
-		if (src.Columns != dest.Columns || src.Rows != dest.Rows)
+		if (src.Length0 != dest.Length0 || src.Length1 != dest.Length1)
 			throw new ArgumentException("NativeArray2Ds must have the same size.");
 
-		UnsafeUtility.MemCpy(dest.GetUnsafePtr(), src.GetUnsafePtr(), src.Columns * src.Rows * UnsafeUtility.SizeOf<T>());
+		UnsafeUtility.MemCpy(dest.GetUnsafePtr(), src.GetUnsafePtr(), src.Length0 * src.Length1 * UnsafeUtility.SizeOf<T>());
 	}
 
 	private static void Copy(T[,] src, NativeArray2D<T> dest)
 	{
 		dest.RequireWriteAccess();
 
-		if (src.GetLength(0) != dest.Columns || src.GetLength(1) != dest.Rows)
+		if (src.GetLength(0) != dest.Length0 || src.GetLength(1) != dest.Length1)
 			throw new ArgumentException("Arrays must have the same size.");
 
 		fixed (void* srcPtr = &src[0, 0])
@@ -249,7 +257,7 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 	{
 		src.RequireReadAccess();
 
-		if (src.Columns != dest.GetLength(0) || src.Rows != dest.GetLength(1))
+		if (src.Length0 != dest.GetLength(0) || src.Length1 != dest.GetLength(1))
 			throw new ArgumentException("Arrays must have the same size.");
 
 		fixed (void* destPtr = &dest[0, 0])
@@ -282,7 +290,7 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 
 	public T[,] ToArray()
 	{
-		T[,] array = new T[m_Columns, m_Rows];
+		T[,] array = new T[m_Length0, m_Length1];
 		fixed (void* arrayPtr = &array[0, 0])
 		{
 			UnsafeUtility.MemCpy(arrayPtr, m_Buffer, m_Length * sizeof(T));
@@ -293,8 +301,8 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 	public bool Equals(NativeArray2D<T> other)
 	{
 		return m_Buffer == other.m_Buffer
-			&& m_Columns == other.m_Columns
-			&& m_Rows == other.m_Rows;
+			&& m_Length0 == other.m_Length0
+			&& m_Length1 == other.m_Length1;
 	}
 
 	public override bool Equals(object other)
@@ -308,8 +316,8 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 	public override int GetHashCode()
 	{
 		int result = (int)m_Buffer;
-		result = (result * 397) ^ m_Columns;
-		result = (result * 397) ^ m_Rows;
+		result = (result * 397) ^ m_Length0;
+		result = (result * 397) ^ m_Length1;
 		return result;
 	}
 
@@ -341,17 +349,17 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 	public struct Enumerator : IEnumerator<T>
 	{
 		private NativeArray2D<T> m_Array;
-		private int m_RowIndex;
-		private int m_ColumnIndex;
+		private int m_Index0;
+		private int m_Index1;
 
 		public Enumerator(ref NativeArray2D<T> array)
 		{
 			m_Array = array;
-			m_ColumnIndex = -1;
-			m_RowIndex = 0;
+			m_Index0 = -1;
+			m_Index1 = 0;
 		}
 
-		public T Current => m_Array[m_ColumnIndex, m_RowIndex];
+		public T Current => m_Array[m_Index0, m_Index1];
 
 		object IEnumerator.Current => Current;
 
@@ -361,12 +369,12 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 
 		public bool MoveNext()
 		{
-			m_ColumnIndex++;
-			if (m_ColumnIndex >= m_Array.Columns)
+			m_Index0++;
+			if (m_Index0 >= m_Array.Length0)
 			{
-				m_ColumnIndex = 0;
-				m_RowIndex++;
-				return m_RowIndex < m_Array.m_Rows;
+				m_Index0 = 0;
+				m_Index1++;
+				return m_Index1 < m_Array.m_Length1;
 			}
 
 			return true;
@@ -374,8 +382,8 @@ public unsafe struct NativeArray2D<T> : IDisposable, IEnumerable<T>, IEquatable<
 
 		public void Reset()
 		{
-			m_ColumnIndex = -1;
-			m_RowIndex = 0;
+			m_Index0 = -1;
+			m_Index1 = 0;
 		}
 	}
 }

@@ -23,8 +23,6 @@ public class UnitMoveSystem : KodeboldJobSystem
 
 	public override void UpdateSystem()
 	{
-		ComponentDataFromEntity<TargetableByAI> targetableByAILookup = GetComponentDataFromEntity<TargetableByAI>(true);
-
 		float deltaTime = Time.fixedDeltaTime;
 
 #if UNITY_EDITOR
@@ -33,30 +31,40 @@ public class UnitMoveSystem : KodeboldJobSystem
 		NativeQueue<DebugDrawCommand>.ParallelWriter debugDrawCommandQueue = m_debugDrawer.DebugDrawCommandQueueParallel;
 #endif
 		Dependency = Entities
-			.WithReadOnly(targetableByAILookup)
 			.WithAny<MovingToAttackState, MovingToDepositState, MovingToHarvestState>()
 			.WithAny<MovingToPositionState>()
-			.ForEach((ref PhysicsVelocity velocity, ref LocalToWorld transform, ref Rotation rotation, ref UnitMove unitMove, in CurrentTarget currentTarget, in PreviousTarget previousTarget) =>
+			.ForEach((ref PhysicsVelocity velocity, ref LocalToWorld transform, ref Rotation rotation, 
+				ref UnitMove unitMove, in PathFinding pathFinding, in PreviousTarget previousTarget, 
+				in DynamicBuffer<PathNode> path) =>
 			{
-				if (!targetableByAILookup.HasComponent(currentTarget.targetData.targetEntity))
+				if (!pathFinding.hasPath)
 					return;
 #if UNITY_EDITOR
-				debugDrawCommandQueue.Enqueue(new DebugDrawCommand
+				float3 pos1 = transform.Position;
+
+				for (int i = pathFinding.currentIndexOnPath; i < path.Length; ++i)
 				{
-					debugDrawCommandType = DebugDrawCommandType.Line,
-					debugDrawLineData = new DebugDrawLineData
+					float3 pos2 = path[i].position;
+					
+					debugDrawCommandQueue.Enqueue(new DebugDrawCommand
 					{
-						colour = Color.green,
-						start = transform.Position,
-						end = currentTarget.targetData.targetPos
-					}
-				});
+						debugDrawCommandType = DebugDrawCommandType.Line,
+						debugDrawLineData = new DebugDrawLineData
+						{
+							colour = Color.green,
+							start = pos1,
+							end = pos2
+						}
+					});
+
+					pos1 = pos2;
+				}
 #endif
 
 				float3 pos = transform.Position;
 				pos.y = 0;
 
-				float3 targetPos = currentTarget.targetData.targetPos;
+				float3 targetPos = path[pathFinding.currentIndexOnPath].position;
 				targetPos.y = 0;
 
 				float3 targetDir = math.normalize(targetPos - pos);
@@ -66,7 +74,7 @@ public class UnitMoveSystem : KodeboldJobSystem
 
 				if (angle > 0.1f)
 				{
-					if (!unitMove.rotating || !previousTarget.targetData.targetPos.Equals(currentTarget.targetData.targetPos))
+					if (!unitMove.rotating || !previousTarget.targetData.targetPos.Equals(targetPos))
 					{
 						unitMove.rotating = true;
 
@@ -96,18 +104,34 @@ public class UnitMoveSystem : KodeboldJobSystem
 
 		Dependency = Entities
 			.WithAll<MovingToPositionState>()
-			.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer, ref UnitMove unitMove, ref PhysicsVelocity physicsVelocity, in Translation translation, in CurrentTarget currentTarget) =>
-		{
-			float distance = math.distance(translation.Value, currentTarget.targetData.targetPos);
-
-			if (distance < 1.0f)
+			.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer, 
+				ref UnitMove unitMove, ref PhysicsVelocity physicsVelocity, ref PathFinding pathfinding,
+				in Translation translation,  in DynamicBuffer<PathNode> path) =>
 			{
-				unitMove.rotating = false;
-				physicsVelocity.Linear = 0;
-				commandBuffer.RemoveAt(0);
-				Debug.Log("Reached target position, move to next command");
-			}
-		}).ScheduleParallel(Dependency);
+				if (!pathfinding.hasPath)
+					return;
+				
+				float distanceSq = math.distancesq(translation.Value.xz,
+					path[pathfinding.currentIndexOnPath].position.xz);
+				
+
+				if (distanceSq < 1.0f)
+				{
+					pathfinding.currentNode = path[pathfinding.currentIndexOnPath].gridPosition;
+					
+					pathfinding.currentIndexOnPath++;
+					
+					if (pathfinding.currentIndexOnPath < path.Length)
+						return;
+
+					
+					unitMove.rotating = false;
+					physicsVelocity.Linear = 0;
+					commandBuffer.RemoveAt(0);
+					pathfinding.hasPath = false;
+					Debug.Log("Reached target position, move to next command");
+				}
+			}).ScheduleParallel(Dependency);
 
 		m_endSimECBSystem.AddJobHandleForProducer(Dependency);
 	}
