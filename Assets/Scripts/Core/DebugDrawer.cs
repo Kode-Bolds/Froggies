@@ -82,7 +82,7 @@ public class DebugDrawer : KodeboldBehaviour
 			{
 				case DebugDrawCommandType.Line:
 					DebugDrawLineData debugDrawLineData = debugDrawCommand.DebugCommandData<DebugDrawLineData>();
-					Debug.DrawLine(debugDrawLineData.start, debugDrawLineData.end, debugDrawLineData.colour);
+					Debug.DrawLine(debugDrawLineData.start, debugDrawLineData.end, debugDrawLineData.colour, 0, false);
 					break;
 				case DebugDrawCommandType.Sphere:
 					break;

@@ -102,7 +102,7 @@ public class @ControlScheme : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c569250a-bf00-4b5f-a0a8-969cdf424db6"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
