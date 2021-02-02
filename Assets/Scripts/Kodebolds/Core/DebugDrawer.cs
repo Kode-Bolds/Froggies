@@ -50,6 +50,7 @@ namespace Kodebolds.Core
 
 	public class DebugDrawer : KodeboldBehaviour
 	{
+		[SerializeField] private bool m_enabled;
 		public NativeQueue<DebugDrawCommand> DebugDrawCommandQueue => m_debugDrawCommandQueue;
 		public NativeQueue<DebugDrawCommand>.ParallelWriter DebugDrawCommandQueueParallel => m_debugDrawCommandQueueParallel;
 
@@ -72,6 +73,9 @@ namespace Kodebolds.Core
 		public override void UpdateBehaviour()
 		{
 #if UNITY_EDITOR
+			if (!m_enabled)
+				return;
+
 			debugDrawDependencies.Complete();
 
 			NativeArray<DebugDrawCommand> debugDrawCommands = m_debugDrawCommandQueue.ToArray(Allocator.Temp);

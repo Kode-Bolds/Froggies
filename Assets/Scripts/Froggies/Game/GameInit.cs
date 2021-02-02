@@ -160,7 +160,6 @@ namespace Froggies
 				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SpawningQueueSystem>());
 				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SelectionSystem>());
 				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<CameraControlSystem>());
-				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<PathFindingSystem>());
 				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<HarvestingSystem>());
 				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<DepositSystem>());
 				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<UnitMoveSystem>());
@@ -175,6 +174,7 @@ namespace Froggies
 
 				commandStateProcessingSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<FindAITargetSystem>());
 				commandStateProcessingSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<CommandProcessSystem>());
+				commandStateProcessingSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<PathFindingSystem>());
 				commandStateProcessingSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<StateTransitionSystem>());
 			}
 

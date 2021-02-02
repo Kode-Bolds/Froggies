@@ -10,9 +10,9 @@ namespace Froggies
         public int2 gridPosition;
         public OccupiedBy occupiedBy;
         public NodeState state;
-        public float g;
-        public float h;
-        public float f;
+        public float g; //Total length of path from start node to this node.
+        public float h; //Distance from node to target node.
+        public float f; //Estimated total distance traveled if taking this node in the path.
 
         public void SetParent(MapNode* newParent)
         {
@@ -27,10 +27,11 @@ namespace Froggies
 
     public enum NodeState
     {
-        Untested,
-        Closed,
-        Open
+        Untested, //Not yet tested for current path.
+        Closed, //Tested and eliminated from consideration, or already added to path.
+        Open //Tested but still open for consideration for path.
     }
+
     public enum OccupiedBy
     {
         Nothing = 0,
