@@ -104,7 +104,7 @@ namespace Froggies
                 {
                     ""name"": """",
                     ""id"": ""c569250a-bf00-4b5f-a0a8-969cdf424db6"",
-                    ""path"": ""<Mouse>/middleButton"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

@@ -36,16 +36,16 @@ namespace Froggies
 			{
 				Translation targetTranslation = translationLookup[currentTarget.targetData.targetEntity];
 
-			//If our target has moved, update our target pos.
-			if (!targetTranslation.Value.Equals(currentTarget.targetData.targetPos))
+				//If our target has moved, update our target pos.
+				if (!targetTranslation.Value.Equals(currentTarget.targetData.targetPos))
 				{
 					currentTarget.targetData.targetPos = targetTranslation.Value;
 				}
 
 				float distance = math.distance(translation.Value, currentTarget.targetData.targetPos);
 
-			//We are in range, execute attack command.
-			if (distance < combatUnit.attackRange)
+				//We are in range, execute attack command.
+				if (distance < combatUnit.attackRange)
 				{
 					CommandProcessSystem.ExecuteCommand(ref commandBuffer);
 

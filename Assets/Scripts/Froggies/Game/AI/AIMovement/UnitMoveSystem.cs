@@ -36,14 +36,13 @@ namespace Froggies
 			Dependency = Entities
 				.WithAny<MovingToAttackState, MovingToDepositState, MovingToHarvestState>()
 				.WithAny<MovingToPositionState>()
+				.WithAll<HasPathTag>()
 				.ForEach((ref PhysicsVelocity velocity, ref LocalToWorld transform, ref Rotation rotation,
 					ref UnitMove unitMove, in PathFinding pathFinding, in PreviousTarget previousTarget,
 					in DynamicBuffer<PathNode> path) =>
 				{
-					if (!pathFinding.hasPath)
-						return;
 #if UNITY_EDITOR
-				float3 pos1 = transform.Position;
+					float3 pos1 = transform.Position;
 
 					for (int i = pathFinding.currentIndexOnPath; i < path.Length; ++i)
 					{
@@ -64,7 +63,7 @@ namespace Froggies
 					}
 #endif
 
-				float3 pos = transform.Position;
+					float3 pos = transform.Position;
 					pos.y = 0;
 
 					float3 targetPos = path[pathFinding.currentIndexOnPath].position;
@@ -106,16 +105,12 @@ namespace Froggies
 			EntityCommandBuffer.ParallelWriter ecb = m_endSimECBSystem.CreateCommandBuffer().AsParallelWriter();
 
 			Dependency = Entities
-				.WithAll<MovingToPositionState>()
+				.WithAll<MovingToPositionState, HasPathTag>()
 				.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer,
 					ref UnitMove unitMove, ref PhysicsVelocity physicsVelocity, ref PathFinding pathfinding,
 					in Translation translation, in DynamicBuffer<PathNode> path) =>
 				{
-					if (!pathfinding.hasPath)
-						return;
-
-					float distanceSq = math.distancesq(translation.Value.xz,
-						path[pathfinding.currentIndexOnPath].position.xz);
+					float distanceSq = math.distancesq(translation.Value.xz, path[pathfinding.currentIndexOnPath].position.xz);
 
 
 					if (distanceSq < 1.0f)
@@ -130,7 +125,7 @@ namespace Froggies
 						unitMove.rotating = false;
 						physicsVelocity.Linear = 0;
 						commandBuffer.RemoveAt(0);
-						pathfinding.hasPath = false;
+						pathfinding.completedPath = true;
 						//Debug.Log("Reached target position, move to next command");
 					}
 				}).ScheduleParallel(Dependency);

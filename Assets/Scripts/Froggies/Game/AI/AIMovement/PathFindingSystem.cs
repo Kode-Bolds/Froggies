@@ -5,281 +5,313 @@ using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEngine;
 
 namespace Froggies
 {
-    public class PathFindingSystem : KodeboldJobSystem
-    {
-        private GridManager m_gridManager;
-        private static NativeArray2D<MapNode> m_grid;
+	public class PathFindingSystem : KodeboldJobSystem
+	{
+		private EndSimulationEntityCommandBufferSystem m_endSimulationECB;
+		private GridManager m_gridManager;
 
-        private float recalculatePeriod = 1f;
+		private EntityQuery m_pathFindingQuery;
+		private float recalculatePeriod = 1f;
 
-        private EntityQuery m_pathFindingQuery;
+		public override void GetSystemDependencies(Dependencies dependencies)
+		{
+			m_gridManager = dependencies.GetDependency<GridManager>();
+		}
 
-        public override void GetSystemDependencies(Dependencies dependencies)
-        {
-            m_gridManager = dependencies.GetDependency<GridManager>();
-        }
+		public override void InitSystem()
+		{
+			m_pathFindingQuery = GetEntityQuery(
+				ComponentType.ReadWrite<PathFinding>(),
+				ComponentType.ReadWrite<PathNode>(),
+				ComponentType.ReadOnly<CurrentTarget>(),
+				ComponentType.ReadOnly<Translation>());
 
-        public override void InitSystem()
-        {
-            m_grid = m_gridManager.Grid;
-            m_pathFindingQuery = GetEntityQuery(ComponentType.ReadWrite<PathFinding>(),
-                ComponentType.ReadWrite<PathNode>(),
-                ComponentType.ReadOnly<CurrentTarget>());
-        }
+			m_endSimulationECB = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+		}
 
-        public override void UpdateSystem()
-        {
-            //We use IJobChunk so that we can share a grid between all pathfinders in a chunk
-            Dependency = new PathFindingJob
-            {
-                pathFindingComponentHandle = GetComponentTypeHandle<PathFinding>(),
-                pathNodeBufferHandle = GetBufferTypeHandle<PathNode>(),
-                currentTargetComponentHandle = GetComponentTypeHandle<CurrentTarget>(true),
-                gridRef = m_grid
-            }.ScheduleParallel(m_pathFindingQuery, Dependency);
-        }
+		public override void UpdateSystem()
+		{
+			//We use IJobChunk so that we can share a grid between all pathfinders in a chunk
+			Dependency = new PathFindingJob
+			{
+				pathFindingComponentHandle = GetComponentTypeHandle<PathFinding>(),
+				hasPathComponentHandle = GetComponentTypeHandle<HasPathTag>(),
+				pathNodeBufferHandle = GetBufferTypeHandle<PathNode>(),
+				currentTargetComponentHandle = GetComponentTypeHandle<CurrentTarget>(true),
+				translationComponentHandle = GetComponentTypeHandle<Translation>(true),
+				entityType = GetEntityTypeHandle(),
+				gridRef = m_gridManager.Grid,
+				ecb = m_endSimulationECB.CreateCommandBuffer().AsParallelWriter()
+			}.ScheduleParallel(m_pathFindingQuery, Dependency);
 
-        [BurstCompile]
-        private unsafe struct PathFindingJob : IJobChunk
-        {
-            public ComponentTypeHandle<PathFinding> pathFindingComponentHandle;
-            public BufferTypeHandle<PathNode> pathNodeBufferHandle;
-            [ReadOnly] public ComponentTypeHandle<CurrentTarget> currentTargetComponentHandle;
+			m_endSimulationECB.AddJobHandleForProducer(Dependency);
+		}
 
-            [ReadOnly] public NativeArray2D<MapNode> gridRef;
+		[BurstCompile]
+		private unsafe struct PathFindingJob : IJobChunk
+		{
+			public ComponentTypeHandle<PathFinding> pathFindingComponentHandle;
+			public ComponentTypeHandle<HasPathTag> hasPathComponentHandle;
+			public BufferTypeHandle<PathNode> pathNodeBufferHandle;
+			[ReadOnly] public ComponentTypeHandle<CurrentTarget> currentTargetComponentHandle;
+			[ReadOnly] public ComponentTypeHandle<Translation> translationComponentHandle;
+			[ReadOnly] public EntityTypeHandle entityType;
 
-            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
-            {
-                NativeArray<PathFinding> pathfindingArray = chunk.GetNativeArray(pathFindingComponentHandle);
-                BufferAccessor<PathNode> pathNodeBufferAccessor = chunk.GetBufferAccessor(pathNodeBufferHandle);
-                NativeArray<CurrentTarget> currentTargetArray = chunk.GetNativeArray(currentTargetComponentHandle);
+			[ReadOnly] public NativeArray2D<MapNode> gridRef;
+			public EntityCommandBuffer.ParallelWriter ecb;
 
-                NativeArray2D<MapNode> gridCopy = new NativeArray2D<MapNode>(gridRef.Length0, gridRef.Length1,
-                    Allocator.Temp, NativeArrayOptions.UninitializedMemory);
-                UnsafeUtility.MemCpy(gridCopy.GetUnsafePtr(), gridRef.GetUnsafePtrReadOnly(),
-                    gridRef.Length * sizeof(MapNode));
+			public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+			{
+				//Writeable.
+				NativeArray<PathFinding> pathfindingArray = chunk.GetNativeArray(pathFindingComponentHandle);
+				BufferAccessor<PathNode> pathNodeBufferAccessor = chunk.GetBufferAccessor(pathNodeBufferHandle);
 
-                for (int i = 0; i < chunk.Count; ++i)
-                {
-                    PathFinding pathfinding = pathfindingArray[i];
-                    CurrentTarget currentTarget = currentTargetArray[i];
-                    DynamicBuffer<PathNode> path = pathNodeBufferAccessor[i];
+				//Read Only.
+				NativeArray<CurrentTarget> currentTargetArray = chunk.GetNativeArray(currentTargetComponentHandle);
+				NativeArray<Translation> translationArray = chunk.GetNativeArray(translationComponentHandle);
+				NativeArray<Entity> entities = chunk.GetNativeArray(entityType);
 
-                    if (!pathfinding.requestedPath)
-                        continue;
-                    
-                    path.Clear();
-                    pathfinding.currentIndexOnPath = 0;
+				//Create a copy of the grid for this thread and chunk.
+				NativeArray2D<MapNode> gridCopy = new NativeArray2D<MapNode>(gridRef.Length0, gridRef.Length1, Allocator.Temp, NativeArrayOptions.UninitializedMemory);
+				UnsafeUtility.MemCpy(gridCopy.GetUnsafePtr(), gridRef.GetUnsafePtrReadOnly(), gridRef.Length * sizeof(MapNode));
 
-                    //Calculate closest node to targetpos
-                    pathfinding.targetNode = FindNearestNode(currentTarget.targetData.targetPos);
-                    if (pathfinding.targetNode.Equals(pathfinding.currentNode))
-                    {
-                        pathfinding.requestedPath = false;
-                        continue;
-                    }
+				for (int indexInChunk = 0; indexInChunk < chunk.Count; ++indexInChunk)
+				{
+					//Writable.
+					PathFinding pathfinding = pathfindingArray[indexInChunk];
+					DynamicBuffer<PathNode> path = pathNodeBufferAccessor[indexInChunk];
 
-                    //Set h values of grid
-                    CalculateGridH(gridCopy, ref pathfinding);
+					//Read Only.
+					Entity entity = entities[indexInChunk];
+					CurrentTarget currentTarget = currentTargetArray[indexInChunk];
+					Translation translation = translationArray[indexInChunk];
 
-                    bool pathfound = SearchForPath(pathfinding.currentNode, pathfinding.targetNode, gridCopy);
+					bool hasPath = chunk.Has(hasPathComponentHandle);
 
-                    //Reverse path
-                    if (pathfound)
-                    {
-                        MapNode node = gridCopy[pathfinding.currentNode.x, pathfinding.currentNode.y];
-                        while (node.child != null)
-                        {
-                            path.Add(new PathNode {position = node.position, gridPosition = node.gridPosition});
-                            node = *node.child;
-                        }  
-                        path.Add(new PathNode {position = node.position, gridPosition = node.gridPosition});
+					if (!pathfinding.requestedPath)
+					{
+						//We only want to remove our has path component if we didn't request a new one, to avoid re-adding later in the job if we find a new path.
+						if (pathfinding.completedPath)
+						{
+							pathfinding.completedPath = false;
+							ecb.RemoveComponent<HasPathTag>(chunkIndex, entity);
+							pathfindingArray[indexInChunk] = pathfinding;
+						}
 
-                        pathfinding.hasPath = true;
-                        pathfinding.requestedPath = false;
-                    }
+						continue;
+					}
 
-                    pathfindingArray[i] = pathfinding;
-                }
+					path.Clear();
+					pathfinding.currentIndexOnPath = 0;
+					pathfinding.completedPath = false;
+					pathfinding.requestedPath = false;
 
-                gridCopy.Dispose();
-            }
-        }
+					//Calculate the closest nodes to us and our target position.
+					//Don't search for path if we're already at our target node.
+					pathfinding.currentNode = FindNearestNode(translation.Value, gridCopy);
+					pathfinding.targetNode = FindNearestNode(currentTarget.targetData.targetPos, gridCopy);
+					if (pathfinding.targetNode.Equals(pathfinding.currentNode))
+					{
+						pathfindingArray[indexInChunk] = pathfinding;
+						continue;
+					}
 
-        private struct NodeCompare : IComparer<MapNode>
-        {
-            public int Compare(MapNode node1, MapNode node2)
-            {
-                int fCompare = node1.f.CompareTo(node2.f);
-                if (fCompare != 0)
-                    return fCompare;
+					CalculateGridH(gridCopy, ref pathfinding);
 
-                return node1.h.CompareTo(node2.h);
-            }
-        }
+					bool pathfound = SearchForPath(pathfinding.currentNode, pathfinding.targetNode, gridCopy);
 
-        private static unsafe bool SearchForPath(int2 currentNode, int2 targetNode, NativeArray2D<MapNode> gridCopy)
-        {
-            //Get pointer into flat array
-            MapNode* currentNodePtr = gridCopy.GetPointerToElement(currentNode.x, currentNode.y);
+					if (pathfound)
+					{
+						ConstructPath(gridCopy, ref pathfinding, ref path);
 
-            //Get passable neighbours
-            NativeList<MapNode> passableNeighbours = GetPassableNeighbours(currentNode, gridCopy, currentNodePtr);
+						if (!hasPath)
+							ecb.AddComponent<HasPathTag>(chunkIndex, entity);
+					}
+					else if (hasPath)
+					{
+						ecb.RemoveComponent<HasPathTag>(chunkIndex, entity);
+					}
 
-            NodeCompare nodeCompare = new NodeCompare();
-            passableNeighbours.Sort(nodeCompare);
+					pathfindingArray[indexInChunk] = pathfinding;
+				}
 
-            currentNodePtr->state = NodeState.Closed;
-            for (int i = 0; i < passableNeighbours.Length; ++i)
-            {
-                MapNode neighbour = passableNeighbours[i];
-                
-                currentNodePtr->child =
-                    gridCopy.GetPointerToElement(neighbour.gridPosition.x, neighbour.gridPosition.y);
-                
-                //WE HAVE FOUND THE TARGET
-                if (neighbour.gridPosition.Equals(targetNode))
-                {
-                    passableNeighbours.Dispose();
-                    return true;
-                }
+				gridCopy.Dispose();
+			}
+		}
 
-                //recurse
-                if (SearchForPath(neighbour.gridPosition, targetNode, gridCopy))
-                {
-                    passableNeighbours.Dispose();
-                    return true;
-                }
-            }
+		public static int2 FindNearestNode(float3 pos, NativeArray2D<MapNode> grid)
+		{
+			if (!grid.IsCreated)
+				Debug.Assert(false);
 
-            passableNeighbours.Dispose();
-            return false;
-        }
+			//TODO: Can we do a binary search here?
+			int2 closestNode = default;
+			float closestDistSq = float.MaxValue;
 
-        private static unsafe void CalculateGridH(NativeArray2D<MapNode> gridCopy, ref PathFinding kPathfinding)
-        {
-            //Fill in h values for grid
-            for (int i = 0; i < gridCopy.Length0; ++i)
-            {
-                for (int j = 0; j < gridCopy.Length1; ++j)
-                {
-                    MapNode node = gridCopy[i, j];
-                    node.h = math.distancesq(gridCopy[i, j].position,
-                        gridCopy[kPathfinding.targetNode.x, kPathfinding.targetNode.y].position);
+			for (int i = 0; i < grid.Length0; ++i)
+			{
+				for (int j = 0; j < grid.Length1; ++j)
+				{
+					float distanceSq = math.distancesq(grid[i, j].position, pos);
+					if (distanceSq < closestDistSq)
+					{
+						closestNode = new int2(i, j);
+						closestDistSq = distanceSq;
+					}
+				}
+			}
 
-                    node.parent = null;
-                    node.child = null;
-                    node.state = NodeState.Untested;
+			return closestNode;
+		}
 
-                    gridCopy[i, j] = node;
-                }
-            }
-        }
+		private static unsafe void CalculateGridH(NativeArray2D<MapNode> gridCopy, ref PathFinding kPathfinding)
+		{
+			//Fill in h values for grid.
+			for (int i = 0; i < gridCopy.Length0; ++i)
+			{
+				for (int j = 0; j < gridCopy.Length1; ++j)
+				{
+					MapNode node = gridCopy[i, j];
+					node.h = math.distancesq(gridCopy[i, j].position, gridCopy[kPathfinding.targetNode.x, kPathfinding.targetNode.y].position);
 
-        public static int2 FindNearestNode(float3 pos)
-        {
-            if (!m_grid.IsCreated)
-                Debug.Assert(false);
+					node.parent = null;
+					node.child = null;
+					node.state = NodeState.Untested;
 
-            //Can we do a binary search here?
-            int2 closestNode = default;
-            float closestDistSq = float.MaxValue;
+					gridCopy[i, j] = node;
+				}
+			}
+		}
 
-            for (int i = 0; i < m_grid.Length0; ++i)
-            {
-                for (int j = 0; j < m_grid.Length1; ++j)
-                {
-                    float distanceSq = math.distancesq(m_grid[i, j].position, pos);
-                    if (distanceSq < closestDistSq)
-                    {
-                        closestNode = new int2(i, j);
-                        closestDistSq = distanceSq;
-                    }
-                }
-            }
+		private struct NodeCompare : IComparer<MapNode>
+		{
+			public int Compare(MapNode node1, MapNode node2)
+			{
+				int fCompare = node1.f.CompareTo(node2.f);
+				if (fCompare != 0)
+					return fCompare;
 
-            return closestNode;
-        }
+				return node1.h.CompareTo(node2.h);
+			}
+		}
 
-        private static unsafe NativeList<MapNode> GetPassableNeighbours(int2 currentNode,
-            NativeArray2D<MapNode> gridCopy, MapNode* currentNodePtr)
-        {
-            NativeList<MapNode> neighbours = new NativeList<MapNode>(8, Allocator.Temp);
+		private static unsafe bool SearchForPath(int2 currentNode, int2 targetNode, NativeArray2D<MapNode> gridCopy)
+		{
+			MapNode* currentNodePtr = gridCopy.GetPointerToElement(currentNode);
 
-            bool CheckXBounds(int x)
-            {
-                return (x < gridCopy.Length0 && x >= 0);
-            }
+			NativeList<MapNode> passableNeighbours = GetPassableNeighbours(currentNode, gridCopy, currentNodePtr);
 
-            bool CheckYBounds(int y)
-            {
-                return (y < gridCopy.Length1 && y >= 0);
-            }
+			NodeCompare nodeCompare = new NodeCompare();
+			passableNeighbours.Sort(nodeCompare);
 
-            for (int x = -1; x <= 1; ++x)
-            {
-                int xIndex = currentNode.x + x;
+			currentNodePtr->state = NodeState.Closed;
+			for (int i = 0; i < passableNeighbours.Length; ++i)
+			{
+				MapNode neighbour = passableNeighbours[i];
+				currentNodePtr->child = gridCopy.GetPointerToElement(neighbour.gridPosition);
 
-                if (!CheckXBounds(xIndex))
-                    continue;
+				//Target has been reached.
+				if (neighbour.gridPosition.Equals(targetNode))
+				{
+					passableNeighbours.Dispose();
+					return true;
+				}
 
-                for (int y = -1; y <= 1; ++y)
-                {
-                    if (x == 0 && y == 0)
-                        continue;
+				//Recursively search deeper.
+				if (SearchForPath(neighbour.gridPosition, targetNode, gridCopy))
+				{
+					passableNeighbours.Dispose();
+					return true;
+				}
+			}
 
-                    int yIndex = currentNode.y + y;
+			passableNeighbours.Dispose();
+			return false;
+		}
 
-                    if (!CheckYBounds(yIndex))
-                        continue;
+		private static unsafe NativeList<MapNode> GetPassableNeighbours(int2 currentNode,
+			NativeArray2D<MapNode> gridCopy, MapNode* currentNodePtr)
+		{
+			NativeList<MapNode> neighbours = new NativeList<MapNode>(8, Allocator.Temp);
 
-                    neighbours.Add(gridCopy[xIndex, yIndex]);
-                }
-            }
+			//Find all neighbours on the grid by checking if all surrounding nodes are within grid bounds and are valid nodes to traverse to.
+			for (int x = -1; x <= 1; ++x)
+			{
+				int xIndex = currentNode.x + x;
 
-            NativeList<MapNode> activeNeighbours = new NativeList<MapNode>(8, Allocator.Temp);
+				if (!gridCopy.CheckXBounds(xIndex))
+					continue;
 
-            for (int i = 0; i < neighbours.Length; ++i)
-            {
-                MapNode neighbour = neighbours[i];
-                if (neighbour.occupiedBy != OccupiedBy.Nothing || neighbour.state == NodeState.Closed)
-                    continue;
+				for (int y = -1; y <= 1; ++y)
+				{
+					if (x == 0 && y == 0)
+						continue;
 
-                if (neighbour.state == NodeState.Open)
-                {
-                    float gDistance = math.distancesq(neighbour.position, neighbour.parent->position);
-                    float tempGDistance = currentNodePtr->g + gDistance;
+					int yIndex = currentNode.y + y;
 
-                    if (tempGDistance < neighbour.g)
-                    {
-                        MapNode* neighbourPtr =
-                            gridCopy.GetPointerToElement(neighbour.gridPosition.x, neighbour.gridPosition.y);
+					if (!gridCopy.CheckYBounds(yIndex))
+						continue;
 
-                        neighbourPtr->SetParent(currentNodePtr);
-                        activeNeighbours.Add(*neighbourPtr);
-                    }
-                }
-                else
-                {
-                    MapNode* neighbourPtr =
-                        gridCopy.GetPointerToElement(neighbour.gridPosition.x, neighbour.gridPosition.y);
+					MapNode neighbour = gridCopy[xIndex, yIndex];
+					if (neighbour.occupiedBy != OccupiedBy.Nothing || neighbour.state == NodeState.Closed)
+						continue;
 
-                    neighbourPtr->SetParent(currentNodePtr);
-                    neighbourPtr->state = NodeState.Open;
-                    activeNeighbours.Add(*neighbourPtr);
-                }
-            }
+					TestNeighbour(gridCopy, ref neighbour, currentNodePtr, neighbours);
 
-            neighbours.Dispose();
-            return activeNeighbours;
-        }
+					neighbours.Add(gridCopy[xIndex, yIndex]);
+				}
+			}
 
-        public override void FreeSystem()
-        {
-        }
-    }
+			return neighbours;
+		}
+
+		private unsafe static void TestNeighbour(NativeArray2D<MapNode> gridCopy, ref MapNode kNeighbour, MapNode* currentNodePtr, NativeList<MapNode> neighbours)
+		{
+			//If node is open, (eg. already tested previously), we compare the g distances to see if traversing the neighbouring node will be more efficient from this node than its parents node.
+			if (kNeighbour.state == NodeState.Open)
+			{
+				float gDistance = math.distancesq(kNeighbour.position, kNeighbour.parent->position);
+				float tempGDistance = currentNodePtr->g + gDistance;
+
+				if (tempGDistance < kNeighbour.g)
+				{
+					MapNode* neighbourPtr = gridCopy.GetPointerToElement(kNeighbour.gridPosition);
+
+					neighbourPtr->SetParent(currentNodePtr);
+					neighbours.Add(*neighbourPtr);
+				}
+			}
+			//If we're untested, we don't have a parent already, so set parent and add to list.
+			else
+			{
+				MapNode* neighbourPtr = gridCopy.GetPointerToElement(kNeighbour.gridPosition);
+
+				neighbourPtr->SetParent(currentNodePtr);
+				neighbourPtr->state = NodeState.Open;
+				neighbours.Add(*neighbourPtr);
+			}
+		}
+
+		/// <summary>
+		/// Iterates through the children of the current node to the target to retrieve the path.
+		/// </summary>
+		private unsafe static void ConstructPath(NativeArray2D<MapNode> gridCopy, ref PathFinding pathfinding, ref DynamicBuffer<PathNode> path)
+		{
+			MapNode node = gridCopy[pathfinding.currentNode.x, pathfinding.currentNode.y];
+			while (node.child != null)
+			{
+				path.Add(new PathNode { position = node.child->position, gridPosition = node.child->gridPosition });
+				node = *node.child;
+			}
+		}
+
+		public override void FreeSystem()
+		{
+		}
+	}
 }

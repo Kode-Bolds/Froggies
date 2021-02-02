@@ -7,6 +7,7 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.Jobs;
+using Unity.Mathematics;
 
 namespace Kodebolds.Core
 {
@@ -119,6 +120,14 @@ namespace Kodebolds.Core
 			return (T*)m_Buffer + index1 * m_Length0 + index0;
 		}
 
+		public T* GetPointerToElement(int2 indices)
+		{
+			RequireReadAccess();
+			RequireIndexInBounds(indices.x, indices.y);
+
+			return (T*)m_Buffer + indices.y * m_Length0 + indices.x;
+		}
+
 		[Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS")]
 		private static void RequireValidAllocator(Allocator allocator)
 		{
@@ -141,6 +150,7 @@ namespace Kodebolds.Core
 		}
 
 		[Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS")]
+		[BurstDiscard]
 		private void RequireIndexInBounds(int index0, int index1)
 		{
 			if (index0 < 0 || index0 >= m_Length0)
@@ -148,6 +158,16 @@ namespace Kodebolds.Core
 
 			if (index1 < 0 || index1 >= m_Length1)
 				throw new IndexOutOfRangeException("Index1 " + index1 + " out of bounds of range " + m_Length1);
+		}
+
+		public bool CheckXBounds(int x)
+		{
+			return (x < m_Length0 && x >= 0);
+		}
+
+		public bool CheckYBounds(int y)
+		{
+			return (y < m_Length1 && y >= 0);
 		}
 
 		public AtomicSafetyHandle GetAtomicSafetyHandle()
