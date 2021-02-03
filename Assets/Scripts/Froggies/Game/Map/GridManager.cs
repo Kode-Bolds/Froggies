@@ -1,3 +1,4 @@
+using System;
 using Kodebolds.Core;
 using Unity.Collections;
 using Unity.Mathematics;
@@ -11,6 +12,10 @@ namespace Froggies
         public NativeArray2D<MapNode> Grid;
         [SerializeField] public int m_cellSize;
         [SerializeField] public int2 m_gridSize;
+
+        private void OnDrawGizmos()
+        {
+        }
 
         public override void GetBehaviourDependencies(Dependencies dependencies)
         {

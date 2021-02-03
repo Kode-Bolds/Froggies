@@ -262,8 +262,6 @@ namespace Froggies
 						continue;
 
 					TestNeighbour(gridCopy, ref neighbour, currentNodePtr, neighbours);
-
-					neighbours.Add(gridCopy[xIndex, yIndex]);
 				}
 			}
 
