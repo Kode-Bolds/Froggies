@@ -13,9 +13,27 @@ namespace Froggies
         [SerializeField] public int m_cellSize;
         [SerializeField] public int2 m_gridSize;
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
+            Gizmos.color = Color.cyan;
+            for (int i = 0; i <= m_gridSize.x; i++)
+            {
+                Vector3 start = transform.position + new Vector3(m_cellSize * i, 0, 0);
+                Vector3 end = start + new Vector3(0, 0, m_gridSize.y * m_cellSize);
+
+                Gizmos.DrawLine(start, end);
+            }
+
+            for (int i = 0; i <= m_gridSize.y; i++)
+            {
+                Vector3 start = transform.position + new Vector3(0, 0, m_cellSize * i);
+                Vector3 end = start + new Vector3(m_gridSize.x * m_cellSize, 0, 0);
+
+                Gizmos.DrawLine(start, end);
+            }
         }
+#endif
 
         public override void GetBehaviourDependencies(Dependencies dependencies)
         {
