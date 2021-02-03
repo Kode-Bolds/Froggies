@@ -9,8 +9,8 @@ namespace Froggies.EditorScripts
         {
             base.OnInspectorGUI();
         }
-
-        [DrawGizmo(GizmoType.Active)]
+        
+        [DrawGizmo(GizmoType.Selected | GizmoType.NonSelected)]
         static void DrawGrid(GridManager gridManager, GizmoType gizmoType)
         {
             Gizmos.color = Color.cyan;
