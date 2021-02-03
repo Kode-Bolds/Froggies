@@ -13,6 +13,7 @@ namespace Froggies
         [SerializeField] public int m_cellSize;
         [SerializeField] public int2 m_gridSize;
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.cyan;
@@ -32,6 +33,7 @@ namespace Froggies
                 Gizmos.DrawLine(start, end);
             }
         }
+#endif
 
         public override void GetBehaviourDependencies(Dependencies dependencies)
         {
