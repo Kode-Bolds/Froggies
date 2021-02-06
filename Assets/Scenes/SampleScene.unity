@@ -739,7 +739,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resources: {fileID: 8298403794239398424, guid: 4577b10244587834495770b63c41819f, type: 3}
-  stateTransitionQueue: {fileID: 6438835506329870834, guid: 7250262a2f43a49b3a01d6c2f14bdc93, type: 3}
 --- !u!4 &1297448084
 Transform:
   m_ObjectHideFlags: 0

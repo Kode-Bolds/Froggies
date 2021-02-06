@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="width: 100%; height: 100%; opacity: 1;">
+        <ui:VisualElement name="Container" style="flex-direction: row; height: 100%;">
+            <ui:VisualElement name="Left" style="flex-grow: 1; height: 100%;" />
+            <ui:VisualElement name="Center" style="flex-grow: 1; height: 100%;">
+                <ui:VisualElement name="Top" style="height: 33.33%; justify-content: center; align-items: center;">
+                    <ui:Label text="Froggies" display-tooltip-when-elided="True" style="align-items: center; justify-content: center; font-size: 43px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Middle" style="justify-content: center; align-items: stretch; height: 33.33%;">
+                    <ui:Button text="Start" display-tooltip-when-elided="True" name="StartButton" style="justify-content: center; align-items: center; display: flex; opacity: 1; height: 33%;" />
+                    <ui:Button text="Options" display-tooltip-when-elided="True" name="OptionsButton" style="justify-content: center; align-items: center; display: flex; opacity: 1; height: 33%;" />
+                    <ui:Button text="Exit" display-tooltip-when-elided="True" name="ExitButton" style="justify-content: center; align-items: center; display: flex; opacity: 1; height: 33%;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Bottom" style="height: 33.33%;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Right" style="flex-grow: 1; height: 100%;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

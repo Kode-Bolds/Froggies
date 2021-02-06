@@ -14,6 +14,8 @@ public class SelectionSystem : KodeboldJobSystem
     private RaycastSystem m_raycastSystem;
     private NativeArray<float3> m_boxBounds;
 
+    public bool redrawSelectedUnits = false;
+
     public override void GetSystemDependencies(Dependencies dependencies)
     {
         m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();
@@ -28,7 +30,6 @@ public class SelectionSystem : KodeboldJobSystem
 
     public override void UpdateSystem()
     {
-
         bool leftClickPressed = m_inputManagementSystem.InputData.mouseInput.leftClickPressed;
         bool leftClickReleased = m_inputManagementSystem.InputData.mouseInput.leftClickReleased;
         bool leftClickDown = m_inputManagementSystem.InputData.mouseInput.leftClickDown;
@@ -55,7 +56,7 @@ public class SelectionSystem : KodeboldJobSystem
                 boxBoundsSorted[0] = math.min(boxBounds[0], boxBounds[1]);
                 boxBoundsSorted[1] = math.max(boxBounds[0], boxBounds[1]);
             }).Schedule(Dependency);
-        
+
             EntityCommandBuffer.ParallelWriter ecbConcurrent = m_entityCommandBuffer.CreateCommandBuffer().AsParallelWriter();
 
             //Remove previous selections
@@ -90,8 +91,10 @@ public class SelectionSystem : KodeboldJobSystem
                         ecbConcurrent.AddComponent(entityInQueryIndex, entity, new SelectedTag { });
                     }
                 }).ScheduleParallel(Dependency);
-                
+
                 m_entityCommandBuffer.AddJobHandleForProducer(Dependency);
+
+                redrawSelectedUnits = true;
             }
             boxBoundsSorted.Dispose(Dependency);
         }
