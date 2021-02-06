@@ -89,7 +89,7 @@ namespace Froggies
 				}
 
 #if UNITY_EDITOR
-			for (int commandIndex = 1; commandIndex < commandBuffer.Length; commandIndex++)
+				for (int commandIndex = 1; commandIndex < commandBuffer.Length; commandIndex++)
 				{
 					debugDrawCommandQueue.Enqueue(new DebugDrawCommand
 					{
@@ -104,31 +104,32 @@ namespace Froggies
 				}
 #endif
 
-			Command currentCommand = commandBuffer[0];
+				Command currentCommand = commandBuffer[0];
 
 				if (currentCommand.commandStatus == CommandStatus.Complete)
 				{
-				//If the command is complete remove it from the queue
-				commandBuffer.RemoveAt(0);
+					//If the command is complete remove it from the queue
+					commandBuffer.RemoveAt(0);
 					if (commandBuffer.Length != 0)
 					{
-					//Process the next command
-					currentCommand = commandBuffer[0];
+						//Process the next command
+						currentCommand = commandBuffer[0];
 					}
 					else
 					{
+						currentAIState.RequestStateChange(AIState.Idle);
 						return;
 					}
 				}
 
 				if (currentCommand.commandStatus == CommandStatus.Queued)
 				{
-				//If we have not been assigned a target for this command, then we attempt to find a target for it.
-				//We loop here until we hit a command with a target or the command queue is empty, in which case we switch to idle.
-				while (currentCommand.commandData.targetData.targetEntity == Entity.Null)
+					//If we have not been assigned a target for this command, then we attempt to find a target for it.
+					//We loop here until we hit a command with a target or the command queue is empty, in which case we switch to idle.
+					while (currentCommand.commandData.targetData.targetEntity == Entity.Null)
 					{
-					//If we don't find a target, then we move on to the next command if there is one, or set our state to idle.
-					if (!FindNearestTarget(ref currentCommand, translation, resourceTargets, resourceTranslations, resourceEntities, storeTargets, storeTranslations, storeEntities, enemyTargets, enemyTranslations, enemyEntities))
+						//If we don't find a target, then we move on to the next command if there is one, or set our state to idle.
+						if (!FindNearestTarget(ref currentCommand, translation, resourceTargets, resourceTranslations, resourceEntities, storeTargets, storeTranslations, storeEntities, enemyTargets, enemyTranslations, enemyEntities))
 						{
 							commandBuffer.RemoveAt(0);
 							if (commandBuffer.Length > 0)
@@ -145,17 +146,17 @@ namespace Froggies
 
 					currentCommand.commandStatus = CommandStatus.MovingPhase;
 					pathFinding.requestedPath = true;
-					//Debug.Log($"Processing the moving phase { currentCommand.commandType } command from queue");
+					Debug.Log($"Processing the moving phase { currentCommand.commandType } command from queue");
 					ProcessMovingPhaseCommand(entity, ref currentCommand, ref currentAIState);
-				//We do not progress state to execution here as we leave the specific systems to tell us when we are in range for the command.
+					//We do not progress state to execution here as we leave the specific systems to tell us when we are in range for the command.
 
-			}
+				}
 				else if (currentCommand.commandStatus == CommandStatus.ExecutionPhase && currentCommand.commandStatus != currentCommand.previousCommandStatus)
 				{
-					//Debug.Log($"Processing the execution phase { currentCommand.commandType } command from queue");
+					Debug.Log($"Processing the execution phase { currentCommand.commandType } command from queue");
 					ProcessExecutionPhaseCommand(entity, ref currentCommand, ref currentAIState);
-				//We do not progress state to complete here as we leave the specific systems to tell us when we have completed the command.
-			}
+					//We do not progress state to complete here as we leave the specific systems to tell us when we have completed the command.
+				}
 
 				currentCommand.previousCommandStatus = currentCommand.commandStatus;
 				commandBuffer[0] = currentCommand;
@@ -173,7 +174,7 @@ namespace Froggies
 		{
 			AITargetType targetType = currentCommand.commandData.targetData.targetType;
 
-			//Debug.Log($"Finding nearest target of type { targetType }");
+			Debug.Log($"Finding nearest target of type { targetType }");
 
 			int closestTargetIndex = -1;
 			switch (targetType)
@@ -187,7 +188,7 @@ namespace Froggies
 					//If we don't find a nearby resource node, then find the nearest store to deposit at and queue a deposit command with the new target.
 					if (closestTargetIndex == -1)
 					{
-						//Debug.Log($"Finding nearest target of type { AITargetType.Store }");
+						Debug.Log($"Finding nearest target of type { AITargetType.Store }");
 
 						closestTargetIndex = FindTarget(storeTargets, storeTranslations, storeEntities, AITargetType.Store, translation);
 
@@ -285,9 +286,9 @@ namespace Froggies
 			}
 
 			//if (closestIndex != -1)
-				//Debug.Log($"Closest target at index { closestIndex } with entity id { targetEntities[closestIndex].Index }");
+			Debug.Log($"Closest target at index { closestIndex } with entity id { targetEntities[closestIndex].Index }");
 			//else
-				//Debug.Log("Target not found");
+			Debug.Log("Target not found");
 
 			return closestIndex;
 		}
@@ -346,7 +347,7 @@ namespace Froggies
 			};
 
 			commandBuffer.Add(newCommand);
-			//Debug.Log($"Added { commandType } command to the queue");
+			Debug.Log($"Added { commandType } command to the queue");
 		}
 
 		public static void ExecuteCommand(ref DynamicBuffer<Command> commandBuffer)
@@ -355,7 +356,7 @@ namespace Froggies
 			currentCommand.previousCommandStatus = currentCommand.commandStatus;
 			currentCommand.commandStatus = CommandStatus.ExecutionPhase;
 			commandBuffer[0] = currentCommand;
-			//Debug.Log("Execute command of type " + currentCommand.commandType);
+			Debug.Log("Execute command of type " + currentCommand.commandType);
 		}
 
 		public static void CompleteCommand(ref DynamicBuffer<Command> commandBuffer)
@@ -364,7 +365,7 @@ namespace Froggies
 			currentCommand.previousCommandStatus = currentCommand.commandStatus;
 			currentCommand.commandStatus = CommandStatus.Complete;
 			commandBuffer[0] = currentCommand;
-			//Debug.Log("Complete execution command of type " + currentCommand.commandType);
+			Debug.Log("Complete execution command of type " + currentCommand.commandType);
 		}
 
 		public static void RestartCommand(ref DynamicBuffer<Command> commandBuffer)
@@ -373,7 +374,7 @@ namespace Froggies
 			currentCommand.previousCommandStatus = currentCommand.commandStatus;
 			currentCommand.commandStatus = CommandStatus.Queued;
 			commandBuffer[0] = currentCommand;
-			//Debug.Log("Restarting command of type " + currentCommand.commandType);
+			Debug.Log("Restarting command of type " + currentCommand.commandType);
 		}
 	}
 }

@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3880846525754493759}
   - component: {fileID: 1944877857726198113}
   m_Layer: 0
-  m_Name: Harvester
+  m_Name: MeleeUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52a76e0911c149f40967466c70f2dc94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 1
+  unitType: 2
   unitMove:
     moveSpeed: 500
     rotating: 0
@@ -346,7 +346,7 @@ MonoBehaviour:
     y: 1
     z: 1
   health:
-    health: 0
+    health: 15
   resistances:
     armour: 0
     resistanceFlags: 0
@@ -359,10 +359,10 @@ MonoBehaviour:
     harvestTickCooldown: 0.5
     harvestRange: 2.5
   combatUnit:
-    attackDamage: 0
-    damageType: 0
-    attackRange: 0
-    attackSpeed: 0
+    attackDamage: 1
+    damageType: 1
+    attackRange: 5
+    attackSpeed: 0.5
     attackTimer: 0
   rangedUnit:
     accuracy: 0

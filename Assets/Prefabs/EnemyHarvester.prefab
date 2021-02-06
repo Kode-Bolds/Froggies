@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3880846525754493759}
   - component: {fileID: 1944877857726198113}
   m_Layer: 0
-  m_Name: Harvester
+  m_Name: EnemyHarvester
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -346,7 +346,7 @@ MonoBehaviour:
     y: 1
     z: 1
   health:
-    health: 0
+    health: 5
   resistances:
     armour: 0
     resistanceFlags: 0
@@ -366,7 +366,7 @@ MonoBehaviour:
     attackTimer: 0
   rangedUnit:
     accuracy: 0
-  isEnemy: 0
+  isEnemy: 1
 --- !u!1 &8725550329041870271
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,7 +426,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f40229054a993f149aea8b2f9012f687, type: 2}
+  - {fileID: 2100000, guid: fa441fbde27e8f942a375bba837f9c2f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -33,7 +33,7 @@ namespace Froggies
 			{
 				if (!resourceNodeLookup.TryGetComponentDataFromEntity(currentTarget.targetData.targetEntity, out ResourceNode resourceNode))
 				{
-					//Debug.Log($"Harvest node {currentTarget.targetData.targetEntity} destroyed when moving to it, finding nearby resource node of type {currentTarget.targetData.targetType} instead");
+					Debug.Log($"Harvest node {currentTarget.targetData.targetEntity} destroyed when moving to it, finding nearby resource node of type {currentTarget.targetData.targetType} instead");
 
 					CommandProcessSystem.CompleteCommand(ref commandBuffer);
 
@@ -55,7 +55,7 @@ namespace Froggies
 				ResourceNode resource = GetComponent<ResourceNode>(currentTarget.targetData.targetEntity);
 					if (harvester.currentlyCarryingType != resource.resourceType)
 					{
-						//Debug.Log($"Harvesting type { resource.resourceType } setting carry amount to 0");
+						Debug.Log($"Harvesting type { resource.resourceType } setting carry amount to 0");
 
 						harvester.currentlyCarryingAmount = 0;
 						harvester.currentlyCarryingType = resource.resourceType;
@@ -73,7 +73,7 @@ namespace Froggies
 			{
 				if (!resourceNodeLookup.TryGetComponentDataFromEntity(currentTarget.targetData.targetEntity, out ResourceNode resourceNode))
 				{
-					//Debug.Log($"Harvest node {currentTarget.targetData.targetEntity} destroyed while harvesting it, finding nearby resource node of type {currentTarget.targetData.targetType} instead");
+					Debug.Log($"Harvest node {currentTarget.targetData.targetEntity} destroyed while harvesting it, finding nearby resource node of type {currentTarget.targetData.targetType} instead");
 
 				//Complete the harvest command.
 				CommandProcessSystem.CompleteCommand(ref commandBuffer);
@@ -97,14 +97,14 @@ namespace Froggies
 				int harvestAmount = math.min(math.min(resourceNode.resourceAmount, harvester.harvestAmount), inventorySpace);
 
 			//Transfer resource from resource node to harvester
-			//Debug.Log($"Harvested { harvestAmount } of {resourceNode.resourceType}");
+			Debug.Log($"Harvested { harvestAmount } of {resourceNode.resourceType}");
 				harvester.currentlyCarryingAmount += harvestAmount;
 				resourceNode.resourceAmount -= harvestAmount;
 
 			//If the resource is empty destroy it, we must do this before deciding whether to continue harvesting or go deposit
 			if (resourceNode.resourceAmount <= 0)
 				{
-					//Debug.Log("Fully harvested resource");
+					Debug.Log("Fully harvested resource");
 					ecb2.DestroyEntity(entityInQueryIndex, currentTarget.targetData.targetEntity);
 				}
 				else //If the resource isn't being destroyed then update its values

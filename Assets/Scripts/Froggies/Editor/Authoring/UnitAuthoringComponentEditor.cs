@@ -4,9 +4,11 @@ using UnityEditor;
 [CustomEditor(typeof(UnitAuthoringComponent))]
 public class UnitAuthoringComponentEditor : Editor
 {
-	private static bool m_FreezeRotationFoldout;
-	private static bool m_MovementFoldout;
-	private static bool m_HarvestingFoldout;
+	private static bool m_defensesFoldout;
+	private static bool m_freezeRotationFoldout;
+	private static bool m_movementFoldout;
+	private static bool m_harvestingFoldout;
+	private static bool m_combatFoldout;
 
 	public override void OnInspectorGUI()
 	{
@@ -17,8 +19,16 @@ public class UnitAuthoringComponentEditor : Editor
 		unitAuthoring.unitType = (UnitType)EditorGUILayout.EnumFlagsField("Unit Type", unitAuthoring.unitType);
 		unitAuthoring.isEnemy = EditorGUILayout.Toggle("Is Enemy", unitAuthoring.isEnemy);
 
-		m_FreezeRotationFoldout = EditorGUILayout.Foldout(m_FreezeRotationFoldout, "Freeze Rotation");
-		if(m_FreezeRotationFoldout)
+		m_defensesFoldout = EditorGUILayout.Foldout(m_defensesFoldout, "Defenses");
+		if (m_defensesFoldout)
+		{
+			unitAuthoring.health.health = EditorGUILayout.IntField("Health", unitAuthoring.health.health);
+			unitAuthoring.resistances.armour = EditorGUILayout.IntField("Armour", unitAuthoring.resistances.armour);
+			unitAuthoring.resistances.resistanceFlags = (DamageType)EditorGUILayout.EnumFlagsField("Resistances", unitAuthoring.resistances.resistanceFlags);
+		}
+
+		m_freezeRotationFoldout = EditorGUILayout.Foldout(m_freezeRotationFoldout, "Freeze Rotation");
+		if (m_freezeRotationFoldout)
 		{
 			EditorGUI.indentLevel++;
 			unitAuthoring.freezeRotation.x = EditorGUILayout.Toggle("X", unitAuthoring.freezeRotation.x);
@@ -27,8 +37,8 @@ public class UnitAuthoringComponentEditor : Editor
 			EditorGUI.indentLevel--;
 		}
 
-		m_MovementFoldout = EditorGUILayout.Foldout(m_MovementFoldout, "Movement");
-		if(m_MovementFoldout)
+		m_movementFoldout = EditorGUILayout.Foldout(m_movementFoldout, "Movement");
+		if (m_movementFoldout)
 		{
 			EditorGUI.indentLevel++;
 			unitAuthoring.unitMove.moveSpeed = EditorGUILayout.FloatField("Movement Speed", unitAuthoring.unitMove.moveSpeed);
@@ -36,10 +46,10 @@ public class UnitAuthoringComponentEditor : Editor
 			EditorGUI.indentLevel--;
 		}
 
-		if((unitAuthoring.unitType & UnitType.Harvester) != 0)
+		if ((unitAuthoring.unitType & UnitType.Harvester) != 0)
 		{
-			m_HarvestingFoldout = EditorGUILayout.Foldout(m_HarvestingFoldout, "Harvesting");
-			if (m_HarvestingFoldout)
+			m_harvestingFoldout = EditorGUILayout.Foldout(m_harvestingFoldout, "Harvesting");
+			if (m_harvestingFoldout)
 			{
 				EditorGUI.indentLevel++;
 				unitAuthoring.harvester.carryCapacity = EditorGUILayout.IntField("Carry Capacity", unitAuthoring.harvester.carryCapacity);
@@ -49,6 +59,29 @@ public class UnitAuthoringComponentEditor : Editor
 				unitAuthoring.harvester.harvestTickTimer = unitAuthoring.harvester.harvestTickCooldown;
 				EditorGUI.indentLevel--;
 			}
+		}
+
+		if ((unitAuthoring.unitType & (UnitType.Melee | UnitType.Ranged)) != 0)
+		{
+			m_combatFoldout = EditorGUILayout.Foldout(m_combatFoldout, "Combat");
+			if (m_combatFoldout)
+			{
+				EditorGUI.indentLevel++;
+				unitAuthoring.combatUnit.attackDamage = EditorGUILayout.IntField("Attack Damage", unitAuthoring.combatUnit.attackDamage);
+				unitAuthoring.combatUnit.damageType = (DamageType)EditorGUILayout.EnumFlagsField("Damage Type", unitAuthoring.combatUnit.damageType);
+				unitAuthoring.combatUnit.attackRange = EditorGUILayout.IntField("Attack Range", unitAuthoring.combatUnit.attackRange);
+				unitAuthoring.combatUnit.attackSpeed = EditorGUILayout.FloatField("Attack Speed", unitAuthoring.combatUnit.attackSpeed);
+
+				//TODO: Implement ranged unit authoring.
+				if((unitAuthoring.unitType & UnitType.Ranged) != 0)
+				{
+					unitAuthoring.rangedUnit.accuracy = EditorGUILayout.FloatField("Accuracy", unitAuthoring.rangedUnit.accuracy);
+					unitAuthoring.projectileGameObject = (ProjectileAuthoringComponent)EditorGUILayout.ObjectField("Projectile", unitAuthoring.projectileGameObject, typeof(ProjectileAuthoringComponent), false);
+				}
+
+				EditorGUI.indentLevel--;
+			}
+
 		}
 
 		if (EditorGUI.EndChangeCheck())

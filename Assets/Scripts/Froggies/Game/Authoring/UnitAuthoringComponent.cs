@@ -1,4 +1,5 @@
-﻿using Unity.Entities;
+﻿using System.Collections.Generic;
+using Unity.Entities;
 using Unity.Physics.Authoring;
 using UnityEngine;
 
@@ -14,13 +15,24 @@ namespace Froggies
 
 	[RequireComponent(typeof(PhysicsBodyAuthoring))]
 	[RequireComponent(typeof(PhysicsShapeAuthoring))]
-	public class UnitAuthoringComponent : MonoBehaviour, IConvertGameObjectToEntity
+	public class UnitAuthoringComponent : MonoBehaviour, IConvertGameObjectToEntity, IDeclareReferencedPrefabs
 	{
 		[HideInInspector] public UnitType unitType;
 		[HideInInspector] public UnitMove unitMove;
 		[HideInInspector] public FreezeRotation freezeRotation;
+		[HideInInspector] public Health health;
+		[HideInInspector] public Resistances resistances;
 		[HideInInspector] public Harvester harvester;
+		[HideInInspector] public CombatUnit combatUnit;
+		[HideInInspector] public RangedUnit rangedUnit;
+		[HideInInspector] public ProjectileAuthoringComponent projectileGameObject;
 		[HideInInspector] public bool isEnemy;
+
+		public void DeclareReferencedPrefabs(List<GameObject> referencedPrefabs)
+		{
+			if (projectileGameObject)
+				referencedPrefabs.Add(projectileGameObject.gameObject);
+		}
 
 		public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
 		{
@@ -34,14 +46,28 @@ namespace Froggies
 			dstManager.AddComponentData(entity, new PreviousTarget { targetData = new TargetData() });
 			dstManager.AddComponentData(entity, new CurrentAIState { currentAIState = AIState.Idle });
 
+			dstManager.AddComponentData(entity, health);
+			dstManager.AddComponentData(entity, resistances);
+
 			if ((unitType & UnitType.Harvester) != 0)
-			{
 				dstManager.AddComponentData(entity, harvester);
+
+			if ((unitType & (UnitType.Melee | UnitType.Ranged)) != 0)
+				dstManager.AddComponentData(entity, combatUnit);
+
+			if ((unitType & UnitType.Melee) != 0)
+				dstManager.AddComponentData(entity, new MeleeUnit());
+
+			if ((unitType & UnitType.Ranged) != 0)
+			{
+				rangedUnit.projectile = conversionSystem.GetPrimaryEntity(projectileGameObject);
+				dstManager.AddComponentData(entity, rangedUnit);
 			}
 
 			if (isEnemy)
 			{
 				dstManager.AddComponentData(entity, new EnemyTag());
+				dstManager.AddComponentData(entity, new TargetableByAI { targetType = AITargetType.Enemy });
 			}
 			else
 			{
