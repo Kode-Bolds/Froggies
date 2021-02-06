@@ -12,11 +12,13 @@ namespace Froggies
 		Cold = 1 << 3
 	}
 
+	[Serializable]
 	public struct CombatUnit : IComponentData
 	{
-		public float attackRange;
-		public float attackSpeed;
-		public float attackDamage;
+		public int attackDamage;
 		public DamageType damageType;
+		public int attackRange;
+		public float attackSpeed;
+		public float attackTimer;
 	}
 }

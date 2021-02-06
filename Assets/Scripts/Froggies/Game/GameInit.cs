@@ -163,6 +163,9 @@ namespace Froggies
 				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<HarvestingSystem>());
 				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<DepositSystem>());
 				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<UnitMoveSystem>());
+				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<CombatSystem>());
+				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<ProjectileSystem>());
+				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<DeathSystem>());
 			}
 
 			{

@@ -11,7 +11,6 @@ namespace Froggies
 {
 	public class UnitMoveSystem : KodeboldJobSystem
 	{
-		private EndSimulationEntityCommandBufferSystem m_endSimECBSystem;
 		private DebugDrawer m_debugDrawer;
 
 		public override void GetSystemDependencies(Dependencies dependencies)
@@ -21,7 +20,6 @@ namespace Froggies
 
 		public override void InitSystem()
 		{
-			m_endSimECBSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 		}
 
 		public override void UpdateSystem()
@@ -102,8 +100,6 @@ namespace Froggies
 			m_debugDrawer.debugDrawDependencies = Dependency;
 #endif
 
-			EntityCommandBuffer.ParallelWriter ecb = m_endSimECBSystem.CreateCommandBuffer().AsParallelWriter();
-
 			Dependency = Entities
 				.WithAll<MovingToPositionState, HasPathTag>()
 				.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer,
@@ -111,7 +107,6 @@ namespace Froggies
 					in Translation translation, in DynamicBuffer<PathNode> path) =>
 				{
 					float distanceSq = math.distancesq(translation.Value.xz, path[pathfinding.currentIndexOnPath].position.xz);
-
 
 					if (distanceSq < 1.0f)
 					{
@@ -126,11 +121,34 @@ namespace Froggies
 						physicsVelocity.Linear = 0;
 						commandBuffer.RemoveAt(0);
 						pathfinding.completedPath = true;
-						//Debug.Log("Reached target position, move to next command");
+						Debug.Log("Reached end of path.");
 					}
 				}).ScheduleParallel(Dependency);
 
-			m_endSimECBSystem.AddJobHandleForProducer(Dependency);
+			Dependency = Entities
+				.WithAny<MovingToAttackState, MovingToDepositState, MovingToHarvestState>()
+				.WithAll<HasPathTag>()
+				.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer,
+					ref UnitMove unitMove, ref PhysicsVelocity physicsVelocity, ref PathFinding pathfinding,
+					in Translation translation, in DynamicBuffer<PathNode> path) =>
+				{
+					float distanceSq = math.distancesq(translation.Value.xz, path[pathfinding.currentIndexOnPath].position.xz);
+
+					if (distanceSq < 1.0f)
+					{
+						pathfinding.currentNode = path[pathfinding.currentIndexOnPath].gridPosition;
+
+						pathfinding.currentIndexOnPath++;
+
+						if (pathfinding.currentIndexOnPath < path.Length)
+							return;
+
+						unitMove.rotating = false;
+						physicsVelocity.Linear = 0;
+						pathfinding.completedPath = true;
+						Debug.Log("Reached end of path.");
+					}
+				}).ScheduleParallel(Dependency);
 		}
 
 		public override void FreeSystem()

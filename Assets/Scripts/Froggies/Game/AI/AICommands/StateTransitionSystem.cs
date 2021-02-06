@@ -42,43 +42,43 @@ namespace Froggies
 					case AIState.Idle:
 						{
 							ecb.AddComponent<IdleState>(entityInQueryIndex, entity);
-							//Debug.Log("State changed to Idle");
+							Debug.Log("State changed to Idle");
 							break;
 						}
 					case AIState.MovingToPosition:
 						{
 							ecb.AddComponent<MovingToPositionState>(entityInQueryIndex, entity);
-							//Debug.Log("State changed to MovingToPosition");
+							Debug.Log("State changed to MovingToPosition");
 							break;
 						}
 					case AIState.MovingToHarvest:
 						{
 							ecb.AddComponent<MovingToHarvestState>(entityInQueryIndex, entity);
-							//Debug.Log("State changed to MovingToHarvest");
+							Debug.Log("State changed to MovingToHarvest");
 							break;
 						}
 					case AIState.Harvesting:
 						{
 							ecb.AddComponent<HarvestingState>(entityInQueryIndex, entity);
-							//Debug.Log("State changed to Harvesting");
+							Debug.Log("State changed to Harvesting");
 							break;
 						}
 					case AIState.MovingToDeposit:
 						{
 							ecb.AddComponent<MovingToDepositState>(entityInQueryIndex, entity);
-							//Debug.Log("State changed to MovingToDeposit");
+							Debug.Log("State changed to MovingToDeposit");
 							break;
 						}
 					case AIState.MovingToAttack:
 						{
 							ecb.AddComponent<MovingToAttackState>(entityInQueryIndex, entity);
-							//Debug.Log("State changed to MovingToAttack");
+							Debug.Log("State changed to MovingToAttack");
 							break;
 						}
 					case AIState.Attacking:
 						{
 							ecb.AddComponent<AttackingState>(entityInQueryIndex, entity);
-							//Debug.Log("State changed to Attacking");
+							Debug.Log("State changed to Attacking");
 							break;
 						}
 					default:
