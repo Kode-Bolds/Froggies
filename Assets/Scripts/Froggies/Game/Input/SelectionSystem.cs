@@ -15,6 +15,8 @@ namespace Froggies
         private RaycastSystem m_raycastSystem;
         private NativeArray<float3> m_boxBounds;
 
+        public bool redrawSelectedUnits = false;
+
         public override void GetSystemDependencies(Dependencies dependencies)
         {
             m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();
@@ -93,6 +95,8 @@ namespace Froggies
                     }).ScheduleParallel(Dependency);
 
                     m_entityCommandBuffer.AddJobHandleForProducer(Dependency);
+
+                    redrawSelectedUnits = true;
                 }
                 boxBoundsSorted.Dispose(Dependency);
             }
