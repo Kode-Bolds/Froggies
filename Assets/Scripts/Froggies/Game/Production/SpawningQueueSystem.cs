@@ -3,7 +3,6 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
-using Unity.Physics;
 using Unity.Transforms;
 
 namespace Froggies
@@ -13,19 +12,21 @@ namespace Froggies
 	{
 		private InputManagementSystem m_inputManagementSystem;
 		private RaycastSystem m_raycastSystem;
+		private GridManager m_gridManager;
 
-		public NativeQueue<Translation> spawnQueue;
+		public NativeQueue<SpawnCommand> spawnQueue;
 		public JobHandle spawnQueueDependencies;
 
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 			m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();
 			m_raycastSystem = dependencies.GetDependency<RaycastSystem>();
+			m_gridManager = dependencies.GetDependency<GridManager>();
 		}
 
 		public override void InitSystem()
 		{
-			spawnQueue = new NativeQueue<Translation>(Allocator.Persistent);
+			spawnQueue = new NativeQueue<SpawnCommand>(Allocator.Persistent);
 		}
 
 		public override void UpdateSystem()
@@ -35,13 +36,19 @@ namespace Froggies
 			if (m_inputManagementSystem.InputData.inputActions.spawn)
 			{
 				NativeArray<RaycastResult> raycastResult = m_raycastSystem.RaycastResult;
-				NativeQueue<Translation> spawnQueueLocal = spawnQueue;
+				NativeQueue<SpawnCommand> spawnQueueLocal = spawnQueue;
+				NativeArray2D<MapNode> grid = m_gridManager.Grid;
 
-				Dependency = Job.WithReadOnly(raycastResult).WithCode(() =>
+				Dependency = Entities.WithReadOnly(grid).WithReadOnly(raycastResult).ForEach((ref RuntimePrefabData runtimePrefabData) =>
 				{
 					if (raycastResult[0].raycastTargetType == RaycastTargetType.Ground)
 					{
-						spawnQueueLocal.Enqueue(new Translation { Value = raycastResult[0].hitPosition + new float3(0, 1, 0) });
+						Rotation rotation = GetComponent<Rotation>(runtimePrefabData.aiDrone);
+						Translation translation = new Translation { Value = raycastResult[0].hitPosition + new float3(0, 1, 0) };
+						LocalToWorld localToWorld = new LocalToWorld { Value = new float4x4(rotation.Value, translation.Value) };
+						PathFinding pathFinding = new PathFinding { currentNode = PathFindingSystem.FindNearestNode(translation.Value, grid) };
+
+						SpawnCommands.SpawnHarvester(spawnQueueLocal, runtimePrefabData.aiDrone, translation, localToWorld, pathFinding);
 					}
 				}).Schedule(Dependency);
 

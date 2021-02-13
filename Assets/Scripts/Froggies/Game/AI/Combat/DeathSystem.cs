@@ -1,6 +1,7 @@
 ﻿using Kodebolds.Core;
 using Unity.Entities;
 using Unity.Transforms;
+using UnityEngine;
 
 namespace Froggies
 {
@@ -29,6 +30,8 @@ namespace Froggies
 				if(health.health <= 0)
 				{
 					ecb.DestroyEntityWithChildren(entityInQueryIndex, entity, childLookup);
+
+					Debug.Log("Entity " + entity + " has died!");
 				}
 			}).ScheduleParallel();
 

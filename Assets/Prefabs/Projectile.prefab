@@ -236,7 +236,7 @@ MonoBehaviour:
         Category01: 0
         Category02: 1
         Category03: 0
-        Category04: 1
+        Category04: 0
         Category05: 1
         Category06: 1
         Category07: 1
@@ -291,3 +291,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile:
     projectileSpeed: 500
+    damage: 0
+    damageType: 0
+    targetPos:
+      x: 0
+      y: 0
+      z: 0

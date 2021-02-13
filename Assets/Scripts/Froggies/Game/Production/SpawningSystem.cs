@@ -2,8 +2,7 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
-using Unity.Mathematics;
-using Unity.Transforms;
+using UnityEngine;
 
 namespace Froggies
 {
@@ -12,12 +11,10 @@ namespace Froggies
 		private EndInitializationEntityCommandBufferSystem m_entityCommandBuffer;
 
 		private SpawningQueueSystem m_spawningQueueSystem;
-		private GridManager m_gridManager;
 
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 			m_spawningQueueSystem = dependencies.GetDependency<SpawningQueueSystem>();
-			m_gridManager = dependencies.GetDependency<GridManager>();
 		}
 
 		public override void InitSystem()
@@ -25,26 +22,39 @@ namespace Froggies
 			m_entityCommandBuffer = World.GetOrCreateSystem<EndInitializationEntityCommandBufferSystem>();
 		}
 
-		public override void UpdateSystem()
+		public unsafe override void UpdateSystem()
 		{
 			Dependency = JobHandle.CombineDependencies(Dependency, m_spawningQueueSystem.spawnQueueDependencies);
 
 			EntityCommandBuffer ecb = m_entityCommandBuffer.CreateCommandBuffer();
-			NativeQueue<Translation> spawnQueue = m_spawningQueueSystem.spawnQueue;
-			NativeArray2D<MapNode> grid = m_gridManager.Grid;
+			NativeQueue<SpawnCommand> spawnQueue = m_spawningQueueSystem.spawnQueue;
 
-			Dependency = Entities.ForEach((ref RuntimePrefabData runtimePrefabData) =>
+			Dependency = Job.WithCode(() =>
 			{
-				Translation translation;
-				while (spawnQueue.TryDequeue(out translation))
+				while (spawnQueue.TryDequeue(out SpawnCommand spawnCommand))
 				{
-					Rotation rotation = GetComponent<Rotation>(runtimePrefabData.aiDrone);
+					Entity entity;
+					switch (spawnCommand.spawnCommandType)
+					{
+						case SpawnCommandType.Harvester:
+							HarvesterSpawnData harvesterSpawnData = *spawnCommand.CommandData<HarvesterSpawnData>();
 
-					Entity e = ecb.Instantiate(runtimePrefabData.aiDrone);
+							entity = ecb.Instantiate(spawnCommand.entity);
+							ecb.SetComponent(entity, harvesterSpawnData.translation);
+							ecb.SetComponent(entity, harvesterSpawnData.localToWorld);
+							ecb.SetComponent(entity, harvesterSpawnData.pathFinding);
+							break;
+						case SpawnCommandType.Projectile:
+							ProjectileSpawnData projectileSpawnData = *spawnCommand.CommandData<ProjectileSpawnData>();
 
-					ecb.SetComponent(e, translation);
-					ecb.SetComponent(e, new LocalToWorld { Value = new float4x4(rotation.Value, translation.Value) });
-					ecb.SetComponent(e, new PathFinding { currentNode = PathFindingSystem.FindNearestNode(translation.Value, grid) });
+							entity = ecb.Instantiate(spawnCommand.entity);
+							ecb.SetComponent(entity, projectileSpawnData.translation);
+							ecb.SetComponent(entity, projectileSpawnData.projectile);
+							break;
+						default:
+							Debug.LogError("Invalid spawn command type!");
+							break;
+					}
 				}
 			}).Schedule(Dependency);
 
