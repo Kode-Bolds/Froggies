@@ -1,6 +1,7 @@
 ﻿using System;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace Froggies
 {
@@ -8,11 +9,9 @@ namespace Froggies
 	public struct Projectile : IComponentData
 	{
 		public float projectileSpeed;
-	}
-
-	[Serializable]
-	public struct ProjectileTarget : IComponentData
-	{
-		public float3 targetPos;
+		[HideInInspector] public int damage;
+		[HideInInspector] public DamageType damageType;
+		[HideInInspector] public Entity targetEntity;
+		[HideInInspector] public float3 targetPos;
 	}
 }

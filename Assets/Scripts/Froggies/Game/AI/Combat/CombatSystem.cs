@@ -1,5 +1,7 @@
 ﻿using Kodebolds.Core;
+using Unity.Collections;
 using Unity.Entities;
+using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
@@ -9,16 +11,15 @@ namespace Froggies
 {
 	public class CombatSystem : KodeboldJobSystem
 	{
-		private EndSimulationEntityCommandBufferSystem m_endSimulationECB;
+		private SpawningQueueSystem m_spawningQueueSystem;
 
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
-
+			m_spawningQueueSystem = dependencies.GetDependency<SpawningQueueSystem>();
 		}
 
 		public override void InitSystem()
 		{
-			m_endSimulationECB = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 		}
 
 		public override void UpdateSystem()
@@ -87,32 +88,42 @@ namespace Froggies
 			}).Schedule();
 		}
 
-		private void RangedAttack(float deltaTime)
+		private unsafe void RangedAttack(float deltaTime)
 		{
-			EntityCommandBuffer ecb = m_endSimulationECB.CreateCommandBuffer();
+			NativeQueue<SpawnCommand> spawnQueueLocal = m_spawningQueueSystem.spawnQueue;
 
-			Entities.WithAll<AttackingState>().ForEach((ref DynamicBuffer<Command> commandBuffer, ref CurrentTarget currentTarget, ref CombatUnit combatUnit, in Translation translation,
+			Dependency = Entities.WithAll<AttackingState>().ForEach((ref DynamicBuffer<Command> commandBuffer, ref CurrentTarget currentTarget, ref CombatUnit combatUnit, in Translation translation,
 				in RangedUnit rangedUnit) =>
 			{
+				TargetData currentTargetData = currentTarget.targetData;
+
 				//Target no longer exists, therefore is assumed dead.
-				if (!HasComponent<Translation>(currentTarget.targetData.targetEntity))
+				if (!HasComponent<Translation>(currentTargetData.targetEntity))
 					CommandProcessSystem.CompleteCommand(ref commandBuffer);
 
-				if (!IsInRange(combatUnit.attackRange, translation.Value, currentTarget.targetData.targetPos))
+				if (!IsInRange(combatUnit.attackRange, translation.Value, currentTargetData.targetPos))
 					CommandProcessSystem.RestartCommand(ref commandBuffer);
 
 				combatUnit.attackTimer -= deltaTime;
 				if (combatUnit.attackTimer <= 0.0f)
 				{
-					Entity projectile = ecb.Instantiate(rangedUnit.projectile);
-					ecb.AddComponent(projectile, new ProjectileTarget { targetPos = currentTarget.targetData.targetPos });
-					ecb.SetComponent(projectile, new Translation { Value = new float3 {x = translation.Value.x + 5.0f, y = translation.Value.y + 5.0f, z = translation.Value.z + 5.0f } });
+					//TODO: Handle other colliders/maybe do this without colliders.
+					PhysicsCollider targetCollider = GetComponent<PhysicsCollider>(currentTargetData.targetEntity);
+					Unity.Physics.BoxCollider* colliderPtr = (Unity.Physics.BoxCollider*)targetCollider.ColliderPtr;
+
+					Projectile projectile = GetComponent<Projectile>(rangedUnit.projectile);
+					projectile.damage = combatUnit.attackDamage;
+					projectile.damageType = combatUnit.damageType;
+					projectile.targetPos = currentTargetData.targetPos += new float3(0.0f, colliderPtr->Size.y / 2, 0.0f);
+					projectile.targetEntity = currentTargetData.targetEntity;
+
+					Translation projectileTranslation = new Translation { Value = new float3 { x = translation.Value.x + 5.0f, y = translation.Value.y + 5.0f, z = translation.Value.z + 5.0f } };
+
+					SpawnCommands.SpawnProjectile(spawnQueueLocal, rangedUnit.projectile, projectileTranslation, projectile);
 
 					combatUnit.attackTimer = 1.0f / combatUnit.attackSpeed;
 				}
-			}).Schedule();
-
-			m_endSimulationECB.AddJobHandleForProducer(Dependency);
+			}).Schedule(JobHandle.CombineDependencies(Dependency, m_spawningQueueSystem.spawnQueueDependencies));
 		}
 
 		private static bool IsInRange(float attackRange, float3 translation, float3 targetPos)
