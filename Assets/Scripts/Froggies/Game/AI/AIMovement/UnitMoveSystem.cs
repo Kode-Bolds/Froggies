@@ -6,12 +6,16 @@ using Unity.Physics;
 using Unity.Mathematics;
 using UnityEngine;
 using Unity.Collections;
+using System.Diagnostics;
 
 namespace Froggies
 {
 	public class UnitMoveSystem : KodeboldJobSystem
 	{
 		private DebugDrawer m_debugDrawer;
+
+		private const float m_distanceThresholdSqrd = 1.0f;
+		public const float RotationAngleThresholdDot = 0.99939082649f; //Dot product equalling 2 degrees.
 
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
@@ -26,6 +30,14 @@ namespace Froggies
 		{
 			float deltaTime = Time.fixedDeltaTime;
 
+			MovingToJob(deltaTime);
+			RotatingJob(deltaTime);
+			CheckEndPathMovingToPosJob();
+			CheckEndPathMovingToActionJob();
+		}
+
+		private void MovingToJob(float deltaTime)
+		{
 #if UNITY_EDITOR
 			Dependency = JobHandle.CombineDependencies(Dependency, m_debugDrawer.debugDrawDependencies);
 
@@ -35,96 +47,60 @@ namespace Froggies
 				.WithAny<MovingToAttackState, MovingToDepositState, MovingToHarvestState>()
 				.WithAny<MovingToPositionState>()
 				.WithAll<HasPathTag>()
-				.ForEach((ref PhysicsVelocity velocity, ref LocalToWorld transform, ref Rotation rotation,
-					ref UnitMove unitMove, in PathFinding pathFinding, in PreviousTarget previousTarget,
-					in DynamicBuffer<PathNode> path) =>
+				.ForEach((ref PhysicsVelocity velocity, ref LocalToWorld localToWorld, ref UnitMove unitMove, ref Rotation rotation,
+					in PathFinding pathfinding, in PreviousTarget previousTarget, in DynamicBuffer<PathNode> path) =>
 				{
-#if UNITY_EDITOR
-					float3 pos1 = transform.Position;
+					DrawDebugPath(ref localToWorld, in pathfinding, in path, debugDrawCommandQueue);
 
-					for (int i = pathFinding.currentIndexOnPath; i < path.Length; ++i)
-					{
-						float3 pos2 = path[i].position;
-
-						debugDrawCommandQueue.Enqueue(new DebugDrawCommand
-						{
-							debugDrawCommandType = DebugDrawCommandType.Line,
-							debugDrawLineData = new DebugDrawLineData
-							{
-								colour = Color.green,
-								start = pos1,
-								end = pos2
-							}
-						});
-
-						pos1 = pos2;
-					}
-#endif
-
-					float3 pos = transform.Position;
+					float3 pos = localToWorld.Position;
 					pos.y = 0;
 
-					float3 targetPos = path[pathFinding.currentIndexOnPath].position;
+					float3 targetPos = path[pathfinding.currentIndexOnPath].position;
 					targetPos.y = 0;
 
 					float3 targetDir = math.normalize(targetPos - pos);
 
-					float dot = math.dot(targetDir, transform.Forward);
-					float angle = math.acos(dot);
+					Rotate(deltaTime, ref localToWorld, ref rotation, ref unitMove, ref targetPos, ref targetDir, in previousTarget);
 
-					if (angle > 0.1f)
-					{
-						if (!unitMove.rotating || !previousTarget.targetData.targetPos.Equals(targetPos))
-						{
-							unitMove.rotating = true;
-
-							if (math.dot(targetDir, transform.Right) < 0)
-								angle = -angle;
-
-							unitMove.angle = angle;
-						}
-
-						rotation.Value = math.mul(rotation.Value, quaternion.RotateY(unitMove.angle * unitMove.turnRate * deltaTime));
-						transform.Value = new float4x4(rotation.Value, transform.Position);
-					}
-					else if (unitMove.rotating)
-					{
-						unitMove.rotating = false;
-					}
-
-					velocity.Linear = targetDir * unitMove.moveSpeed * deltaTime;
+					velocity.Linear = targetDir * unitMove.moveSpeed;
 					velocity.Linear.y = 0;
 				}).ScheduleParallel(Dependency);
 
 #if UNITY_EDITOR
 			m_debugDrawer.debugDrawDependencies = Dependency;
 #endif
+		}
 
+		private void RotatingJob(float deltaTime)
+		{
+			Dependency = Entities
+				.WithAny<HarvestingState, AttackingState>()
+				.ForEach((ref Rotation rotation, ref LocalToWorld localToWorld, ref UnitMove unitMove,
+					in CurrentTarget currentTarget, in PreviousTarget previousTarget) =>
+				{
+					float3 targetPos = currentTarget.targetData.targetPos;
+					float3 targetDir = math.normalize(targetPos - localToWorld.Position);
+
+					Rotate(deltaTime, ref localToWorld, ref rotation, ref unitMove, ref targetPos, ref targetDir, in previousTarget);
+				}).ScheduleParallel(Dependency);
+		}
+
+		private void CheckEndPathMovingToPosJob()
+		{
 			Dependency = Entities
 				.WithAll<MovingToPositionState, HasPathTag>()
 				.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer,
 					ref UnitMove unitMove, ref PhysicsVelocity physicsVelocity, ref PathFinding pathfinding,
 					in Translation translation, in DynamicBuffer<PathNode> path) =>
 				{
-					float distanceSq = math.distancesq(translation.Value.xz, path[pathfinding.currentIndexOnPath].position.xz);
-
-					if (distanceSq < 1.0f)
-					{
-						pathfinding.currentNode = path[pathfinding.currentIndexOnPath].gridPosition;
-
-						pathfinding.currentIndexOnPath++;
-
-						if (pathfinding.currentIndexOnPath < path.Length)
-							return;
-
-						unitMove.rotating = false;
-						physicsVelocity.Linear = 0;
+					if (CheckEndPath(ref pathfinding, ref unitMove, ref physicsVelocity, path, translation))
 						commandBuffer.RemoveAt(0);
-						pathfinding.completedPath = true;
-						Debug.Log("Reached end of path.");
-					}
-				}).ScheduleParallel(Dependency);
 
+				}).ScheduleParallel(Dependency);
+		}
+
+		private void CheckEndPathMovingToActionJob()
+		{
 			Dependency = Entities
 				.WithAny<MovingToAttackState, MovingToDepositState, MovingToHarvestState>()
 				.WithAll<HasPathTag>()
@@ -132,23 +108,80 @@ namespace Froggies
 					ref UnitMove unitMove, ref PhysicsVelocity physicsVelocity, ref PathFinding pathfinding,
 					in Translation translation, in DynamicBuffer<PathNode> path) =>
 				{
-					float distanceSq = math.distancesq(translation.Value.xz, path[pathfinding.currentIndexOnPath].position.xz);
-
-					if (distanceSq < 1.0f)
-					{
-						pathfinding.currentNode = path[pathfinding.currentIndexOnPath].gridPosition;
-
-						pathfinding.currentIndexOnPath++;
-
-						if (pathfinding.currentIndexOnPath < path.Length)
-							return;
-
-						unitMove.rotating = false;
-						physicsVelocity.Linear = 0;
-						pathfinding.completedPath = true;
-						Debug.Log("Reached end of path.");
-					}
+					CheckEndPath(ref pathfinding, ref unitMove, ref physicsVelocity, path, translation);
 				}).ScheduleParallel(Dependency);
+		}
+
+		private static bool CheckEndPath(ref PathFinding pathfinding, ref UnitMove unitMove, ref PhysicsVelocity physicsVelocity, in DynamicBuffer<PathNode> path, in Translation translation)
+		{
+			float distanceSq = math.distancesq(translation.Value.xz, path[pathfinding.currentIndexOnPath].position.xz);
+
+			if (distanceSq < m_distanceThresholdSqrd)
+			{
+				pathfinding.currentNode = path[pathfinding.currentIndexOnPath].gridPosition;
+
+				pathfinding.currentIndexOnPath++;
+
+				if (pathfinding.currentIndexOnPath < path.Length)
+					return false;
+
+				unitMove.rotating = false;
+				physicsVelocity.Linear = 0;
+				pathfinding.completedPath = true;
+				UnityEngine.Debug.Log("Reached end of path.");
+				return true;
+			}
+
+			return false;
+		}
+
+		[Conditional("DEBUG")]
+		private static void DrawDebugPath(ref LocalToWorld kLocalToWorld, in PathFinding pathfinding, in DynamicBuffer<PathNode> path,
+			NativeQueue<DebugDrawCommand>.ParallelWriter debugDrawCommandQueue)
+		{
+			float3 pos1 = kLocalToWorld.Position;
+
+			for (int i = pathfinding.currentIndexOnPath; i < path.Length; ++i)
+			{
+				float3 pos2 = path[i].position;
+
+				debugDrawCommandQueue.Enqueue(new DebugDrawCommand
+				{
+					debugDrawCommandType = DebugDrawCommandType.Line,
+					debugDrawLineData = new DebugDrawLineData
+					{
+						colour = Color.green,
+						start = pos1,
+						end = pos2
+					}
+				});
+
+				pos1 = pos2;
+			}
+		}
+
+		private static void Rotate(float deltaTime, ref LocalToWorld localToWorld, ref Rotation rotation, ref UnitMove unitMove, ref float3 kTargetPos,
+			ref float3 kTargetDir, in PreviousTarget kPreviousTarget)
+		{
+			float dot = math.dot(kTargetDir, localToWorld.Forward);
+
+			if (dot < RotationAngleThresholdDot)
+			{
+				if (!unitMove.rotating || !kPreviousTarget.targetData.targetPos.Equals(kTargetPos))
+				{
+					unitMove.rotating = true;
+
+					unitMove.rotationAngleSign = math.dot(kTargetDir, localToWorld.Right) < 0 ? -1 : 1;
+				}
+
+				float turnRateSigned = unitMove.turnRate * math.sign(unitMove.rotationAngleSign);
+				rotation.Value = math.mul(rotation.Value, quaternion.RotateY(turnRateSigned * deltaTime));
+				localToWorld.Value = new float4x4(rotation.Value, localToWorld.Position);
+			}
+			else if (unitMove.rotating)
+			{
+				unitMove.rotating = false;
+			}
 		}
 
 		public override void FreeSystem()

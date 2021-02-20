@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Physics.Authoring;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace Froggies
 	[RequireComponent(typeof(PhysicsShapeAuthoring))]
 	public class UnitAuthoringComponent : MonoBehaviour, IConvertGameObjectToEntity, IDeclareReferencedPrefabs
 	{
+		[HideInInspector] public Transform unitCentreTransform;
 		[HideInInspector] public UnitType unitType;
 		[HideInInspector] public UnitMove unitMove;
 		[HideInInspector] public FreezeRotation freezeRotation;
@@ -26,6 +28,7 @@ namespace Froggies
 		[HideInInspector] public CombatUnit combatUnit;
 		[HideInInspector] public RangedUnit rangedUnit;
 		[HideInInspector] public ProjectileAuthoringComponent projectileGameObject;
+		[HideInInspector] public Transform projectileSpawnTransform;
 		[HideInInspector] public bool isEnemy;
 
 		public void DeclareReferencedPrefabs(List<GameObject> referencedPrefabs)
@@ -36,10 +39,12 @@ namespace Froggies
 
 		public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
 		{
+			unitMove.turnRate *= Mathf.Deg2Rad;
 			dstManager.AddComponentData(entity, unitMove);
 			dstManager.AddComponentData(entity, freezeRotation);
 			dstManager.AddComponentData(entity, new UnitTag());
 			dstManager.AddComponentData(entity, new PathFinding());
+			dstManager.AddComponentData(entity, new Attackable { centreOffset = unitCentreTransform.position - transform.position });
 			dstManager.AddBuffer<PathNode>(entity);
 
 			dstManager.AddComponentData(entity, new CurrentTarget { targetData = new TargetData() });
@@ -61,6 +66,7 @@ namespace Froggies
 			if ((unitType & UnitType.Ranged) != 0)
 			{
 				rangedUnit.projectile = conversionSystem.GetPrimaryEntity(projectileGameObject);
+				rangedUnit.projectileSpawnOffset = projectileSpawnTransform.position - transform.position;
 				dstManager.AddComponentData(entity, rangedUnit);
 			}
 

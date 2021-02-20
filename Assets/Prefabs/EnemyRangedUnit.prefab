@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2465800439890943970
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8288341367498405227}
+  m_Layer: 0
+  m_Name: CentreTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8288341367498405227
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2465800439890943970}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3880846525754493730}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3833284268121476206
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,7 +126,7 @@ GameObject:
   - component: {fileID: 3880846525754493759}
   - component: {fileID: 1944877857726198113}
   m_Layer: 0
-  m_Name: EnemyHarvester
+  m_Name: EnemyRangedUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,7 +144,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3639867091748087276}
-  - {fileID: 3568923834061711217}
+  - {fileID: 8288341367498405227}
+  - {fileID: 982576292939390233}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -336,8 +367,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52a76e0911c149f40967466c70f2dc94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitCentreTransform: {fileID: 3568923834061711217}
-  unitType: 1
+  unitCentreTransform: {fileID: 8288341367498405227}
+  unitType: 4
   unitMove:
     moveSpeed: 5
     rotating: 0
@@ -348,7 +379,7 @@ MonoBehaviour:
     y: 1
     z: 1
   health:
-    health: 5
+    health: 15
   resistances:
     armour: 0
     resistanceFlags: 0
@@ -361,21 +392,21 @@ MonoBehaviour:
     harvestTickCooldown: 0.5
     harvestRange: 2.5
   combatUnit:
-    attackDamage: 0
-    damageType: 0
-    attackRange: 0
-    attackSpeed: 0
+    attackDamage: 1
+    damageType: 1
+    attackRange: 20
+    attackSpeed: 0.5
     attackTimer: 0
   rangedUnit:
-    accuracy: 0
+    accuracy: 1
     projectileSpawnOffset:
       x: 0
       y: 0
       z: 0
-  projectileGameObject: {fileID: 0}
-  projectileSpawnTransform: {fileID: 0}
+  projectileGameObject: {fileID: 5007270872133607145, guid: 9339ba6469099894d9e01e773046a2d5, type: 3}
+  projectileSpawnTransform: {fileID: 982576292939390233}
   isEnemy: 1
---- !u!1 &5150027872124937040
+--- !u!1 &5081112614590054679
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -383,27 +414,27 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3568923834061711217}
+  - component: {fileID: 982576292939390233}
   m_Layer: 0
-  m_Name: CentreTransform
+  m_Name: ProjectileSpawnTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3568923834061711217
+--- !u!4 &982576292939390233
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5150027872124937040}
+  m_GameObject: {fileID: 5081112614590054679}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalPosition: {x: 1.313, y: 4.14, z: 2.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3880846525754493730}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8725550329041870271
 GameObject:
