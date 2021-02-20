@@ -30,19 +30,18 @@ namespace Froggies
 
 		public override void UpdateSystem()
 		{
-			float deltaTime = Time.DeltaTime;
 			EntityCommandBuffer.ParallelWriter ecb = m_endSimulationECB.CreateCommandBuffer().AsParallelWriter();
-			Entities.ForEach((Entity entity, int entityInQueryIndex, ref PhysicsVelocity velocity, in Translation translation, in Projectile projectile) =>
+			Entities.ForEach((Entity entity, int entityInQueryIndex, ref PhysicsVelocity velocity, ref Projectile projectile, in Translation translation) =>
 			{
-				float3 directionToTarget = math.normalize(projectile.targetPos - translation.Value);
-
-				velocity.Linear = directionToTarget * projectile.projectileSpeed * deltaTime;
-
 				float distanceSqrd = math.distancesq(translation.Value, projectile.targetPos);
 
-				//Target no longer exists, therefore is assumed dead, so we destroy the projectile when it reaches the target pos.
-				if (!HasComponent<Translation>(projectile.targetEntity) && distanceSqrd <= 1.0f)
+				if (HasComponent<Translation>(projectile.targetEntity))
+					projectile.targetPos = GetComponent<Translation>(projectile.targetEntity).Value + GetComponent<Attackable>(projectile.targetEntity).centreOffset;
+				else if(distanceSqrd <= 1.0f)
 					ecb.DestroyEntity(entityInQueryIndex, entity);
+
+				float3 directionToTarget = math.normalize(projectile.targetPos - translation.Value);
+				velocity.Linear = directionToTarget * projectile.projectileSpeed;
 			}).ScheduleParallel();
 
 			Dependency = new OnProjectileCollisionJob

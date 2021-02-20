@@ -1,20 +1,23 @@
 ﻿using Froggies;
 using UnityEditor;
 
-[CustomEditor(typeof(ResourceNodeAuthoringComponent))]
-public class ResourceNodeAuthoringEditor : Editor
+namespace Froggies.EditorScripts
 {
-	public override void OnInspectorGUI()
+	[CustomEditor(typeof(ResourceNodeAuthoringComponent))]
+	public class ResourceNodeAuthoringEditor : Editor
 	{
-		ResourceNodeAuthoringComponent resourceNodeAuthoring = target as ResourceNodeAuthoringComponent;
+		public override void OnInspectorGUI()
+		{
+			ResourceNodeAuthoringComponent resourceNodeAuthoring = target as ResourceNodeAuthoringComponent;
 
-		EditorGUI.BeginChangeCheck();
+			EditorGUI.BeginChangeCheck();
 
-		resourceNodeAuthoring.resourceNode.resourceType = (ResourceType)EditorGUILayout.EnumPopup("Resource Type", resourceNodeAuthoring.resourceNode.resourceType);
-		resourceNodeAuthoring.aiTarget.targetType = (AITargetType)resourceNodeAuthoring.resourceNode.resourceType;
-		resourceNodeAuthoring.resourceNode.resourceAmount = EditorGUILayout.IntField("Resource Amount", resourceNodeAuthoring.resourceNode.resourceAmount);
+			resourceNodeAuthoring.resourceNode.resourceType = (ResourceType)EditorGUILayout.EnumPopup("Resource Type", resourceNodeAuthoring.resourceNode.resourceType);
+			resourceNodeAuthoring.aiTarget.targetType = (AITargetType)resourceNodeAuthoring.resourceNode.resourceType;
+			resourceNodeAuthoring.resourceNode.resourceAmount = EditorGUILayout.IntField("Resource Amount", resourceNodeAuthoring.resourceNode.resourceAmount);
 
-		if (EditorGUI.EndChangeCheck())
-			EditorUtility.SetDirty(resourceNodeAuthoring);
+			if (EditorGUI.EndChangeCheck())
+				EditorUtility.SetDirty(resourceNodeAuthoring);
+		}
 	}
 }

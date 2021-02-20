@@ -9,7 +9,7 @@ namespace Froggies
     {
         public float moveSpeed;
         public bool rotating;
-        public float angle;
+        public float rotationAngleSign;
         public float turnRate;
     }
 

@@ -93,7 +93,7 @@ namespace Froggies
 			NativeQueue<SpawnCommand> spawnQueueLocal = m_spawningQueueSystem.spawnQueue;
 
 			Dependency = Entities.WithAll<AttackingState>().ForEach((ref DynamicBuffer<Command> commandBuffer, ref CurrentTarget currentTarget, ref CombatUnit combatUnit, in Translation translation,
-				in RangedUnit rangedUnit) =>
+				in RangedUnit rangedUnit, in LocalToWorld localToWorld) =>
 			{
 				TargetData currentTargetData = currentTarget.targetData;
 
@@ -107,19 +107,24 @@ namespace Froggies
 				combatUnit.attackTimer -= deltaTime;
 				if (combatUnit.attackTimer <= 0.0f)
 				{
-					//TODO: Handle other colliders/maybe do this without colliders.
-					PhysicsCollider targetCollider = GetComponent<PhysicsCollider>(currentTargetData.targetEntity);
-					Unity.Physics.BoxCollider* colliderPtr = (Unity.Physics.BoxCollider*)targetCollider.ColliderPtr;
+					float3 posToTarget = currentTarget.targetData.targetPos - translation.Value;
+					float forwardDotTargetDir = math.dot(localToWorld.Forward, math.normalize(posToTarget));
+
+					//Don't shoot if we're not facing target.
+					if (forwardDotTargetDir <= UnitMoveSystem.RotationAngleThresholdDot)
+						return;
 
 					Projectile projectile = GetComponent<Projectile>(rangedUnit.projectile);
 					projectile.damage = combatUnit.attackDamage;
 					projectile.damageType = combatUnit.damageType;
-					projectile.targetPos = currentTargetData.targetPos += new float3(0.0f, colliderPtr->Size.y / 2, 0.0f);
+					projectile.targetPos = currentTargetData.targetPos + GetComponent<Attackable>(currentTargetData.targetEntity).centreOffset;
 					projectile.targetEntity = currentTargetData.targetEntity;
 
-					Translation projectileTranslation = new Translation { Value = new float3 { x = translation.Value.x + 5.0f, y = translation.Value.y + 5.0f, z = translation.Value.z + 5.0f } };
+					Translation projectileTranslation = new Translation { Value = translation.Value + math.rotate(localToWorld.Rotation, rangedUnit.projectileSpawnOffset) };
 
 					SpawnCommands.SpawnProjectile(spawnQueueLocal, rangedUnit.projectile, projectileTranslation, projectile);
+
+					Debug.Log("Firing projectile at " + projectile.targetEntity);
 
 					combatUnit.attackTimer = 1.0f / combatUnit.attackSpeed;
 				}

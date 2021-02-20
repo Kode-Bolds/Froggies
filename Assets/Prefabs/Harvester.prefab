@@ -114,6 +114,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3639867091748087276}
+  - {fileID: 9051390620331754296}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -335,12 +336,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52a76e0911c149f40967466c70f2dc94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitCentreTransform: {fileID: 9051390620331754296}
   unitType: 1
   unitMove:
-    moveSpeed: 500
+    moveSpeed: 5
     rotating: 0
     angle: 0
-    turnRate: 0.9
+    turnRate: 135
   freezeRotation:
     x: 1
     y: 1
@@ -366,7 +368,43 @@ MonoBehaviour:
     attackTimer: 0
   rangedUnit:
     accuracy: 0
+    projectileSpawnOffset:
+      x: 0
+      y: 0
+      z: 0
+  projectileGameObject: {fileID: 0}
+  projectileSpawnTransform: {fileID: 0}
   isEnemy: 0
+--- !u!1 &5009420928437721117
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9051390620331754296}
+  m_Layer: 0
+  m_Name: CentreTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9051390620331754296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5009420928437721117}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3880846525754493730}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8725550329041870271
 GameObject:
   m_ObjectHideFlags: 0

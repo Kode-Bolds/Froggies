@@ -1,5 +1,6 @@
 ﻿using System;
 using Unity.Entities;
+using Unity.Mathematics;
 
 namespace Froggies
 {
@@ -8,5 +9,6 @@ namespace Froggies
 	{
 		public Entity projectile;
 		public float accuracy;
+		public float3 projectileSpawnOffset;
 	}
 }

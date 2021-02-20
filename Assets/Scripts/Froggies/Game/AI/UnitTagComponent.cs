@@ -5,6 +5,5 @@ namespace Froggies
     [GenerateAuthoringComponent]
     public struct UnitTag : IComponentData
     {
-
     }
 }
