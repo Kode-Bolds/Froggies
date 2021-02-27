@@ -11,6 +11,8 @@ namespace Froggies
 		private InputManagementSystem m_inputManagementSystem;
 		private RaycastSystem m_raycastSystem;
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 			m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();

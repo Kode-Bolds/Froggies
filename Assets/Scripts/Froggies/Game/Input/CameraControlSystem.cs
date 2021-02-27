@@ -10,7 +10,9 @@ namespace Froggies
     {
         InputManagementSystem m_inputManagementSystem;
 
-        public override void GetSystemDependencies(Dependencies dependencies)
+        protected override GameState ActiveGameState => GameState.Updating | GameState.Paused;
+
+		public override void GetSystemDependencies(Dependencies dependencies)
         {
             m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();
         }

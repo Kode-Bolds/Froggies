@@ -17,6 +17,8 @@ namespace Froggies
 		private const float m_distanceThresholdSqrd = 1.0f;
 		public const float RotationAngleThresholdDot = 0.99939082649f; //Dot product equalling 2 degrees.
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 			m_debugDrawer = dependencies.GetDependency<DebugDrawer>();

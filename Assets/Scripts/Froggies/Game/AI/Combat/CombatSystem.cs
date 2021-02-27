@@ -14,6 +14,8 @@ namespace Froggies
 	{
 		private SpawningQueueSystem m_spawningQueueSystem;
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 			m_spawningQueueSystem = dependencies.GetDependency<SpawningQueueSystem>();

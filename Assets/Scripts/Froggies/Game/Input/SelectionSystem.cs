@@ -17,7 +17,9 @@ namespace Froggies
 
         public bool redrawSelectedUnits = false;
 
-        public override void GetSystemDependencies(Dependencies dependencies)
+        protected override GameState ActiveGameState => GameState.Updating;
+
+		public override void GetSystemDependencies(Dependencies dependencies)
         {
             m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();
             m_raycastSystem = dependencies.GetDependency<RaycastSystem>();

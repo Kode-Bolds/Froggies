@@ -54,7 +54,10 @@ namespace Froggies
 			int count = m_dependencies.Count;
 			for (int dependencyIndex = 0; dependencyIndex < count; dependencyIndex++)
 			{
-				m_dependencies[dependencyIndex].Free();
+				if(m_dependencies[dependencyIndex] is KodeboldJobSystem system)
+					system.Free();
+				else if (m_dependencies[dependencyIndex] is KodeboldBehaviour behaviour)
+					behaviour.Free();
 			}
 
 			CleanupWorld();

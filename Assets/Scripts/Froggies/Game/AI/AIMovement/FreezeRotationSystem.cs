@@ -9,6 +9,8 @@ namespace Froggies
 	{
 		private EndInitializationEntityCommandBufferSystem m_entityCommandBuffer;
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 

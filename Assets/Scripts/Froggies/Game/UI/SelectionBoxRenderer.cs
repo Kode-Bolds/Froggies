@@ -13,6 +13,8 @@ namespace Froggies
 		private bool _draw;
 		private InputManagementSystem m_inputManagementSystem;
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void GetBehaviourDependencies(Dependencies dependencies)
 		{
 			m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();

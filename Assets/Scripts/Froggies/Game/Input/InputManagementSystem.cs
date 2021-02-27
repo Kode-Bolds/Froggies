@@ -50,6 +50,8 @@ namespace Froggies
 		private InputData m_inputData;
 		public InputData InputData => m_inputData;
 
+		protected override GameState ActiveGameState => GameState.Always & ~GameState.Initalising;
+
 		private ControlScheme m_controlScheme;
 
 		public override void GetSystemDependencies(Dependencies dependencies)

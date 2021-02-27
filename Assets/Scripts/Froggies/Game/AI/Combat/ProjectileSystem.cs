@@ -16,6 +16,8 @@ namespace Froggies
 		private StepPhysicsWorld m_stepPhysicsWorld;
 		private EndSimulationEntityCommandBufferSystem m_endSimulationECB;
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void InitSystem()
 		{
 			m_buildPhysicsWorldSystem = World.GetOrCreateSystem<BuildPhysicsWorld>();

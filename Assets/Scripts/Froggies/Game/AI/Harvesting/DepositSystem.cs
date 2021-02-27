@@ -20,6 +20,8 @@ namespace Froggies
 		private EntityQuery m_resourcesQuery;
 		private NativeQueue<ResourceTypeValuePair> m_resourcesQueue;
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 		}

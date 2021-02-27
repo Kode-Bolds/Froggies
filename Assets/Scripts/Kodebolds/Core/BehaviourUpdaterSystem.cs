@@ -8,6 +8,8 @@ namespace Kodebolds.Core
 	{
 		private List<KodeboldBehaviour> m_kodeboldBehaviours;
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public void SetBehavioursList(List<KodeboldBehaviour> behaviours)
 		{
 			m_kodeboldBehaviours = behaviours;
@@ -28,7 +30,7 @@ namespace Kodebolds.Core
 			int count = m_kodeboldBehaviours.Count;
 			for (int behaviourIndex = 0; behaviourIndex < count; behaviourIndex++)
 			{
-				m_kodeboldBehaviours[behaviourIndex].UpdateBehaviour();
+				m_kodeboldBehaviours[behaviourIndex].OnUpdate();
 			}
 		}
 

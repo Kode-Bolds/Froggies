@@ -17,6 +17,8 @@ namespace Froggies
 		public NativeQueue<SpawnCommand> spawnQueue;
 		public JobHandle spawnQueueDependencies;
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 			m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();
