@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace Froggies
 {
+	[UpdateAfter(typeof(UnitMoveSystem))]
 	public class CombatSystem : KodeboldJobSystem
 	{
 		private SpawningQueueSystem m_spawningQueueSystem;

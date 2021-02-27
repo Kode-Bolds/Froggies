@@ -174,7 +174,7 @@ namespace Froggies
 					unitMove.rotationAngleSign = math.dot(kTargetDir, localToWorld.Right) < 0 ? -1 : 1;
 				}
 
-				float turnRateSigned = unitMove.turnRate * math.sign(unitMove.rotationAngleSign);
+				float turnRateSigned = unitMove.turnRate * unitMove.rotationAngleSign;
 				rotation.Value = math.mul(rotation.Value, quaternion.RotateY(turnRateSigned * deltaTime));
 				localToWorld.Value = new float4x4(rotation.Value, localToWorld.Position);
 			}
