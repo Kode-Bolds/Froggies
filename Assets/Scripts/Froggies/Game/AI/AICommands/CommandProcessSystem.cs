@@ -16,6 +16,8 @@ namespace Froggies
 
 		private DebugDrawer m_debugDrawer;
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void FreeSystem()
 		{
 

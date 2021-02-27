@@ -8,6 +8,8 @@ namespace Froggies
 	{
 		private EndSimulationEntityCommandBufferSystem m_endSimulationECB;
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 

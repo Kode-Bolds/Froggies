@@ -5,7 +5,6 @@ namespace Kodebolds.Core
 {
 	public interface IDependency
 	{
-		void Free();
 	}
 
 	public interface IDependant

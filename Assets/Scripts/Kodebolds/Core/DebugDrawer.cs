@@ -54,6 +54,8 @@ namespace Kodebolds.Core
 		public NativeQueue<DebugDrawCommand> DebugDrawCommandQueue => m_debugDrawCommandQueue;
 		public NativeQueue<DebugDrawCommand>.ParallelWriter DebugDrawCommandQueueParallel => m_debugDrawCommandQueueParallel;
 
+		protected override GameState ActiveGameState => GameState.Updating | GameState.Paused;
+
 		private NativeQueue<DebugDrawCommand>.ParallelWriter m_debugDrawCommandQueueParallel;
 		private NativeQueue<DebugDrawCommand> m_debugDrawCommandQueue;
 

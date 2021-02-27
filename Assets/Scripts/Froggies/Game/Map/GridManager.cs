@@ -13,8 +13,10 @@ namespace Froggies
         [SerializeField] public int m_cellSize;
         [SerializeField] public int2 m_gridSize;
 
+        protected override GameState ActiveGameState => GameState.Updating;
+
 #if UNITY_EDITOR
-        private void OnDrawGizmos()
+		private void OnDrawGizmos()
         {
             Gizmos.color = Color.cyan;
             for (int i = 0; i <= m_gridSize.x; i++)

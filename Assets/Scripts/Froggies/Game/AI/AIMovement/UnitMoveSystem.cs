@@ -17,6 +17,8 @@ namespace Froggies
 		private const float m_distanceThresholdSqrd = 1.0f;
 		public const float RotationAngleThresholdDot = 0.99939082649f; //Dot product equalling 2 degrees.
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 			m_debugDrawer = dependencies.GetDependency<DebugDrawer>();
@@ -174,7 +176,7 @@ namespace Froggies
 					unitMove.rotationAngleSign = math.dot(kTargetDir, localToWorld.Right) < 0 ? -1 : 1;
 				}
 
-				float turnRateSigned = unitMove.turnRate * math.sign(unitMove.rotationAngleSign);
+				float turnRateSigned = unitMove.turnRate * unitMove.rotationAngleSign;
 				rotation.Value = math.mul(rotation.Value, quaternion.RotateY(turnRateSigned * deltaTime));
 				localToWorld.Value = new float4x4(rotation.Value, localToWorld.Position);
 			}

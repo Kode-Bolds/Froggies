@@ -6,7 +6,10 @@ namespace Froggies
     public class InstantiationSystem : KodeboldJobSystem
     {
         private EntityQuery m_query;
-        public override void GetSystemDependencies(Dependencies dependencies)
+
+        protected override GameState ActiveGameState => GameState.Updating;
+
+		public override void GetSystemDependencies(Dependencies dependencies)
         {
         }
 

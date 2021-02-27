@@ -44,6 +44,8 @@ namespace Froggies
 		private JobHandle m_raycastSystemDependency;
 		public JobHandle RaycastSystemDependency => m_raycastSystemDependency;
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 			m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();

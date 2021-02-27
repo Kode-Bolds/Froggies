@@ -341,14 +341,14 @@ MonoBehaviour:
   unitMove:
     moveSpeed: 5
     rotating: 0
-    angle: 0
+    rotationAngleSign: 0
     turnRate: 135
   freezeRotation:
     x: 1
     y: 1
     z: 1
   health:
-    health: 0
+    health: 5
   resistances:
     armour: 0
     resistanceFlags: 0

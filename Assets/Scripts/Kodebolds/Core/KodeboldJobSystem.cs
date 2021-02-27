@@ -1,4 +1,5 @@
-﻿using Unity.Entities;
+﻿using System;
+using Unity.Entities;
 using UnityEngine;
 
 namespace Kodebolds.Core
@@ -6,6 +7,7 @@ namespace Kodebolds.Core
 	public abstract class KodeboldJobSystem : SystemBase, IDependency, IDependant
 	{
 		protected GameStateManager _gameStateManager;
+		protected abstract GameState ActiveGameState { get; }
 
 		public void GetDependencies(Dependencies dependencies)
 		{
@@ -25,7 +27,7 @@ namespace Kodebolds.Core
 		protected override void OnUpdate()
 		{
 			//Don't run update logic until we have entered the updating game state. (eg. no longer initialising the game data)
-			if (Application.isPlaying && _gameStateManager.GameState == GameState.Updating)
+			if (Application.isPlaying && (_gameStateManager.GameState & ActiveGameState) != 0)
 				UpdateSystem();
 		}
 

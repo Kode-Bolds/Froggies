@@ -31,8 +31,9 @@ namespace Froggies
 
         Unity.Collections.NativeArray<Entity> entities;
 
+        protected override GameState ActiveGameState => GameState.Updating;
 
-        public void AddSelectedUnits(int count)
+		public void AddSelectedUnits(int count)
         {
             unitGrid.Clear();
 

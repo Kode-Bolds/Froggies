@@ -369,9 +369,9 @@ MonoBehaviour:
   unitCentreTransform: {fileID: 6020074229352106959}
   unitType: 2
   unitMove:
-    moveSpeed: 25
+    moveSpeed: 5
     rotating: 0
-    angle: 0
+    rotationAngleSign: 0
     turnRate: 135
   freezeRotation:
     x: 1

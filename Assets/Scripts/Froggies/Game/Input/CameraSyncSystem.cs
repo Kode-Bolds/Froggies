@@ -7,6 +7,8 @@ namespace Froggies
 {
 	public class CameraSyncSystem : KodeboldJobSystem
 	{
+		protected override GameState ActiveGameState => GameState.Updating | GameState.Paused;
+
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 		}

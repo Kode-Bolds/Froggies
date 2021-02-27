@@ -9,9 +9,12 @@ using UnityEngine;
 
 namespace Froggies
 {
+	[UpdateAfter(typeof(UnitMoveSystem))]
 	public class CombatSystem : KodeboldJobSystem
 	{
 		private SpawningQueueSystem m_spawningQueueSystem;
+
+		protected override GameState ActiveGameState => GameState.Updating;
 
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
