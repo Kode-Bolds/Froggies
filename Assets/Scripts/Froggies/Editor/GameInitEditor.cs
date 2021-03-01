@@ -1,4 +1,5 @@
 ﻿using Kodebolds.Core;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,39 +22,48 @@ namespace Froggies.EditorScripts
 			{
 				EditorGUI.indentLevel++;
 
-				for (int behaviourIndex = 0; behaviourIndex < gameInit.KodeboldBehaviours.Count; behaviourIndex++)
-				{
-					EditorGUILayout.BeginHorizontal();
+				EditorGUILayout.LabelField("Initialisation Behaviours");
+				DisplayBehaviours(gameInit.InitialisationKodeboldBehaviours);
 
-					if (GUILayout.Button("-"))
-					{
-						gameInit.KodeboldBehaviours.RemoveAt(behaviourIndex);
-
-						if (behaviourIndex >= gameInit.KodeboldBehaviours.Count)
-							continue;
-					}
-
-					if (GUILayout.Button("+"))
-					{
-						gameInit.KodeboldBehaviours.Add(null);
-					}
-
-
-					gameInit.KodeboldBehaviours[behaviourIndex] = EditorGUILayout.ObjectField(gameInit.KodeboldBehaviours[behaviourIndex], typeof(KodeboldBehaviour), false) as KodeboldBehaviour;
-
-					EditorGUILayout.EndHorizontal();
-				}
-
-				if (gameInit.KodeboldBehaviours.Count == 0 && GUILayout.Button("Add New Behaviour"))
-				{
-					gameInit.KodeboldBehaviours.Add(null);
-				}
+				EditorGUILayout.LabelField("Update Behaviours");
+				DisplayBehaviours(gameInit.UpdateKodeboldBehaviours);
 
 				EditorGUI.indentLevel--;
 			}
 
 			if (EditorGUI.EndChangeCheck())
 				EditorUtility.SetDirty(gameInit);
+		}
+
+		private void DisplayBehaviours(List<KodeboldBehaviour> behaviourList)
+		{
+			for (int behaviourIndex = 0; behaviourIndex < behaviourList.Count; behaviourIndex++)
+			{
+				EditorGUILayout.BeginHorizontal();
+
+				if (GUILayout.Button("-"))
+				{
+					behaviourList.RemoveAt(behaviourIndex);
+
+					if (behaviourIndex >= behaviourList.Count)
+						continue;
+				}
+
+				if (GUILayout.Button("+"))
+				{
+					behaviourList.Add(null);
+				}
+
+
+				behaviourList[behaviourIndex] = EditorGUILayout.ObjectField(behaviourList[behaviourIndex], typeof(KodeboldBehaviour), false) as KodeboldBehaviour;
+
+				EditorGUILayout.EndHorizontal();
+			}
+
+			if (behaviourList.Count == 0 && GUILayout.Button("Add New Behaviour"))
+			{
+				behaviourList.Add(null);
+			}
 		}
 	}
 }

@@ -11,13 +11,13 @@ namespace Froggies
 		private float2 m_selectionBoxStartPos;
 		private float2 m_selectionBoxEndPos;
 		private bool _draw;
-		private InputManagementSystem m_inputManagementSystem;
+		private InputManager m_inputManager;
 
 		protected override GameState ActiveGameState => GameState.Updating;
 
 		public override void GetBehaviourDependencies(Dependencies dependencies)
 		{
-			m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();
+			m_inputManager = dependencies.GetDependency<InputManager>();
 		}
 
 		public override void InitBehaviour()
@@ -27,18 +27,18 @@ namespace Froggies
 
 		public override void UpdateBehaviour()
 		{
-			if (m_inputManagementSystem.InputData.mouseInput.leftClickPressed)
+			if (m_inputManager.InputData.mouseInput.leftClickPressed)
 			{
-				m_selectionBoxStartPos = m_inputManagementSystem.InputData.mouseInput.mouseScreenPos;
+				m_selectionBoxStartPos = m_inputManager.InputData.mouseInput.mouseScreenPos;
 				_draw = true;
 			}
 
-			if (m_inputManagementSystem.InputData.mouseInput.leftClickDown)
+			if (m_inputManager.InputData.mouseInput.leftClickDown)
 			{
-				m_selectionBoxEndPos = m_inputManagementSystem.InputData.mouseInput.mouseScreenPos;
+				m_selectionBoxEndPos = m_inputManager.InputData.mouseInput.mouseScreenPos;
 			}
 
-			if (m_inputManagementSystem.InputData.mouseInput.leftClickReleased)
+			if (m_inputManager.InputData.mouseInput.leftClickReleased)
 			{
 				_draw = false;
 			}

@@ -4,7 +4,7 @@ using Unity.Entities;
 namespace Kodebolds.Core
 {
 	[DisableAutoCreation]
-	public class BehaviourUpdaterSystem : KodeboldJobSystem
+	public class InitialisationBehaviourUpdaterSystem : KodeboldJobSystem
 	{
 		private List<KodeboldBehaviour> m_kodeboldBehaviours;
 

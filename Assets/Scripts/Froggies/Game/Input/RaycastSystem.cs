@@ -29,7 +29,7 @@ namespace Froggies
 	public class RaycastSystem : KodeboldJobSystem
 	{
 		private EntityQuery m_entityQuery;
-		private InputManagementSystem m_inputManagementSystem;
+		private InputManager m_inputManager;
 		private EndFrameJobCompleteSystem endFrameJobCompleteSystem;
 		private BuildPhysicsWorld m_physicsWorldBuilder;
 		private EndFramePhysicsSystem endFramePhysicsSystem;
@@ -48,7 +48,7 @@ namespace Froggies
 
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
-			m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();
+			m_inputManager = dependencies.GetDependency<InputManager>();
 			endFrameJobCompleteSystem = dependencies.GetDependency<EndFrameJobCompleteSystem>();
 		}
 
@@ -78,7 +78,7 @@ namespace Froggies
 		{
 			CollisionWorld collisionWorld = m_physicsWorldBuilder.PhysicsWorld.CollisionWorld;
 			NativeArray<Translation> cameraTranslation = m_entityQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out JobHandle cameraTranslationHandle);
-			float3 mousePos = m_inputManagementSystem.InputData.mouseInput.mouseWorldPos;
+			float3 mousePos = m_inputManager.InputData.mouseInput.mouseWorldPos;
 			CollisionFilter collisionFilter = m_collisionFilter;
 			NativeArray<RaycastResult> raycastResult = m_raycastResult;
 
@@ -91,7 +91,7 @@ namespace Froggies
 			{
 				float3 cameraPos = cameraTranslation[0].Value;
 				RaycastResult result;
-				if (InputManagementSystem.CastRayFromMouse(cameraPos, mousePos, 1000.0f, out Unity.Physics.RaycastHit closestHit, collisionFilter, collisionWorld))
+				if (InputManager.CastRayFromMouse(cameraPos, mousePos, 1000.0f, out Unity.Physics.RaycastHit closestHit, collisionFilter, collisionWorld))
 				{
 					Entity hitEntity = closestHit.Entity;
 
@@ -163,7 +163,7 @@ namespace Froggies
 			{
 				float3 cameraPos = cameraTranslation[0].Value;
 				RaycastResult result;
-				if (InputManagementSystem.CastRayFromMouse(cameraPos, mousePos, 1000.0f, out Unity.Physics.RaycastHit closestHit, selectionFilter, collisionWorld))
+				if (InputManager.CastRayFromMouse(cameraPos, mousePos, 1000.0f, out Unity.Physics.RaycastHit closestHit, selectionFilter, collisionWorld))
 				{
 					result = new RaycastResult
 					{
