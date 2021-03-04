@@ -122,10 +122,7 @@ namespace Kodebolds.Core
 
 		public T* GetPointerToElement(int2 indices)
 		{
-			RequireReadAccess();
-			RequireIndexInBounds(indices.x, indices.y);
-
-			return (T*)m_Buffer + indices.y * m_Length0 + indices.x;
+			return GetPointerToElement(indices.x, indices.y);
 		}
 
 		[Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS")]
@@ -153,10 +150,10 @@ namespace Kodebolds.Core
 		[BurstDiscard]
 		private void RequireIndexInBounds(int index0, int index1)
 		{
-			if (index0 < 0 || index0 >= m_Length0)
+			if (!CheckXBounds(index0))
 				throw new IndexOutOfRangeException("Index0 " + index0 + " out of bounds of range " + m_Length0);
 
-			if (index1 < 0 || index1 >= m_Length1)
+			if (!CheckYBounds(index1))
 				throw new IndexOutOfRangeException("Index1 " + index1 + " out of bounds of range " + m_Length1);
 		}
 
