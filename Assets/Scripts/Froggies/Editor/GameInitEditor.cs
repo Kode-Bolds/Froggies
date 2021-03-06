@@ -16,6 +16,8 @@ namespace Froggies.EditorScripts
 
 			EditorGUI.BeginChangeCheck();
 
+			gameInit.BehaviourContainer = EditorGUILayout.ObjectField(gameInit.BehaviourContainer, typeof(GameObject), true) as GameObject;
+			
 			m_kodeboldBehvioursFoldout = EditorGUILayout.Foldout(m_kodeboldBehvioursFoldout, "Kodebold Behaviours");
 			if (m_kodeboldBehvioursFoldout)
 			{

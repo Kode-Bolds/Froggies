@@ -12,12 +12,12 @@ namespace Froggies
 		private EndInitializationEntityCommandBufferSystem m_entityCommandBuffer;
 
 		private SpawningQueueSystem m_spawningQueueSystem;
-		private GridManager m_gridManager;
+		private MapManager _mMapManager;
 
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 			m_spawningQueueSystem = dependencies.GetDependency<SpawningQueueSystem>();
-			m_gridManager = dependencies.GetDependency<GridManager>();
+			_mMapManager = dependencies.GetDependency<MapManager>();
 		}
 
 		public override void InitSystem()
@@ -31,7 +31,7 @@ namespace Froggies
 
 			EntityCommandBuffer ecb = m_entityCommandBuffer.CreateCommandBuffer();
 			NativeQueue<Translation> spawnQueue = m_spawningQueueSystem.spawnQueue;
-			NativeArray2D<MapNode> grid = m_gridManager.Grid;
+			NativeArray2D<MapNode> grid = _mMapManager.map;
 
 			Dependency = Entities.ForEach((ref RuntimePrefabData runtimePrefabData) =>
 			{
@@ -44,7 +44,7 @@ namespace Froggies
 
 					ecb.SetComponent(e, translation);
 					ecb.SetComponent(e, new LocalToWorld { Value = new float4x4(rotation.Value, translation.Value) });
-					ecb.SetComponent(e, new PathFinding { currentNode = PathFindingSystem.FindNearestNode(translation.Value, grid) });
+					ecb.SetComponent(e, new PathFinding { currentNode = MapUtils.FindNearestNode(translation.Value, grid) });
 				}
 			}).Schedule(Dependency);
 

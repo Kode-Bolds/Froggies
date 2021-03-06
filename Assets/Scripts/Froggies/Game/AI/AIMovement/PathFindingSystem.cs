@@ -13,14 +13,14 @@ namespace Froggies
 	public class PathFindingSystem : KodeboldJobSystem
 	{
 		private EndSimulationEntityCommandBufferSystem m_endSimulationECB;
-		private GridManager m_gridManager;
+		private MapManager _mMapManager;
 
 		private EntityQuery m_pathFindingQuery;
 		private float recalculatePeriod = 1f;
 
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
-			m_gridManager = dependencies.GetDependency<GridManager>();
+			_mMapManager = dependencies.GetDependency<MapManager>();
 		}
 
 		public override void InitSystem()
@@ -45,7 +45,7 @@ namespace Froggies
 				currentTargetComponentHandle = GetComponentTypeHandle<CurrentTarget>(true),
 				translationComponentHandle = GetComponentTypeHandle<Translation>(true),
 				entityType = GetEntityTypeHandle(),
-				gridRef = m_gridManager.Grid,
+				gridRef = _mMapManager.map,
 				ecb = m_endSimulationECB.CreateCommandBuffer().AsParallelWriter()
 			}.ScheduleParallel(m_pathFindingQuery, Dependency);
 
@@ -113,8 +113,8 @@ namespace Froggies
 
 					//Calculate the closest nodes to us and our target position.
 					//Don't search for path if we're already at our target node.
-					pathfinding.currentNode = FindNearestNode(translation.Value, gridCopy);
-					pathfinding.targetNode = FindNearestNode(currentTarget.targetData.targetPos, gridCopy);
+					pathfinding.currentNode = MapUtils.FindNearestNode(translation.Value, gridCopy);
+					pathfinding.targetNode = MapUtils.FindNearestNode(currentTarget.targetData.targetPos, gridCopy);
 					if (pathfinding.targetNode.Equals(pathfinding.currentNode))
 					{
 						pathfindingArray[indexInChunk] = pathfinding;
@@ -142,31 +142,6 @@ namespace Froggies
 
 				gridCopy.Dispose();
 			}
-		}
-
-		public static int2 FindNearestNode(float3 pos, NativeArray2D<MapNode> grid)
-		{
-			if (!grid.IsCreated)
-				Debug.Assert(false);
-
-			//TODO: Can we do a binary search here?
-			int2 closestNode = default;
-			float closestDistSq = float.MaxValue;
-
-			for (int i = 0; i < grid.Length0; ++i)
-			{
-				for (int j = 0; j < grid.Length1; ++j)
-				{
-					float distanceSq = math.distancesq(grid[i, j].position, pos);
-					if (distanceSq < closestDistSq)
-					{
-						closestNode = new int2(i, j);
-						closestDistSq = distanceSq;
-					}
-				}
-			}
-
-			return closestNode;
 		}
 
 		private static unsafe void CalculateGridH(NativeArray2D<MapNode> gridCopy, ref PathFinding kPathfinding)

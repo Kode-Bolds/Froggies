@@ -1,5 +1,6 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace Froggies
 {
@@ -22,6 +23,16 @@ namespace Froggies
     {
         public float3 position;
         public int2 gridPosition;
+    }
+    
+    public class PathFindingComponent: MonoBehaviour, IConvertGameObjectToEntity
+    {
+        public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
+        {
+            PathFinding pathFinding = new PathFinding();
+
+            dstManager.AddComponentData(entity, pathFinding);
+        }
     }
 }
 

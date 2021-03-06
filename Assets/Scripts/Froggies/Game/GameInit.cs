@@ -16,6 +16,7 @@ namespace Froggies
 
 		private static BehaviourUpdaterSystem m_behaviourUpdaterSystem;
 
+		public GameObject BehaviourContainer;
 		public List<KodeboldBehaviour> KodeboldBehaviours = new List<KodeboldBehaviour>();
 		//TODO: Add capability for other dependencies such as SO's.
 
@@ -266,11 +267,12 @@ namespace Froggies
 		private List<KodeboldBehaviour> CreateBehaviours()
 		{
 			List<KodeboldBehaviour> kodeboldBehaviours = new List<KodeboldBehaviour>();
-			GameObject behaviourContainer = new GameObject("Behaviours");
 
+			kodeboldBehaviours.AddRange(BehaviourContainer.GetComponentsInChildren<KodeboldBehaviour>());
+			
 			foreach (KodeboldBehaviour kodeboldBehaviour in KodeboldBehaviours)
 			{
-				kodeboldBehaviours.Add(Instantiate(kodeboldBehaviour, behaviourContainer.transform));
+				kodeboldBehaviours.Add(Instantiate(kodeboldBehaviour, BehaviourContainer.transform));
 			}
 
 			return kodeboldBehaviours;

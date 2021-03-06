@@ -27,7 +27,7 @@ namespace Froggies
 			dstManager.AddComponentData(entity, unitMove);
 			dstManager.AddComponentData(entity, freezeRotation);
 			dstManager.AddComponentData(entity, new UnitTag());
-			dstManager.AddComponentData(entity, new PathFinding());
+			dstManager.AddComponentData(entity, new Flocker());
 			dstManager.AddBuffer<PathNode>(entity);
 
 			dstManager.AddComponentData(entity, new CurrentTarget { targetData = new TargetData() });

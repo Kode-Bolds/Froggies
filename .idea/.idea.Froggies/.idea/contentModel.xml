@@ -4,106 +4,130 @@
     <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
     <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_Froggies.-72015306.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
-      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
-      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
-          <e p="Components" t="Include">
-            <e p="AITargetComponent.cs" t="Include" />
-            <e p="Authoring" t="Include">
-              <e p="BuildingAuthoring.cs" t="Include" />
-              <e p="Editor" t="Include">
+          <e p="Froggies" t="Include">
+            <e p="Editor" t="Include">
+              <e p="Authoring" t="Include">
                 <e p="ResourceNodeAuthoringEditor.cs" t="Include" />
                 <e p="UnitAuthoringComponentEditor.cs" t="Include" />
               </e>
-              <e p="ResourceNodeAuthoring.cs" t="Include" />
-              <e p="StoreAuthoringComponent.cs" t="Include" />
-              <e p="UnitAuthoringComponent.cs" t="Include" />
-            </e>
-            <e p="BuildingTag.cs" t="Include" />
-            <e p="CameraMovement.cs" t="Include" />
-            <e p="CombatUnit.cs" t="Include" />
-            <e p="Command.cs" t="Include" />
-            <e p="ControlPointsBlobComponent.cs" t="Include" />
-            <e p="CurrentAIState.cs" t="Include" />
-            <e p="CurrentTarget.cs" t="Include" />
-            <e p="EnemyTag.cs" t="Include" />
-            <e p="FreezeRotation.cs" t="Include" />
-            <e p="Harvester.cs" t="Include" />
-            <e p="Health.cs" t="Include" />
-            <e p="MapNode.cs" t="Include" />
-            <e p="MeleeUnit.cs" t="Include" />
-            <e p="OnStartPrefabComponent.cs" t="Include" />
-            <e p="PathFinding.cs" t="Include" />
-            <e p="Placing.cs" t="Include" />
-            <e p="RangedUnit.cs" t="Include" />
-            <e p="ResourceNode.cs" t="Include" />
-            <e p="Resources.cs" t="Include" />
-            <e p="RuntimeSpawningPrefabComponent.cs" t="Include" />
-            <e p="SelectedTag.cs" t="Include" />
-            <e p="StoreComponent.cs" t="Include" />
-            <e p="UnitAIStates.cs" t="Include" />
-            <e p="UnitMoveComponent.cs" t="Include" />
-            <e p="UnitTag.cs" t="Include" />
-          </e>
-          <e p="ControlScheme.cs" t="Include" />
-          <e p="Core" t="Include">
-            <e p="BehaviourUpdaterSystem.cs" t="Include" />
-            <e p="DebugDrawer.cs" t="Include" />
-            <e p="Dependencies.cs" t="Include" />
-            <e p="Editor" t="Include">
+              <e p="Froggies.EditorScripts.asmdef" t="Include" />
               <e p="GameInitEditor.cs" t="Include" />
-              <e p="GridManagerEditor.cs" t="Include" />
+              <e p="GridSnap.cs" t="Include" />
+              <e p="GridSnapEditor.cs" t="Include" />
+              <e p="MapAuthoringEditor.cs" t="Include" />
             </e>
-            <e p="EndFrameJobCompleteSystem.cs" t="Include" />
-            <e p="GameInit.cs" t="Include" />
-            <e p="GameStateManager.cs" t="Include" />
-            <e p="GridManager.cs" t="Include" />
-            <e p="KodeboldBehaviour.cs" t="Include" />
-            <e p="KodeboldJobSystem.cs" t="Include" />
-            <e p="NativeContainerExtensions" t="Include">
-              <e p="NativeArray2D.cs" t="Include" />
-              <e p="NativeContainerExtensionMethods.cs" t="Include" />
+            <e p="Game" t="Include">
+              <e p="AI" t="Include">
+                <e p="AICommands" t="Include">
+                  <e p="AITargetComponent.cs" t="Include" />
+                  <e p="CommandBuffer.cs" t="Include" />
+                  <e p="CommandProcessSystem.cs" t="Include" />
+                  <e p="CurrentAIStateComponent.cs" t="Include" />
+                  <e p="CurrentTargetComponent.cs" t="Include" />
+                  <e p="FindAITargetSystem.cs" t="Include" />
+                  <e p="SelectedTagComponent.cs" t="Include" />
+                  <e p="StateTransitionSystem.cs" t="Include" />
+                  <e p="UnitAIStateComponents.cs" t="Include" />
+                </e>
+                <e p="AIMovement" t="Include">
+                  <e p="FlockingComponent.cs" t="Include" />
+                  <e p="FlockingSystem.cs" t="Include" />
+                  <e p="FreezeRotationComponent.cs" t="Include" />
+                  <e p="FreezeRotationSystem.cs" t="Include" />
+                  <e p="ObstacleComponent.cs" t="Include" />
+                  <e p="PathFindingComponent.cs" t="Include" />
+                  <e p="PathFindingSystem.cs" t="Include" />
+                  <e p="UnitMoveComponent.cs" t="Include" />
+                  <e p="UnitMoveSystem.cs" t="Include" />
+                </e>
+                <e p="Combat" t="Include">
+                  <e p="CombatSystem.cs" t="Include" />
+                  <e p="CombatUnit.cs" t="Include" />
+                  <e p="EnemyTag.cs" t="Include" />
+                  <e p="Health.cs" t="Include" />
+                  <e p="MeleeUnit.cs" t="Include" />
+                  <e p="Projectile.cs" t="Include" />
+                  <e p="RangedUnit.cs" t="Include" />
+                  <e p="Resistances.cs" t="Include" />
+                </e>
+                <e p="Harvesting" t="Include">
+                  <e p="DepositSystem.cs" t="Include" />
+                  <e p="HarvesterComponent.cs" t="Include" />
+                  <e p="HarvestingSystem.cs" t="Include" />
+                  <e p="ResourceNodeComponent.cs" t="Include" />
+                  <e p="ResourcesComponent.cs" t="Include" />
+                </e>
+                <e p="UnitTagComponent.cs" t="Include" />
+              </e>
+              <e p="Authoring" t="Include">
+                <e p="BuildingAuthoringComponent.cs" t="Include" />
+                <e p="ObstacleAuthoringComponent.cs" t="Include" />
+                <e p="OnStartPrefabComponent.cs" t="Include" />
+                <e p="ResourceNodeAuthoringComponent.cs" t="Include" />
+                <e p="RuntimeSpawningPrefabComponent.cs" t="Include" />
+                <e p="StoreAuthoringComponent.cs" t="Include" />
+                <e p="UnitAuthoringComponent.cs" t="Include" />
+              </e>
+              <e p="Building" t="Include">
+                <e p="BuildingTagComponent.cs" t="Include" />
+                <e p="PlacingComponent.cs" t="Include" />
+                <e p="StoreComponent.cs" t="Include" />
+              </e>
+              <e p="Froggies.asmdef" t="Include" />
+              <e p="GameInit.cs" t="Include" />
+              <e p="Input" t="Include">
+                <e p="CameraControlSystem.cs" t="Include" />
+                <e p="CameraMovementComponent.cs" t="Include" />
+                <e p="CameraSyncSystem.cs" t="Include" />
+                <e p="ControlScheme.cs" t="Include" />
+                <e p="InputManagementSystem.cs" t="Include" />
+                <e p="RaycastSystem.cs" t="Include" />
+                <e p="SelectionSystem.cs" t="Include" />
+              </e>
+              <e p="InstantiationSystem.cs" t="Include" />
+              <e p="Map" t="Include">
+                <e p="MapData.cs" t="Include" />
+                <e p="MapManager.cs" t="Include" />
+                <e p="MapNode.cs" t="Include" />
+              </e>
+              <e p="MapUtils.cs" t="Include" />
+              <e p="PhysicsCategories.cs" t="Include" />
+              <e p="Production" t="Include">
+                <e p="SpawningQueueSystem.cs" t="Include" />
+                <e p="SpawningSystem.cs" t="Include" />
+              </e>
+              <e p="UI" t="Include">
+                <e p="GameScreen.cs" t="Include" />
+                <e p="SelectionBoxRenderer.cs" t="Include" />
+                <e p="UIManager.cs" t="Include" />
+              </e>
             </e>
           </e>
-          <e p="PhysicsCategories.cs" t="Include" />
-          <e p="SelectionBoxRenderer.cs" t="Include" />
-          <e p="SomeGameObject.cs" t="Include" />
-          <e p="Systems" t="Include">
-            <e p="CameraControlSystem.cs" t="Include" />
-            <e p="CameraSyncSystem.cs" t="Include" />
-            <e p="CombatSystem.cs" t="Include" />
-            <e p="CommandProcessSystem.cs" t="Include" />
-            <e p="DepositSystem.cs" t="Include" />
-            <e p="FindAITargetSystem.cs" t="Include" />
-            <e p="FreezeRotationSystem.cs" t="Include" />
-            <e p="HarvestingSystem.cs" t="Include" />
-            <e p="InputManagementSystem.cs" t="Include" />
-            <e p="InstantiationSystem.cs" t="Include" />
-            <e p="PathFindingSystem.cs" t="Include" />
-            <e p="PatrolControlPointsSystem.cs" t="Include" />
-            <e p="RaycastSystem.cs" t="Include" />
-            <e p="SelectionSystem.cs" t="Include" />
-            <e p="SpawningQueueSystem.cs" t="Include" />
-            <e p="SpawningSystem.cs" t="Include" />
-            <e p="StateTransitionSystem.cs" t="Include" />
-            <e p="UnitMoveSystem.cs" t="Include" />
+          <e p="Kodebolds" t="Include">
+            <e p="Core" t="Include">
+              <e p="BehaviourUpdaterSystem.cs" t="Include" />
+              <e p="DebugDrawer.cs" t="Include" />
+              <e p="Dependencies.cs" t="Include" />
+              <e p="EndFrameJobCompleteSystem.cs" t="Include" />
+              <e p="GameStateManager.cs" t="Include" />
+              <e p="KodeboldBehaviour.cs" t="Include" />
+              <e p="KodeboldJobSystem.cs" t="Include" />
+              <e p="Kodebolds.Core.asmdef" t="Include" />
+              <e p="NativeContainerExtensions" t="Include">
+                <e p="NativeArray2D.cs" t="Include" />
+                <e p="NativeContainerExtensionMethods.cs" t="Include" />
+              </e>
+            </e>
           </e>
-          <e p="UI" t="Include">
-            <e p="GameScreen.cs" t="Include" />
-            <e p="UIManager.cs" t="Include" />
-          </e>
-        </e>
-        <e p="UI" t="Include">
-          <e p="BottomBar.uss" t="Include" />
-          <e p="BottomBar.uxml" t="Include" />
-          <e p="GameScreen.uxml" t="Include" />
-          <e p="ResourceBar.uss" t="Include" />
-          <e p="ResourceBar.uxml" t="Include" />
         </e>
       </e>
       <e p="DocCodeSamples.csproj" t="IncludeRecursive" />
+      <e p="Froggies.EditorScripts.csproj" t="IncludeRecursive" />
+      <e p="Froggies.csproj" t="IncludeRecursive" />
       <e p="Froggies.sln" t="IncludeFlat" />
+      <e p="Kodebolds.Core.csproj" t="IncludeRecursive" />
       <e p="Packages" t="Include">
         <e p="com.unity.entities@0.14.0-preview.19" t="Include">
           <e p="DocCodeSamples.Tests" t="Include">
