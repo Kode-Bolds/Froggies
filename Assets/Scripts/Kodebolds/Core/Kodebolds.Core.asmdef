@@ -5,7 +5,14 @@
         "Unity.Mathematics",
         "Unity.Collections",
         "Unity.Burst",
-        "Unity.Transforms"
+        "Unity.Transforms",
+        "Unity.Scenes",
+        "Unity.Scenes.Editor",
+        "Unity.Physics",
+        "Unity.Physics.Hybrid",
+        "Unity.Transforms.Hybrid",
+        "Unity.Entities.Hybrid",
+        "Unity.Rendering.Hybrid"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
