@@ -45,27 +45,27 @@ namespace Froggies
 		public bool shiftDown;
 	}
 
-	public class InputManagementSystem : KodeboldJobSystem
+	public class InputManager : KodeboldBehaviour
 	{
 		private InputData m_inputData;
 		public InputData InputData => m_inputData;
 
-		protected override GameState ActiveGameState => GameState.Always & ~GameState.Initalising;
+		protected override GameState ActiveGameState => GameState.Always & ~GameState.Initialising;
 
 		private ControlScheme m_controlScheme;
 
-		public override void GetSystemDependencies(Dependencies dependencies)
+		public override void GetBehaviourDependencies(Dependencies dependencies)
 		{
 
 		}
 
-		public override void InitSystem()
+		public override void InitBehaviour()
 		{
 			m_controlScheme = new ControlScheme();
 			m_controlScheme.Default.Enable();
 		}
 
-		public override void UpdateSystem()
+		public override void UpdateBehaviour()
 		{
 			m_inputData = new InputData();
 
@@ -120,7 +120,7 @@ namespace Froggies
 			return collisionWorld.CastRay(rayInput, out closestHit);
 		}
 
-		public override void FreeSystem()
+		public override void FreeBehaviour()
 		{
 
 		}

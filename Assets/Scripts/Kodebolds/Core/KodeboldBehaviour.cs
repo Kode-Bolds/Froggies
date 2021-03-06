@@ -24,7 +24,6 @@ namespace Kodebolds.Core
 
 		public void OnUpdate()
 		{
-			//Don't run update logic until we have entered the updating game state. (eg. no longer initialising the game data)
 			if (Application.isPlaying && (_gameStateManager.GameState & ActiveGameState) != 0)
 				UpdateBehaviour();
 		}

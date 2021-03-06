@@ -11,7 +11,7 @@ namespace Froggies
     public class SelectionSystem : KodeboldJobSystem
     {
         private EndSimulationEntityCommandBufferSystem m_entityCommandBuffer;
-        private InputManagementSystem m_inputManagementSystem;
+        private InputManager m_inputManager;
         private RaycastSystem m_raycastSystem;
         private NativeArray<float3> m_boxBounds;
 
@@ -21,7 +21,7 @@ namespace Froggies
 
 		public override void GetSystemDependencies(Dependencies dependencies)
         {
-            m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();
+            m_inputManager = dependencies.GetDependency<InputManager>();
             m_raycastSystem = dependencies.GetDependency<RaycastSystem>();
         }
 
@@ -34,9 +34,9 @@ namespace Froggies
         public override void UpdateSystem()
         {
 
-            bool leftClickPressed = m_inputManagementSystem.InputData.mouseInput.leftClickPressed;
-            bool leftClickReleased = m_inputManagementSystem.InputData.mouseInput.leftClickReleased;
-            bool leftClickDown = m_inputManagementSystem.InputData.mouseInput.leftClickDown;
+            bool leftClickPressed = m_inputManager.InputData.mouseInput.leftClickPressed;
+            bool leftClickReleased = m_inputManager.InputData.mouseInput.leftClickReleased;
+            bool leftClickDown = m_inputManager.InputData.mouseInput.leftClickDown;
 
             if (leftClickDown || leftClickReleased)
             {

@@ -2,9 +2,11 @@
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Physics;
+using Unity.Transforms;
 
 namespace Froggies
 {
+	[UpdateAfter(typeof(CopyInitialTransformFromGameObjectSystem))]
 	public class FreezeRotationSystem : KodeboldJobSystem
 	{
 		private EndInitializationEntityCommandBufferSystem m_entityCommandBuffer;

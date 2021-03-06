@@ -5,12 +5,12 @@ namespace Kodebolds.Core
 	[Flags]
 	public enum GameState
 	{
-		None = 0,
-		Initalising = 1 << 0,
-		Updating = 1 << 1,
-		Paused = 1 << 2,
-		Menu = 1 << 3,
-		Always = Initalising | Updating | Paused | Menu
+		Initialising = 1 << 0,
+		Menu = 1 << 1,
+		Loading = 1 << 2,
+		Updating = 1 << 3,
+		Paused = 1 << 4,
+		Always = Initialising | Menu | Loading | Updating | Paused 
 	}
 
 	public class GameStateManager : IDependency
@@ -20,7 +20,7 @@ namespace Kodebolds.Core
 
 		public GameStateManager()
 		{
-			_gameState = GameState.Initalising;
+			_gameState = GameState.Initialising;
 		}
 
 		public void FinishInitialisation()
@@ -29,7 +29,12 @@ namespace Kodebolds.Core
 			_gameState = GameState.Updating;
 		}
 
-		public void StartUpdate()
+		public void StartLoading()
+		{
+			_gameState = GameState.Loading;
+		}
+
+		public void FinishLoading()
 		{
 			_gameState = GameState.Updating;
 		}

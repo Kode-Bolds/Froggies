@@ -11,6 +11,7 @@ namespace Froggies
 
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
+			GameDataContainer gameData = dependencies.GetDependency<GameDataContainer>();
 		}
 
 		public override void InitSystem()

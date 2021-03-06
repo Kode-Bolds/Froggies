@@ -8,13 +8,13 @@ namespace Froggies
 {
     public class CameraControlSystem : KodeboldJobSystem
     {
-        InputManagementSystem m_inputManagementSystem;
+        InputManager m_inputManager;
 
         protected override GameState ActiveGameState => GameState.Updating | GameState.Paused;
 
 		public override void GetSystemDependencies(Dependencies dependencies)
         {
-            m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();
+            m_inputManager = dependencies.GetDependency<InputManager>();
         }
 
         public override void InitSystem()
@@ -24,15 +24,15 @@ namespace Froggies
 
         public override void UpdateSystem()
         {
-            float2 cameraControls = m_inputManagementSystem.InputData.inputActions.cameraMovement;
-            float2 mouseScroll = m_inputManagementSystem.InputData.mouseInput.mouseScroll;
-            float2 mousePos = m_inputManagementSystem.InputData.mouseInput.mouseScreenPos;
+            float2 cameraControls = m_inputManager.InputData.inputActions.cameraMovement;
+            float2 mouseScroll = m_inputManager.InputData.mouseInput.mouseScroll;
+            float2 mousePos = m_inputManager.InputData.mouseInput.mouseScreenPos;
             float2 screenBounds = new float2(Screen.width, Screen.height);
-            float2 mouseDelta = m_inputManagementSystem.InputData.mouseInput.mouseDelta;
+            float2 mouseDelta = m_inputManager.InputData.mouseInput.mouseDelta;
 
             float dt = Time.DeltaTime;
             bool focused = Application.isFocused;
-            bool middleMouse = m_inputManagementSystem.InputData.mouseInput.middleClickDown;
+            bool middleMouse = m_inputManager.InputData.mouseInput.middleClickDown;
 
             Entities
             .WithAll<Camera>()

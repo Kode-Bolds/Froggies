@@ -10,7 +10,7 @@ namespace Froggies
 	[AlwaysUpdateSystem]
 	public class SpawningQueueSystem : KodeboldJobSystem
 	{
-		private InputManagementSystem m_inputManagementSystem;
+		private InputManager m_inputManager;
 		private RaycastSystem m_raycastSystem;
 		private GridManager m_gridManager;
 
@@ -21,7 +21,7 @@ namespace Froggies
 
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
-			m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();
+			m_inputManager = dependencies.GetDependency<InputManager>();
 			m_raycastSystem = dependencies.GetDependency<RaycastSystem>();
 			m_gridManager = dependencies.GetDependency<GridManager>();
 		}
@@ -35,7 +35,7 @@ namespace Froggies
 		{
 			Dependency = JobHandle.CombineDependencies(Dependency, m_raycastSystem.RaycastSystemDependency);
 
-			if (m_inputManagementSystem.InputData.inputActions.spawn)
+			if (m_inputManager.InputData.inputActions.spawn)
 			{
 				NativeArray<RaycastResult> raycastResult = m_raycastSystem.RaycastResult;
 				NativeQueue<SpawnCommand> spawnQueueLocal = spawnQueue;
