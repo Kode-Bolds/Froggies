@@ -9,6 +9,8 @@ namespace Kodebolds.Core
 	{
 		private NativeList<JobHandle> m_jobHandlesToComplete;
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 

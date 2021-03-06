@@ -12,6 +12,9 @@ namespace Froggies
 {
     public class FlockingSystem : KodeboldJobSystem
     {
+        
+		protected override GameState ActiveGameState => GameState.Updating;
+
         public override void GetSystemDependencies(Dependencies dependencies)
         {
         }

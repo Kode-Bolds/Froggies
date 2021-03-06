@@ -12,6 +12,6 @@ public class MapData : ScriptableObject
 {
     public int cellSize;
     public int2 gridSize;
-    public MapNode [,] grid;
+    public MapNode[] grid;
     public Vector3 origin;
 }

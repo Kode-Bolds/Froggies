@@ -20,6 +20,8 @@ namespace Froggies
 		private EntityQuery m_resourcesQuery;
 		private NativeQueue<ResourceTypeValuePair> m_resourcesQueue;
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 		}
@@ -55,11 +57,11 @@ namespace Froggies
 					if (harvester.currentlyCarryingAmount == 0)
 					{
 
-						//Debug.Log(" Nothing to deposit, empty command queue will return us to Idle state");
+						Debug.Log(" Nothing to deposit, empty command queue will return us to Idle state");
 						return;
 					}
 
-					//Debug.Log($"Deposited { harvester.currentlyCarryingAmount } of { harvester.currentlyCarryingType }");
+					Debug.Log($"Deposited { harvester.currentlyCarryingAmount } of { harvester.currentlyCarryingType }");
 
 				//Add stuff to global resources queue and empty inventory.
 				resourceQueueParallel.Enqueue(new ResourceTypeValuePair { resourceType = harvester.currentlyCarryingType, resourceValue = harvester.currentlyCarryingAmount });
@@ -73,11 +75,11 @@ namespace Froggies
 					if (resourceNodeLookup.HasComponent(previousTarget.targetData.targetEntity))
 					{
 						CommandProcessSystem.QueueCommand(CommandType.Harvest, commandBuffer, previousTarget.targetData, true);
-						//Debug.Log($"Requesting switch to MoveToHarvest state for previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType}");
+						Debug.Log($"Requesting switch to MoveToHarvest state for previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType}");
 					}
 					else
 					{
-						//Debug.Log($"Previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType} no longer exists, queueing new harvest command.");
+						Debug.Log($"Previously harvested resource node {previousTarget.targetData.targetEntity} of type {previousTarget.targetData.targetType} no longer exists, queueing new harvest command.");
 
 						CommandProcessSystem.QueueCommand(CommandType.Harvest, commandBuffer, new TargetData { targetType = previousTarget.targetData.targetType }, true);
 					}

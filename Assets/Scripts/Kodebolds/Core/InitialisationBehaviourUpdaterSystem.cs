@@ -4,9 +4,11 @@ using Unity.Entities;
 namespace Kodebolds.Core
 {
 	[DisableAutoCreation]
-	public class BehaviourUpdaterSystem : KodeboldJobSystem
+	public class InitialisationBehaviourUpdaterSystem : KodeboldJobSystem
 	{
 		private List<KodeboldBehaviour> m_kodeboldBehaviours;
+
+		protected override GameState ActiveGameState => GameState.Updating;
 
 		public void SetBehavioursList(List<KodeboldBehaviour> behaviours)
 		{
@@ -28,7 +30,7 @@ namespace Kodebolds.Core
 			int count = m_kodeboldBehaviours.Count;
 			for (int behaviourIndex = 0; behaviourIndex < count; behaviourIndex++)
 			{
-				m_kodeboldBehaviours[behaviourIndex].UpdateBehaviour();
+				m_kodeboldBehaviours[behaviourIndex].OnUpdate();
 			}
 		}
 

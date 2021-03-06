@@ -1,24 +1,28 @@
-﻿using Kodebolds.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
 using UnityEngine;
 
-namespace Froggies
+namespace Kodebolds.Core
 {
-	//EXPLICITLY not adding usings here to can determine which systems here are Unity systems at first glance.
-	public class GameInit : MonoBehaviour
+	//EXPLICITLY not adding usings here so we can determine which systems here are Unity systems at first glance.
+	public abstract class GameInit : MonoBehaviour
 	{
-		private List<IDependency> m_dependencies;
-		private List<IDependant> m_dependants;
-		private GameStateManager m_gameStateManager;
+		protected static string m_worldName = "Kodebolds";
 
-		private static BehaviourUpdaterSystem m_behaviourUpdaterSystem;
+		protected List<IDependency> m_dependencies;
+		protected List<IDependant> m_dependants;
+		protected GameStateManager m_gameStateManager;
 
+		protected static InitialisationBehaviourUpdaterSystem m_initialisationBehaviourUpdaterSystem;
+		protected static UpdateBehaviourUpdaterSystem m_updateBehaviourUpdaterSystem;
 		public GameObject BehaviourContainer;
-		public List<KodeboldBehaviour> KodeboldBehaviours = new List<KodeboldBehaviour>();
-		//TODO: Add capability for other dependencies such as SO's.
+
+
+		public List<KodeboldBehaviour> InitialisationKodeboldBehaviours = new List<KodeboldBehaviour>();
+		public List<KodeboldBehaviour> UpdateKodeboldBehaviours = new List<KodeboldBehaviour>();
+		public List<KodeboldSO> KodeboldScriptableObjects = new List<KodeboldSO>();
 
 		public void OnEnable()
 		{
@@ -55,7 +59,10 @@ namespace Froggies
 			int count = m_dependencies.Count;
 			for (int dependencyIndex = 0; dependencyIndex < count; dependencyIndex++)
 			{
-				m_dependencies[dependencyIndex].Free();
+				if (m_dependencies[dependencyIndex] is KodeboldJobSystem system)
+					system.Free();
+				else if (m_dependencies[dependencyIndex] is KodeboldBehaviour behaviour)
+					behaviour.Free();
 			}
 
 			CleanupWorld();
@@ -74,7 +81,7 @@ namespace Froggies
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
 		private static void CreateEditorSystems()
 		{
-			GetOrCreateWorld().GetOrCreateSystem<EditorSystemsGroup>();
+			GetOrCreateWorldInternal().GetOrCreateSystem<EditorSystemsGroup>();
 		}
 
 		public class EditorSystemsGroup : Unity.Entities.ComponentSystemGroup
@@ -87,22 +94,12 @@ namespace Froggies
 		}
 #endif
 
-		[Unity.Entities.UpdateAfter(typeof(Unity.Physics.Systems.EndFramePhysicsSystem))]
-		public class PostPhysicsSystemsGroup : Unity.Entities.ComponentSystemGroup { }
-
-		[Unity.Entities.UpdateAfter(typeof(PostPhysicsSystemsGroup))]
-		public class CommandStateProcessingSystemsGroup : Unity.Entities.ComponentSystemGroup { }
-
-		[Unity.Entities.UpdateAfter(typeof(Unity.Transforms.TransformSystemGroup))]
-		public class BehaviourUpdaterSystemsGroup : Unity.Entities.ComponentSystemGroup { }
-
-
-		private static Unity.Entities.World GetOrCreateWorld()
+		protected static Unity.Entities.World GetOrCreateWorldInternal()
 		{
-			if (Unity.Entities.World.DefaultGameObjectInjectionWorld != null && Unity.Entities.World.DefaultGameObjectInjectionWorld.Name == "KodeboldsWorld")
+			if (Unity.Entities.World.DefaultGameObjectInjectionWorld != null && Unity.Entities.World.DefaultGameObjectInjectionWorld.Name == m_worldName)
 				return Unity.Entities.World.DefaultGameObjectInjectionWorld;
 
-			Unity.Entities.World world = new Unity.Entities.World("KodeboldsWorld");
+			Unity.Entities.World world = new Unity.Entities.World(m_worldName);
 			Unity.Entities.World.DefaultGameObjectInjectionWorld = world;
 
 			//INITIALISATION
@@ -110,10 +107,6 @@ namespace Froggies
 
 			initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<Unity.Entities.BeginInitializationEntityCommandBufferSystem>());
 			initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<Unity.Entities.ConvertToEntitySystem>());
-			initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<CameraSyncSystem>());
-			initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<InputManagementSystem>());
-			initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<InstantiationSystem>());
-			initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SpawningSystem>());
 			initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<Unity.Entities.RetainBlobAssetSystem>());
 			initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<Unity.Entities.UpdateWorldTimeSystem>());
 
@@ -128,8 +121,8 @@ namespace Froggies
 
 			initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<Unity.Transforms.CopyInitialTransformFromGameObjectSystem>());
 
-			//Must run after CopyInitialTransformFromGameObjectSystem.
-			initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<FreezeRotationSystem>());
+			m_initialisationBehaviourUpdaterSystem = world.GetOrCreateSystem<InitialisationBehaviourUpdaterSystem>();
+			initSystemGroup.AddSystemToUpdateList(m_initialisationBehaviourUpdaterSystem);
 
 			initSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<Unity.Entities.EndInitializationEntityCommandBufferSystem>());
 
@@ -154,32 +147,6 @@ namespace Froggies
 			simSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<Unity.Physics.Systems.EndFramePhysicsSystem>());
 
 			{
-				PostPhysicsSystemsGroup postPhysicsSystemsGroup = world.GetOrCreateSystem<PostPhysicsSystemsGroup>();
-				simSystemGroup.AddSystemToUpdateList(postPhysicsSystemsGroup);
-
-				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<RaycastSystem>());
-				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SpawningQueueSystem>());
-				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<SelectionSystem>());
-				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<CameraControlSystem>());
-				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<HarvestingSystem>());
-				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<DepositSystem>());
-				postPhysicsSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<UnitMoveSystem>());
-			}
-
-			{
-				//These systems must be updated after all the game logic systems as state transitions add/remove components via an entity command buffer, meaning the command status data
-				//will be out of sync with the state components until the next sync point (command buffer system).
-				//We do this step at the end to avoid an additional sync point that would halt the main thread.
-				CommandStateProcessingSystemsGroup commandStateProcessingSystemsGroup = world.GetOrCreateSystem<CommandStateProcessingSystemsGroup>();
-				simSystemGroup.AddSystemToUpdateList(commandStateProcessingSystemsGroup);
-
-				commandStateProcessingSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<FindAITargetSystem>());
-				commandStateProcessingSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<CommandProcessSystem>());
-				commandStateProcessingSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<PathFindingSystem>());
-				commandStateProcessingSystemsGroup.AddSystemToUpdateList(world.GetOrCreateSystem<StateTransitionSystem>());
-			}
-
-			{
 				Unity.Transforms.TransformSystemGroup transformSystemGroup = world.GetOrCreateSystem<Unity.Transforms.TransformSystemGroup>();
 				simSystemGroup.AddSystemToUpdateList(transformSystemGroup);
 
@@ -197,14 +164,8 @@ namespace Froggies
 				transformSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<Unity.Transforms.EndFrameWorldToLocalSystem>());
 			}
 
-			{
-				BehaviourUpdaterSystemsGroup behaviourUpdaterSystemsGroup = world.GetOrCreateSystem<BehaviourUpdaterSystemsGroup>();
-				simSystemGroup.AddSystemToUpdateList(behaviourUpdaterSystemsGroup);
-
-				m_behaviourUpdaterSystem = world.GetOrCreateSystem<BehaviourUpdaterSystem>();
-
-				behaviourUpdaterSystemsGroup.AddSystemToUpdateList(m_behaviourUpdaterSystem);
-			}
+			m_updateBehaviourUpdaterSystem = world.GetOrCreateSystem<UpdateBehaviourUpdaterSystem>();
+			simSystemGroup.AddSystemToUpdateList(m_updateBehaviourUpdaterSystem);
 
 			simSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<Unity.Entities.EndSimulationEntityCommandBufferSystem>());
 
@@ -238,16 +199,17 @@ namespace Froggies
 			return world;
 		}
 
+		protected abstract Unity.Entities.World GetOrCreateWorld();
+
 		private List<IDependency> CreateDependencies(out GameStateManager gameStateManager)
 		{
 			List<IDependency> dependencies = new List<IDependency>();
 
-			gameStateManager = new GameStateManager();
-			dependencies.Add(gameStateManager);
+			dependencies.Add(gameStateManager = new GameStateManager());
 
-			List<KodeboldBehaviour> kodeboldBehaviours = CreateBehaviours();
-			m_behaviourUpdaterSystem.SetBehavioursList(kodeboldBehaviours);
-			dependencies.AddRange(kodeboldBehaviours);
+			dependencies.AddRange(CreateAdditionalDependencies());
+			dependencies.AddRange(CreateBehaviours());
+			dependencies.AddRange(KodeboldScriptableObjects);
 
 			//Get all our created Kodebold systems and add them into the dependencies
 			Unity.Entities.World world = Unity.Entities.World.DefaultGameObjectInjectionWorld;
@@ -259,6 +221,8 @@ namespace Froggies
 			return dependencies;
 		}
 
+		protected abstract List<IDependency> CreateAdditionalDependencies();
+
 		private List<IDependant> CreateDependants()
 		{
 			return new List<IDependant>();
@@ -266,16 +230,23 @@ namespace Froggies
 
 		private List<KodeboldBehaviour> CreateBehaviours()
 		{
-			List<KodeboldBehaviour> kodeboldBehaviours = new List<KodeboldBehaviour>();
+			List<KodeboldBehaviour> initKodeboldBehaviours = new List<KodeboldBehaviour>();
+			List<KodeboldBehaviour> updateKodeboldBehaviours = new List<KodeboldBehaviour>();
 
-			kodeboldBehaviours.AddRange(BehaviourContainer.GetComponentsInChildren<KodeboldBehaviour>());
-			
-			foreach (KodeboldBehaviour kodeboldBehaviour in KodeboldBehaviours)
+			foreach (KodeboldBehaviour kodeboldBehaviour in InitialisationKodeboldBehaviours)
 			{
-				kodeboldBehaviours.Add(Instantiate(kodeboldBehaviour, BehaviourContainer.transform));
+				initKodeboldBehaviours.Add(Instantiate(kodeboldBehaviour, BehaviourContainer.transform));
 			}
+			m_initialisationBehaviourUpdaterSystem.SetBehavioursList(initKodeboldBehaviours);
+			updateKodeboldBehaviours.AddRange(BehaviourContainer.GetComponentsInChildren<KodeboldBehaviour>());
 
-			return kodeboldBehaviours;
+			foreach (KodeboldBehaviour kodeboldBehaviour in UpdateKodeboldBehaviours)
+			{
+				updateKodeboldBehaviours.Add(Instantiate(kodeboldBehaviour, BehaviourContainer.transform));
+			}
+			m_updateBehaviourUpdaterSystem.SetBehavioursList(updateKodeboldBehaviours);
+
+			return initKodeboldBehaviours.Concat(updateKodeboldBehaviours).ToList();
 		}
 	}
 }

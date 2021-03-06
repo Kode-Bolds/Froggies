@@ -8,6 +8,8 @@ namespace Froggies
     [RequireComponent(typeof(UIDocument))]
     public class GameScreen : KodeboldBehaviour
     {
+        private VisualElement rootVisualElement;
+
         private VisualElement bottomPanel;
         private VisualElement topPanel;
 
@@ -19,21 +21,27 @@ namespace Froggies
         public VisualElement buttonGrid;
         public VisualElement mainUnit;
 
-
         public Image minimap;
         public RenderTexture miniMapRenderTexture;
 
+        World.NoAllocReadOnlyCollection<World> world;
+        EntityManager entityManager;
+        EntityQuery selectedQuery;
+        SelectionSystem selectionSystem;
 
-        public void AddSelectedUnits(int count)
+        Unity.Collections.NativeArray<Entity> entities;
+
+        protected override GameState ActiveGameState => GameState.Updating;
+
+		public void AddSelectedUnits(int count)
         {
             unitGrid.Clear();
 
             for (int i = 0; i < count; i++)
             {
-                VisualElement unit = new Button();
+                Button unit = new Button();
+                unit.clickable.clickedWithEventInfo += ChangeMainSelectedUnit;
                 unit.AddToClassList("unit");
-                //unit.style.backgroundImage = 
-
                 unitGrid.Add(unit);
             }
         }
@@ -66,34 +74,36 @@ namespace Froggies
 
         public override void InitBehaviour()
         {
+            // Get the world and entity manager
+            world = World.All;
+            entityManager = world[0].EntityManager;
 
-
-            var rootVisualElement = GetComponent<UIDocument>().rootVisualElement;
+            // Root element of UI
+            rootVisualElement = GetComponent<UIDocument>().rootVisualElement;
 
             bottomPanel = GetComponent<UIDocument>().rootVisualElement.Q("BottomBar");
             topPanel = GetComponent<UIDocument>().rootVisualElement.Q("ResourceBar");
 
-
-            // Minimap Test - RenderTexture
+            // Minimap
             minimap = rootVisualElement.Q<Image>("MapImage");
             minimap.image = miniMapRenderTexture;
 
+            // Resources
             resource1Text = rootVisualElement.Q<Label>("Resource1Text");
             resource2Text = rootVisualElement.Q<Label>("Resource2Text");
             resource3Text = rootVisualElement.Q<Label>("Resource3Text");
 
-
-            // Selected Units Test
+            // Selected Units
             unitGrid = GetComponent<UIDocument>().rootVisualElement.Q("UnitGrid");
+            selectedQuery = entityManager.CreateEntityQuery(ComponentType.ReadWrite<SelectedTag>());
+            selectionSystem = world[0].GetExistingSystem<SelectionSystem>();
 
-            // Buttons Test
+            // Action Buttons
             buttonGrid = GetComponent<UIDocument>().rootVisualElement.Q("ButtonGrid");
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 3; i++)
             {
                 AddToButtons();
             }
-
-            // Main Unit Test
 
             // hoveredUnit = TODO: implemented when an onHover is implemented on a UI "unit"
             mainUnit = GetComponent<UIDocument>().rootVisualElement.Q("MainUnit");
@@ -104,33 +114,50 @@ namespace Froggies
 
         public override void UpdateBehaviour()
         {
+            // Re-assign the new texture to the minimap
             minimap.image = miniMapRenderTexture;
 
-            var world = World.All;
-            EntityManager entityManager = world[0].EntityManager;
-
-            // RESOURCES
-            EntityQuery entityQuery = entityManager.CreateEntityQuery(ComponentType.ReadWrite<Resources>());
-            Resources resources = entityQuery.GetSingleton<Resources>();
-            // entityQuery.SetSingleton<Resources>(res);
-            // Resource Text
-            resource1Text.text = resources.buildingMaterial.ToString();
-            resource2Text.text = resources.food.ToString();
-            resource3Text.text = resources.rareResource.ToString();
 
 
-            // SELECTED ENTITIES
-            EntityQuery selectedQuery = entityManager.CreateEntityQuery(ComponentType.ReadWrite<SelectedTag>());
-            var entities = selectedQuery.ToEntityArray(Unity.Collections.Allocator.Persistent);
-            if (entities.Length > 0)
+            // // ---- RESOURCES ---- \\
+            // EntityQuery entityQuery = entityManager.CreateEntityQuery(ComponentType.ReadWrite<Resources>());
+            // Resources resources = entityQuery.GetSingleton<Resources>();
+            // // entityQuery.SetSingleton<Resources>(res);
+            // // Resource Text
+            // resource1Text.text = resources.buildingMaterial.ToString();
+            // resource2Text.text = resources.food.ToString();
+            // resource3Text.text = resources.rareResource.ToString();
+
+
+            // ---- SELECTED PLAYERS ---- \\
+            if (selectionSystem.redrawSelectedUnits)
             {
-                AddSelectedUnits(entities.Length);
+                selectionSystem.redrawSelectedUnits = false;
+
+                entities = selectedQuery.ToEntityArray(Unity.Collections.Allocator.Persistent);
+                if (entities.Length > 0)
+                {
+                    AddSelectedUnits(entities.Length);
+                }
+                entities.Dispose();
             }
-            entities.Dispose();
         }
 
         public override void FreeBehaviour()
         {
         }
+
+
+
+        // UI BUTTON ON CLICK EVENTS \\
+        public void ChangeMainSelectedUnit(EventBase eventBase)
+        {
+            //  mainUnit.visible = false;
+
+            // TODO: SWITCH THE MAIN UNIT TO LINK WITH THE UNIT THAT WAS SELECTED
+        }
+
+
+        // UI BUTTON ON HOVER EVENTS \\
     }
 }

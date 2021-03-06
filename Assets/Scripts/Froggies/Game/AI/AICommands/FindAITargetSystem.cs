@@ -8,12 +8,14 @@ namespace Froggies
 {
 	public class FindAITargetSystem : KodeboldJobSystem
 	{
-		private InputManagementSystem m_inputManagementSystem;
+		private InputManager m_inputManager;
 		private RaycastSystem m_raycastSystem;
+
+		protected override GameState ActiveGameState => GameState.Updating;
 
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
-			m_inputManagementSystem = dependencies.GetDependency<InputManagementSystem>();
+			m_inputManager = dependencies.GetDependency<InputManager>();
 			m_raycastSystem = dependencies.GetDependency<RaycastSystem>();
 		}
 
@@ -25,10 +27,10 @@ namespace Froggies
 		{
 			Dependency = JobHandle.CombineDependencies(Dependency, m_raycastSystem.RaycastSystemDependency);
 
-			if (m_inputManagementSystem.InputData.mouseInput.rightClickPressed)
+			if (m_inputManager.InputData.mouseInput.rightClickPressed)
 			{
 				NativeArray<RaycastResult> raycastResult = m_raycastSystem.RaycastResult;
-				bool shiftPressed = m_inputManagementSystem.InputData.keyboardInput.shiftDown;
+				bool shiftPressed = m_inputManager.InputData.keyboardInput.shiftDown;
 
 				Dependency = Entities.WithReadOnly(raycastResult).WithAll<SelectedTag>().ForEach((Entity entity, int entityInQueryIndex, ref CurrentTarget currentTarget, ref DynamicBuffer<Command> commandBuffer) =>
 				{

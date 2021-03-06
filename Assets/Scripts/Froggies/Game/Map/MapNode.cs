@@ -2,6 +2,7 @@
 
 namespace Froggies
 {
+    [System.Serializable]
     public unsafe struct MapNode
     {
         public MapNode* parent;

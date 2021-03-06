@@ -76,6 +76,14 @@ namespace Froggies.EditorScripts
                 Handles.DrawLine(start, end);
             }
 
+            for (int i = 0; i < map.gridSize.x * map.gridSize.y; ++i)
+            {
+                if (map.grid[i].occupiedBy != OccupiedBy.Nothing)
+                {
+                    Handles.DrawSolidDisc(map.grid[i].position, new Vector3(0,1,0),5);
+                }
+            }
+            
             if (newCellSize != map.cellSize || !newGridSize.x.Equals(map.gridSize.x) || !newGridSize.y.Equals(map.gridSize.y) || math.abs((newOrigin - map.origin).magnitude) > 0.1f)
             {
                 //Draw "new" grid in red
@@ -148,18 +156,19 @@ namespace Froggies.EditorScripts
             map.cellSize = newCellSize;
             map.gridSize.x = newGridSize.x;
             map.gridSize.y = newGridSize.y;
-            map.grid = new MapNode[map.gridSize.x, map.gridSize.y];
+            map.grid = new MapNode[map.gridSize.x * map.gridSize.y];
             map.origin = newOrigin;
 
+            float3 halfCell = new float3((float)map.cellSize / 2, 0, (float)map.cellSize / 2);
+            float3 posOrigin = (float3)map.origin + halfCell;
             for (int x = 0; x < map.gridSize.x; x++)
             {
                 for (int z = 0; z < map.gridSize.y; z++)
                 {
-                    map.grid[x, z] = new MapNode
+                    map.grid[z * map.gridSize.x + x] = new MapNode
                     {
-                        position = (float3)map.origin + new float3(x * map.cellSize,
-                            0, z * map.cellSize),
-                        gridPosition = new int2(x + map.cellSize / 2, z + map.cellSize / 2)
+                        position = posOrigin + new float3(x * map.cellSize,0, z * map.cellSize),
+                        gridPosition = new int2(x, z )
                     };
                 }
             }

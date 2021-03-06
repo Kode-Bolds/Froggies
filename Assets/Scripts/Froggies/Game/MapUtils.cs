@@ -33,20 +33,20 @@ namespace Froggies
             return closestNode;
         }
         
-        public static int2 FindNearestNode(float3 pos, MapNode[,] grid)
+        public static int2 FindNearestNode(float3 pos, MapData map)
         {
             //TODO: Can we do a binary search here?
             int2 closestNode = default;
             float closestDistSq = float.MaxValue;
 
-            for (int i = 0; i < grid.GetLength(0); ++i)
+            for (int x = 0; x < map.gridSize.x; ++x)
             {
-                for (int j = 0; j < grid.GetLength(1); ++j)
+                for (int y = 0; y < map.gridSize.y; ++y)
                 {
-                    float distanceSq = math.distancesq(grid[i, j].position, pos);
+                    float distanceSq = math.distancesq(map.grid[y * map.gridSize.x + x].position, pos);
                     if (distanceSq < closestDistSq)
                     {
-                        closestNode = new int2(i, j);
+                        closestNode = new int2(x, y);
                         closestDistSq = distanceSq;
                     }
                 }

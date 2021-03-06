@@ -13,7 +13,6 @@
                 <e p="UnitAuthoringComponentEditor.cs" t="Include" />
               </e>
               <e p="Froggies.EditorScripts.asmdef" t="Include" />
-              <e p="GameInitEditor.cs" t="Include" />
               <e p="GridSnap.cs" t="Include" />
               <e p="GridSnapEditor.cs" t="Include" />
               <e p="MapAuthoringEditor.cs" t="Include" />
@@ -43,12 +42,15 @@
                   <e p="UnitMoveSystem.cs" t="Include" />
                 </e>
                 <e p="Combat" t="Include">
+                  <e p="Attackable.cs" t="Include" />
                   <e p="CombatSystem.cs" t="Include" />
                   <e p="CombatUnit.cs" t="Include" />
+                  <e p="DeathSystem.cs" t="Include" />
                   <e p="EnemyTag.cs" t="Include" />
                   <e p="Health.cs" t="Include" />
                   <e p="MeleeUnit.cs" t="Include" />
                   <e p="Projectile.cs" t="Include" />
+                  <e p="ProjectileSystem.cs" t="Include" />
                   <e p="RangedUnit.cs" t="Include" />
                   <e p="Resistances.cs" t="Include" />
                 </e>
@@ -65,6 +67,7 @@
                 <e p="BuildingAuthoringComponent.cs" t="Include" />
                 <e p="ObstacleAuthoringComponent.cs" t="Include" />
                 <e p="OnStartPrefabComponent.cs" t="Include" />
+                <e p="ProjectileAuthoringComponent.cs" t="Include" />
                 <e p="ResourceNodeAuthoringComponent.cs" t="Include" />
                 <e p="RuntimeSpawningPrefabComponent.cs" t="Include" />
                 <e p="StoreAuthoringComponent.cs" t="Include" />
@@ -76,13 +79,17 @@
                 <e p="StoreComponent.cs" t="Include" />
               </e>
               <e p="Froggies.asmdef" t="Include" />
-              <e p="GameInit.cs" t="Include" />
+              <e p="FroggiesGameInit.cs" t="Include" />
+              <e p="GameData" t="Include">
+                <e p="GameDataContainer.cs" t="Include" />
+                <e p="LevelData.cs" t="Include" />
+              </e>
               <e p="Input" t="Include">
                 <e p="CameraControlSystem.cs" t="Include" />
                 <e p="CameraMovementComponent.cs" t="Include" />
                 <e p="CameraSyncSystem.cs" t="Include" />
                 <e p="ControlScheme.cs" t="Include" />
-                <e p="InputManagementSystem.cs" t="Include" />
+                <e p="InputManager.cs" t="Include" />
                 <e p="RaycastSystem.cs" t="Include" />
                 <e p="SelectionSystem.cs" t="Include" />
               </e>
@@ -95,6 +102,7 @@
               <e p="MapUtils.cs" t="Include" />
               <e p="PhysicsCategories.cs" t="Include" />
               <e p="Production" t="Include">
+                <e p="SpawnCommands.cs" t="Include" />
                 <e p="SpawningQueueSystem.cs" t="Include" />
                 <e p="SpawningSystem.cs" t="Include" />
               </e>
@@ -107,18 +115,26 @@
           </e>
           <e p="Kodebolds" t="Include">
             <e p="Core" t="Include">
-              <e p="BehaviourUpdaterSystem.cs" t="Include" />
+              <e p="Bytes.cs" t="Include" />
               <e p="DebugDrawer.cs" t="Include" />
               <e p="Dependencies.cs" t="Include" />
+              <e p="Editor" t="Include">
+                <e p="GameInitEditor.cs" t="Include" />
+                <e p="Kodebolds.Core.Editor.asmdef" t="Include" />
+              </e>
               <e p="EndFrameJobCompleteSystem.cs" t="Include" />
+              <e p="GameInit.cs" t="Include" />
               <e p="GameStateManager.cs" t="Include" />
+              <e p="InitialisationBehaviourUpdaterSystem.cs" t="Include" />
               <e p="KodeboldBehaviour.cs" t="Include" />
               <e p="KodeboldJobSystem.cs" t="Include" />
+              <e p="KodeboldSO.cs" t="Include" />
               <e p="Kodebolds.Core.asmdef" t="Include" />
               <e p="NativeContainerExtensions" t="Include">
                 <e p="NativeArray2D.cs" t="Include" />
                 <e p="NativeContainerExtensionMethods.cs" t="Include" />
               </e>
+              <e p="UpdateBehaviourUpdaterSystem.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -127,6 +143,7 @@
       <e p="Froggies.EditorScripts.csproj" t="IncludeRecursive" />
       <e p="Froggies.csproj" t="IncludeRecursive" />
       <e p="Froggies.sln" t="IncludeFlat" />
+      <e p="Kodebolds.Core.EditorScripts.csproj" t="IncludeRecursive" />
       <e p="Kodebolds.Core.csproj" t="IncludeRecursive" />
       <e p="Packages" t="Include">
         <e p="com.unity.entities@0.14.0-preview.19" t="Include">

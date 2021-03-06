@@ -1,6 +1,8 @@
 {
-    "name": "Kodebolds.Core.Editor",
-    "references": [],
+    "name": "Kodebolds.Core.EditorScripts",
+    "references": [
+        "GUID:db1c893dc1127414abc8af498651d35f"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": true,

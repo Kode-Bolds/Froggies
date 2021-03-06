@@ -18,6 +18,8 @@ namespace Froggies
 		private EntityQuery m_pathFindingQuery;
 		private float recalculatePeriod = 1f;
 
+		protected override GameState ActiveGameState => GameState.Updating;
+
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 			_mMapManager = dependencies.GetDependency<MapManager>();

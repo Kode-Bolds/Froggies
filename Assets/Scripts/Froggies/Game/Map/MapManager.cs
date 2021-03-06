@@ -9,41 +9,36 @@ namespace Froggies
 {
     public class MapManager : KodeboldBehaviour
     {
-        public MapData mapSO;
+        public MapData[] maps;
+        public MapData currentMap;
 
         public NativeArray2D<MapNode> map;
-        
 
-        
-        
-        private void LoadMap()
+        protected override GameState ActiveGameState => GameState.Updating;
+
+        private void LoadMap(int mapIndex)
         {
+            currentMap = maps[mapIndex];
+            
             //Load map as NativeArray
-            map = new NativeArray2D<MapNode>(mapSO.grid, Allocator.Persistent);
+            map = new NativeArray2D<MapNode>(currentMap.grid, currentMap.gridSize.x, currentMap.gridSize.y, Allocator.Persistent);
         }
-
-        
-
-
 
         public override void GetBehaviourDependencies(Dependencies dependencies)
         {
-            throw new NotImplementedException();
         }
 
         public override void InitBehaviour()
         {
-            throw new NotImplementedException();
+            LoadMap(0);
         }
 
         public override void UpdateBehaviour()
         {
-            throw new NotImplementedException();
         }
 
         public override void FreeBehaviour()
         {
-            throw new NotImplementedException();
         }
     }
 }
