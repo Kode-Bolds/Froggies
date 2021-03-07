@@ -27,133 +27,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="349474b5-6a51-4098-8ba4-62336b57384c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/GlobalEntitiesDependencies.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GlobalEntitiesDependencies/GlobalEntitySceneDependency.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GlobalEntitiesDependencies/GlobalEntitySceneDependency.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GlobalEntitiesDependencies/GlobalLiveLinkAssetDependency.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GlobalEntitiesDependencies/GlobalLiveLinkAssetDependency.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/EnemyMaterial.mat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/EnemyMaterial.mat.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/EnemyHarvester.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/EnemyMeleeUnit.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/EnemyMeleeUnit.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/EnemyRangedUnit.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/EnemyRangedUnit.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/GameInit.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/GameInit.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/InputManager.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/InputManager.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Main Camera.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Main Camera.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/MeleeUnit.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/MeleeUnit.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/OnStartPrefabData.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/OnStartPrefabData.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Projectile.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/RangedUnit.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/RangedUnit.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/RuntimePrefabData.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/RuntimePrefabData.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AICommands/CommandProcessSystem.cs.orig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AICommands/CommandProcessSystem.cs.orig.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AICommands/StateTransitionSystem.cs.orig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AICommands/StateTransitionSystem.cs.orig.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/Attackable.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/Attackable.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/DeathSystem.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/DeathSystem.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/ProjectileSystem.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/ProjectileSystem.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Authoring/ProjectileAuthoringComponent.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Authoring/ProjectileAuthoringComponent.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Authoring/UnitAuthoringComponent.cs.orig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Authoring/UnitAuthoringComponent.cs.orig.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/FroggiesGameInit.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/GameData.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/GameData/GameDataContainer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/GameData/GameDataContainer.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/GameData/LevelData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/GameData/LevelData.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Input/InputManager.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Production/SpawnCommands.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Production/SpawnCommands.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Production/SpawningSystem.cs.orig.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/Bytes.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/Bytes.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/Editor/GameInitEditor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/Editor/GameInitEditor.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/GameInit.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/GameInit.cs.orig.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/InitialisationBehaviourUpdaterSystem.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/KodeboldSO.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/KodeboldSO.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/UpdateBehaviourUpdaterSystem.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/UpdateBehaviourUpdaterSystem.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Froggies/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PhysicsCategoryNames.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PhysicsCategoryNames.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GridManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GridManager.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Harvester.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Harvester.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/HarvesterEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Projectile.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/HarvesterEnemy.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/EnemyHarvester.prefab.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ResourceNodeRare.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ResourceNodeRare.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SceneDependencyCache/06dd9b028b7a8df8e57d0b00cfae57dd.sceneWithBuildSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SceneDependencyCache/06dd9b028b7a8df8e57d0b00cfae57dd.sceneWithBuildSettings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene/SomeSubScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene/SomeSubScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Editor/Authoring/ResourceNodeAuthoringEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Editor/Authoring/ResourceNodeAuthoringEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Editor/Authoring/UnitAuthoringComponentEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Editor/Authoring/UnitAuthoringComponentEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Editor/GameInitEditor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Editor/GameInitEditor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Editor/GridSnap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Editor/GridSnap.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Editor/MapAuthoringEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Editor/MapAuthoringEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AICommands/CommandProcessSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AICommands/CommandProcessSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AICommands/FindAITargetSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AICommands/FindAITargetSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AICommands/StateTransitionSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AICommands/StateTransitionSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AIMovement/FlockingSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AIMovement/FlockingSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AIMovement/FreezeRotationSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AIMovement/FreezeRotationSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AIMovement/PathFindingSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AIMovement/PathFindingSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AIMovement/UnitMoveComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AIMovement/UnitMoveComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AIMovement/UnitMoveSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/AIMovement/UnitMoveSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/CombatSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/CombatSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/CombatUnit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/CombatUnit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/Projectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/Projectile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/RangedUnit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/RangedUnit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/Resistances.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Combat/Resistances.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Harvesting/DepositSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Harvesting/DepositSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Harvesting/HarvestingSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/Harvesting/HarvestingSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/UnitTagComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/AI/UnitTagComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Authoring/UnitAuthoringComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Authoring/UnitAuthoringComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/GameInit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/GameInit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/GameInit.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/FroggiesGameInit.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Input/CameraControlSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Input/CameraControlSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Input/CameraSyncSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Input/CameraSyncSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Input/InputManagementSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Input/InputManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Input/InputManagementSystem.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Input/RaycastSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Input/RaycastSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Input/SelectionSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Input/SelectionSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/InstantiationSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/InstantiationSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Map/MapData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Map/MapData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Map/MapManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Map/MapManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Map/MapNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Map/MapNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/MapUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/MapUtils.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Production/SpawningQueueSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Production/SpawningQueueSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Production/SpawningSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Production/SpawningSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/UI/GameScreen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/UI/GameScreen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/UI/SelectionBoxRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/UI/SelectionBoxRenderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/BehaviourUpdaterSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/InitialisationBehaviourUpdaterSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/BehaviourUpdaterSystem.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/DebugDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/DebugDrawer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/Dependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/Dependencies.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/Editor/Kodebolds.Core.Editor.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/Editor/Kodebolds.Core.Editor.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/EndFrameJobCompleteSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/EndFrameJobCompleteSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/GameStateManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/GameStateManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/KodeboldBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/KodeboldBehaviour.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/KodeboldJobSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/KodeboldJobSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/Kodebolds.Core.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/Kodebolds.Core.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/NativeContainerExtensions/NativeArray2D.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/NativeContainerExtensions/NativeArray2D.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/NativeContainerExtensions/NativeContainerExtensionMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Kodebolds/Core/NativeContainerExtensions/NativeContainerExtensionMethods.cs" afterDir="false" />
-    </list>
+    <list default="true" id="349474b5-6a51-4098-8ba4-62336b57384c" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -308,7 +182,7 @@
       <workItem from="1613819376692" duration="18551000" />
       <workItem from="1614424345791" duration="13038000" />
       <workItem from="1615035218094" duration="8293000" />
-      <workItem from="1615043646507" duration="10408000" />
+      <workItem from="1615043646507" duration="14046000" />
     </task>
     <servers />
   </component>
@@ -346,70 +220,70 @@
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
     <state width="536" height="464" key="DebuggerActiveHint/0.0.3840.1080@0.0.3840.1080" timestamp="1615049292754" />
-    <state width="1682" height="134" key="GridCell.Tab.0.bottom" timestamp="1615052604912">
+    <state width="1682" height="134" key="GridCell.Tab.0.bottom" timestamp="1615057713565">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.0.bottom/0.0.3840.1080@0.0.3840.1080" timestamp="1615052604912" />
-    <state width="1682" height="134" key="GridCell.Tab.0.center" timestamp="1615052604912">
+    <state width="1682" height="134" key="GridCell.Tab.0.bottom/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713565" />
+    <state width="1682" height="134" key="GridCell.Tab.0.center" timestamp="1615057713564">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.0.center/0.0.3840.1080@0.0.3840.1080" timestamp="1615052604912" />
-    <state width="1682" height="134" key="GridCell.Tab.0.left" timestamp="1615052604911">
+    <state width="1682" height="134" key="GridCell.Tab.0.center/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713564" />
+    <state width="1682" height="134" key="GridCell.Tab.0.left" timestamp="1615057713563">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.0.left/0.0.3840.1080@0.0.3840.1080" timestamp="1615052604911" />
-    <state width="1682" height="134" key="GridCell.Tab.0.right" timestamp="1615052604912">
+    <state width="1682" height="134" key="GridCell.Tab.0.left/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713563" />
+    <state width="1682" height="134" key="GridCell.Tab.0.right" timestamp="1615057713564">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.0.right/0.0.3840.1080@0.0.3840.1080" timestamp="1615052604912" />
-    <state width="1682" height="134" key="GridCell.Tab.1.bottom" timestamp="1615052615988">
+    <state width="1682" height="134" key="GridCell.Tab.0.right/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713564" />
+    <state width="1682" height="134" key="GridCell.Tab.1.bottom" timestamp="1615057713567">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.1.bottom/0.0.3840.1080@0.0.3840.1080" timestamp="1615052615988" />
-    <state width="1682" height="134" key="GridCell.Tab.1.center" timestamp="1615052615988">
+    <state width="1682" height="134" key="GridCell.Tab.1.bottom/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713567" />
+    <state width="1682" height="134" key="GridCell.Tab.1.center" timestamp="1615057713565">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.1.center/0.0.3840.1080@0.0.3840.1080" timestamp="1615052615988" />
-    <state width="1682" height="134" key="GridCell.Tab.1.left" timestamp="1615052615987">
+    <state width="1682" height="134" key="GridCell.Tab.1.center/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713565" />
+    <state width="1682" height="134" key="GridCell.Tab.1.left" timestamp="1615057713565">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.1.left/0.0.3840.1080@0.0.3840.1080" timestamp="1615052615987" />
-    <state width="1682" height="134" key="GridCell.Tab.1.right" timestamp="1615052615988">
+    <state width="1682" height="134" key="GridCell.Tab.1.left/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713565" />
+    <state width="1682" height="134" key="GridCell.Tab.1.right" timestamp="1615057713566">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.1.right/0.0.3840.1080@0.0.3840.1080" timestamp="1615052615988" />
-    <state width="1682" height="134" key="GridCell.Tab.2.bottom" timestamp="1615052604822">
+    <state width="1682" height="134" key="GridCell.Tab.1.right/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713566" />
+    <state width="1682" height="134" key="GridCell.Tab.2.bottom" timestamp="1615057713569">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.2.bottom/0.0.3840.1080@0.0.3840.1080" timestamp="1615052604822" />
-    <state width="1682" height="134" key="GridCell.Tab.2.center" timestamp="1615052604822">
+    <state width="1682" height="134" key="GridCell.Tab.2.bottom/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713569" />
+    <state width="1682" height="134" key="GridCell.Tab.2.center" timestamp="1615057713568">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.2.center/0.0.3840.1080@0.0.3840.1080" timestamp="1615052604822" />
-    <state width="1682" height="134" key="GridCell.Tab.2.left" timestamp="1615052604822">
+    <state width="1682" height="134" key="GridCell.Tab.2.center/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713568" />
+    <state width="1682" height="134" key="GridCell.Tab.2.left" timestamp="1615057713567">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.2.left/0.0.3840.1080@0.0.3840.1080" timestamp="1615052604822" />
-    <state width="1682" height="134" key="GridCell.Tab.2.right" timestamp="1615052604822">
+    <state width="1682" height="134" key="GridCell.Tab.2.left/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713567" />
+    <state width="1682" height="134" key="GridCell.Tab.2.right" timestamp="1615057713568">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.2.right/0.0.3840.1080@0.0.3840.1080" timestamp="1615052604822" />
-    <state width="1682" height="134" key="GridCell.Tab.3.bottom" timestamp="1615052604822">
+    <state width="1682" height="134" key="GridCell.Tab.2.right/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713568" />
+    <state width="1682" height="134" key="GridCell.Tab.3.bottom" timestamp="1615057713571">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.3.bottom/0.0.3840.1080@0.0.3840.1080" timestamp="1615052604822" />
-    <state width="1682" height="134" key="GridCell.Tab.3.center" timestamp="1615052604822">
+    <state width="1682" height="134" key="GridCell.Tab.3.bottom/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713571" />
+    <state width="1682" height="134" key="GridCell.Tab.3.center" timestamp="1615057713570">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.3.center/0.0.3840.1080@0.0.3840.1080" timestamp="1615052604822" />
-    <state width="1682" height="134" key="GridCell.Tab.3.left" timestamp="1615052604822">
+    <state width="1682" height="134" key="GridCell.Tab.3.center/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713570" />
+    <state width="1682" height="134" key="GridCell.Tab.3.left" timestamp="1615057713570">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.3.left/0.0.3840.1080@0.0.3840.1080" timestamp="1615052604822" />
-    <state width="1682" height="134" key="GridCell.Tab.3.right" timestamp="1615052604822">
+    <state width="1682" height="134" key="GridCell.Tab.3.left/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713570" />
+    <state width="1682" height="134" key="GridCell.Tab.3.right" timestamp="1615057713571">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state width="1682" height="134" key="GridCell.Tab.3.right/0.0.3840.1080@0.0.3840.1080" timestamp="1615052604822" />
+    <state width="1682" height="134" key="GridCell.Tab.3.right/0.0.3840.1080@0.0.3840.1080" timestamp="1615057713571" />
     <state x="1695" y="265" width="433" height="528" key="RiderGenerateDialog" timestamp="1614426024446">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
@@ -422,10 +296,10 @@
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
     <state x="1056" y="14" width="1722" height="1060" key="VCS.FileHistoryDialog/0.0.3840.1080@0.0.3840.1080" timestamp="1615045835955" />
-    <state x="1580" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1615048288571">
+    <state x="1580" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1615054892538">
       <screen x="0" y="0" width="3840" height="1080" />
     </state>
-    <state x="1580" y="253" width="672" height="678" key="search.everywhere.popup/0.0.3840.1080@0.0.3840.1080" timestamp="1615048288571" />
+    <state x="1580" y="253" width="672" height="678" key="search.everywhere.popup/0.0.3840.1080@0.0.3840.1080" timestamp="1615054892538" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -435,19 +309,6 @@
           <line>30</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Core/Dependencies.cs" initialLine="30" />
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Map/MapManager.cs</url>
-          <line>23</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Froggies/Game/Map/MapManager.cs" initialLine="23">
-            <startOffsets>
-              <option value="545" />
-            </startOffsets>
-            <endOffsets>
-              <option value="663" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
