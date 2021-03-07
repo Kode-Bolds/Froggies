@@ -1,4 +1,4 @@
-﻿using Kodebolds.Core;
+using Kodebolds.Core;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
@@ -20,7 +20,6 @@ namespace Froggies
 
 		public override void FreeSystem()
 		{
-
 		}
 
 		public override void GetSystemDependencies(Dependencies dependencies)
@@ -30,34 +29,58 @@ namespace Froggies
 
 		public override void InitSystem()
 		{
-			m_resourceQuery = GetEntityQuery(ComponentType.ReadOnly<ResourceNode>(), ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
-			m_enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
-			m_storeQuery = GetEntityQuery(ComponentType.ReadOnly<Store>(), ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
+            m_resourceQuery = GetEntityQuery(ComponentType.ReadOnly<ResourceNode>(),
+                ComponentType.ReadOnly<Translation>(), ComponentType.ReadOnly<TargetableByAI>());
+            m_enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyTag>(), ComponentType.ReadOnly<Translation>(),
+                ComponentType.ReadOnly<TargetableByAI>());
+            m_storeQuery = GetEntityQuery(ComponentType.ReadOnly<Store>(), ComponentType.ReadOnly<Translation>(),
+                ComponentType.ReadOnly<TargetableByAI>());
 		}
 
 		public override void UpdateSystem()
 		{
-			NativeArray<Translation> resourceTranslations = m_resourceQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out JobHandle getResourceTranslations);
-			NativeArray<TargetableByAI> resourceTargets = m_resourceQuery.ToComponentDataArrayAsync<TargetableByAI>(Allocator.TempJob, out JobHandle getResourceTargets);
-			NativeArray<Entity> resourceEntities = m_resourceQuery.ToEntityArrayAsync(Allocator.TempJob, out JobHandle getResourceEntities);
-			JobHandle resourceQueries = JobHandle.CombineDependencies(getResourceTranslations, getResourceTargets, getResourceEntities);
+            NativeArray<Translation> resourceTranslations =
+                m_resourceQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob,
+                    out JobHandle getResourceTranslations);
+            NativeArray<TargetableByAI> resourceTargets =
+                m_resourceQuery.ToComponentDataArrayAsync<TargetableByAI>(Allocator.TempJob,
+                    out JobHandle getResourceTargets);
+            NativeArray<Entity> resourceEntities =
+                m_resourceQuery.ToEntityArrayAsync(Allocator.TempJob, out JobHandle getResourceEntities);
+            JobHandle resourceQueries =
+                JobHandle.CombineDependencies(getResourceTranslations, getResourceTargets, getResourceEntities);
 
-			NativeArray<Translation> enemyTranslations = m_resourceQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out JobHandle getEnemyTranslations);
-			NativeArray<TargetableByAI> enemyTargets = m_enemyQuery.ToComponentDataArrayAsync<TargetableByAI>(Allocator.TempJob, out JobHandle getEnemyTargets);
-			NativeArray<Entity> enemyEntities = m_resourceQuery.ToEntityArrayAsync(Allocator.TempJob, out JobHandle getEnemyEntites);
-			JobHandle enemyQueries = JobHandle.CombineDependencies(getEnemyTranslations, getEnemyTargets, getEnemyEntites);
+            NativeArray<Translation> enemyTranslations =
+                m_resourceQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob,
+                    out JobHandle getEnemyTranslations);
+            NativeArray<TargetableByAI> enemyTargets =
+                m_enemyQuery.ToComponentDataArrayAsync<TargetableByAI>(Allocator.TempJob,
+                    out JobHandle getEnemyTargets);
+            NativeArray<Entity> enemyEntities =
+                m_resourceQuery.ToEntityArrayAsync(Allocator.TempJob, out JobHandle getEnemyEntites);
+            JobHandle enemyQueries =
+                JobHandle.CombineDependencies(getEnemyTranslations, getEnemyTargets, getEnemyEntites);
 
-			NativeArray<Translation> storeTranslations = m_storeQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob, out JobHandle getStoreTranslations);
-			NativeArray<TargetableByAI> storeTargets = m_storeQuery.ToComponentDataArrayAsync<TargetableByAI>(Allocator.TempJob, out JobHandle getStoreTargets);
-			NativeArray<Entity> storeEntities = m_storeQuery.ToEntityArrayAsync(Allocator.TempJob, out JobHandle getStoreEntities);
-			JobHandle storeQueries = JobHandle.CombineDependencies(getStoreTranslations, getStoreTargets, getStoreEntities);
+            NativeArray<Translation> storeTranslations =
+                m_storeQuery.ToComponentDataArrayAsync<Translation>(Allocator.TempJob,
+                    out JobHandle getStoreTranslations);
+            NativeArray<TargetableByAI> storeTargets =
+                m_storeQuery.ToComponentDataArrayAsync<TargetableByAI>(Allocator.TempJob,
+                    out JobHandle getStoreTargets);
+            NativeArray<Entity> storeEntities =
+                m_storeQuery.ToEntityArrayAsync(Allocator.TempJob, out JobHandle getStoreEntities);
+            JobHandle storeQueries =
+                JobHandle.CombineDependencies(getStoreTranslations, getStoreTargets, getStoreEntities);
 
-			Dependency = JobHandle.CombineDependencies(JobHandle.CombineDependencies(resourceQueries, enemyQueries, storeQueries), Dependency);
+            Dependency =
+                JobHandle.CombineDependencies(
+                    JobHandle.CombineDependencies(resourceQueries, enemyQueries, storeQueries), Dependency);
 
 #if UNITY_EDITOR
 			Dependency = JobHandle.CombineDependencies(Dependency, m_debugDrawer.debugDrawDependencies);
 
-			NativeQueue<DebugDrawCommand>.ParallelWriter debugDrawCommandQueue = m_debugDrawer.DebugDrawCommandQueueParallel;
+            NativeQueue<DebugDrawCommand>.ParallelWriter debugDrawCommandQueue =
+                m_debugDrawer.DebugDrawCommandQueueParallel;
 #endif
 
 			Dependency = Entities
@@ -79,7 +102,9 @@ namespace Froggies
 			.WithDisposeOnCompletion(storeTranslations)
 			.WithDisposeOnCompletion(storeTargets)
 			.WithDisposeOnCompletion(storeEntities)
-			.ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer, ref CurrentTarget currentTarget, ref PathFinding pathFinding, ref CurrentAIState currentAIState, in Translation translation) =>
+                .ForEach((Entity entity, int entityInQueryIndex, ref DynamicBuffer<Command> commandBuffer,
+                    ref CurrentTarget currentTarget, ref PathFinding pathFinding, ref CurrentAIState currentAIState,
+                    in Translation translation) =>
 			{
 				if (commandBuffer.Length <= 0)
 				{
@@ -87,11 +112,12 @@ namespace Froggies
 					{
 						currentAIState.RequestStateChange(AIState.Idle);
 					}
+
 					return;
 				}
 
 #if UNITY_EDITOR
-				for (int commandIndex = 1; commandIndex < commandBuffer.Length; commandIndex++)
+			for (int commandIndex = 1; commandIndex < commandBuffer.Length; commandIndex++)
 				{
 					debugDrawCommandQueue.Enqueue(new DebugDrawCommand
 					{
@@ -106,16 +132,16 @@ namespace Froggies
 				}
 #endif
 
-				Command currentCommand = commandBuffer[0];
+			Command currentCommand = commandBuffer[0];
 
 				if (currentCommand.commandStatus == CommandStatus.Complete)
 				{
-					//If the command is complete remove it from the queue
-					commandBuffer.RemoveAt(0);
+				//If the command is complete remove it from the queue
+				commandBuffer.RemoveAt(0);
 					if (commandBuffer.Length != 0)
 					{
-						//Process the next command
-						currentCommand = commandBuffer[0];
+					//Process the next command
+					currentCommand = commandBuffer[0];
 					}
 					else
 					{
@@ -126,12 +152,14 @@ namespace Froggies
 
 				if (currentCommand.commandStatus == CommandStatus.Queued)
 				{
-					//If we have not been assigned a target for this command, then we attempt to find a target for it.
-					//We loop here until we hit a command with a target or the command queue is empty, in which case we switch to idle.
-					while (currentCommand.commandData.targetData.targetEntity == Entity.Null)
+				//If we have not been assigned a target for this command, then we attempt to find a target for it.
+				//We loop here until we hit a command with a target or the command queue is empty, in which case we switch to idle.
+				while (currentCommand.commandData.targetData.targetEntity == Entity.Null)
 					{
-						//If we don't find a target, then we move on to the next command if there is one, or set our state to idle.
-						if (!FindNearestTarget(ref currentCommand, translation, resourceTargets, resourceTranslations, resourceEntities, storeTargets, storeTranslations, storeEntities, enemyTargets, enemyTranslations, enemyEntities))
+					//If we don't find a target, then we move on to the next command if there is one, or set our state to idle.
+                            if (!FindNearestTarget(ref currentCommand, translation, resourceTargets,
+                                resourceTranslations, resourceEntities, storeTargets, storeTranslations, storeEntities,
+                                enemyTargets, enemyTranslations, enemyEntities))
 						{
 							commandBuffer.RemoveAt(0);
 							if (commandBuffer.Length > 0)
@@ -150,15 +178,15 @@ namespace Froggies
 					pathFinding.requestedPath = true;
 					Debug.Log($"Processing the moving phase { currentCommand.commandType } command from queue");
 					ProcessMovingPhaseCommand(entity, ref currentCommand, ref currentAIState);
-					//We do not progress state to execution here as we leave the specific systems to tell us when we are in range for the command.
-
-				}
-				else if (currentCommand.commandStatus == CommandStatus.ExecutionPhase && currentCommand.commandStatus != currentCommand.previousCommandStatus)
+				//We do not progress state to execution here as we leave the specific systems to tell us when we are in range for the command.
+			}
+                    else if (currentCommand.commandStatus == CommandStatus.ExecutionPhase &&
+                             currentCommand.commandStatus != currentCommand.previousCommandStatus)
 				{
 					Debug.Log($"Processing the execution phase { currentCommand.commandType } command from queue");
 					ProcessExecutionPhaseCommand(entity, ref currentCommand, ref currentAIState);
-					//We do not progress state to complete here as we leave the specific systems to tell us when we have completed the command.
-				}
+				//We do not progress state to complete here as we leave the specific systems to tell us when we have completed the command.
+			}
 
 				currentCommand.previousCommandStatus = currentCommand.commandStatus;
 				commandBuffer[0] = currentCommand;
@@ -170,9 +198,12 @@ namespace Froggies
 		}
 
 		private static bool FindNearestTarget(ref Command currentCommand, in Translation translation,
-			in NativeArray<TargetableByAI> resourceTargets, in NativeArray<Translation> resourceTranslations, NativeArray<Entity> resourceEntities,
-			in NativeArray<TargetableByAI> storeTargets, in NativeArray<Translation> storeTranslations, NativeArray<Entity> storeEntities,
-			in NativeArray<TargetableByAI> enemyTargets, in NativeArray<Translation> enemyTranslations, NativeArray<Entity> enemyEntities)
+            in NativeArray<TargetableByAI> resourceTargets, in NativeArray<Translation> resourceTranslations,
+            NativeArray<Entity> resourceEntities,
+            in NativeArray<TargetableByAI> storeTargets, in NativeArray<Translation> storeTranslations,
+            NativeArray<Entity> storeEntities,
+            in NativeArray<TargetableByAI> enemyTargets, in NativeArray<Translation> enemyTranslations,
+            NativeArray<Entity> enemyEntities)
 		{
 			AITargetType targetType = currentCommand.commandData.targetData.targetType;
 
@@ -185,14 +216,16 @@ namespace Froggies
 				case AITargetType.BuildingResource:
 				case AITargetType.RareResource:
 
-					closestTargetIndex = FindTarget(resourceTargets, resourceTranslations, resourceEntities, targetType, translation);
+                    closestTargetIndex = FindTarget(resourceTargets, resourceTranslations, resourceEntities, targetType,
+                        translation);
 
 					//If we don't find a nearby resource node, then find the nearest store to deposit at and queue a deposit command with the new target.
 					if (closestTargetIndex == -1)
 					{
 						Debug.Log($"Finding nearest target of type { AITargetType.Store }");
 
-						closestTargetIndex = FindTarget(storeTargets, storeTranslations, storeEntities, AITargetType.Store, translation);
+                        closestTargetIndex = FindTarget(storeTargets, storeTranslations, storeEntities,
+                            AITargetType.Store, translation);
 
 						if (closestTargetIndex != -1)
 						{
@@ -227,7 +260,8 @@ namespace Froggies
 					}
 				case AITargetType.Enemy:
 
-					closestTargetIndex = FindTarget(enemyTargets, enemyTranslations, enemyEntities, targetType, translation);
+                    closestTargetIndex = FindTarget(enemyTargets, enemyTranslations, enemyEntities, targetType,
+                        translation);
 
 					if (closestTargetIndex == -1)
 					{
@@ -248,7 +282,8 @@ namespace Froggies
 					}
 				case AITargetType.Store:
 
-					closestTargetIndex = FindTarget(storeTargets, storeTranslations, storeEntities, targetType, translation);
+                    closestTargetIndex = FindTarget(storeTargets, storeTranslations, storeEntities, targetType,
+                        translation);
 
 					if (closestTargetIndex == -1)
 					{
@@ -273,7 +308,9 @@ namespace Froggies
 			}
 		}
 
-		private static int FindTarget(in NativeArray<TargetableByAI> targets, in NativeArray<Translation> targetTranslations, in NativeArray<Entity> targetEntities, in AITargetType targetType, in Translation unitTranslation)
+        private static int FindTarget(in NativeArray<TargetableByAI> targets,
+            in NativeArray<Translation> targetTranslations, in NativeArray<Entity> targetEntities,
+            in AITargetType targetType, in Translation unitTranslation)
 		{
 			int closestIndex = -1;
 			float smallestDistanceSq = -1.0f;
@@ -295,7 +332,8 @@ namespace Froggies
 			return closestIndex;
 		}
 
-		private static void ProcessMovingPhaseCommand(Entity entity, ref Command command, ref CurrentAIState currentAIState)
+        private static void ProcessMovingPhaseCommand(Entity entity, ref Command command,
+            ref CurrentAIState currentAIState)
 		{
 			CommandData commandData = command.commandData;
 			switch (command.commandType)
@@ -314,7 +352,9 @@ namespace Froggies
 					break;
 			}
 		}
-		private static void ProcessExecutionPhaseCommand(Entity entity, ref Command command, ref CurrentAIState currentAIState)
+
+        private static void ProcessExecutionPhaseCommand(Entity entity, ref Command command,
+            ref CurrentAIState currentAIState)
 		{
 			CommandData commandData = command.commandData;
 			switch (command.commandType)
@@ -334,7 +374,8 @@ namespace Froggies
 			}
 		}
 
-		public static void QueueCommand(CommandType commandType, in DynamicBuffer<Command> commandBuffer, in TargetData targetData, bool onlyQueueIfEmpty)
+        public static void QueueCommand(CommandType commandType, in DynamicBuffer<Command> commandBuffer,
+            in TargetData targetData, bool onlyQueueIfEmpty)
 		{
 			if (onlyQueueIfEmpty && commandBuffer.Length > 1)
 				return;

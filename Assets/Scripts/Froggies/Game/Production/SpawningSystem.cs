@@ -11,12 +11,13 @@ namespace Froggies
 		private EndInitializationEntityCommandBufferSystem m_entityCommandBuffer;
 
 		private SpawningQueueSystem m_spawningQueueSystem;
-
 		protected override GameState ActiveGameState => GameState.Updating;
+		private MapManager _mMapManager;
 
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
 			m_spawningQueueSystem = dependencies.GetDependency<SpawningQueueSystem>();
+			_mMapManager = dependencies.GetDependency<MapManager>();
 		}
 
 		public override void InitSystem()
@@ -30,6 +31,7 @@ namespace Froggies
 
 			EntityCommandBuffer ecb = m_entityCommandBuffer.CreateCommandBuffer();
 			NativeQueue<SpawnCommand> spawnQueue = m_spawningQueueSystem.spawnQueue;
+			NativeArray2D<MapNode> grid = _mMapManager.map;
 
 			Dependency = Job.WithCode(() =>
 			{
@@ -48,7 +50,6 @@ namespace Froggies
 							break;
 						case SpawnCommandType.Projectile:
 							ProjectileSpawnData projectileSpawnData = *spawnCommand.CommandData<ProjectileSpawnData>();
-
 							entity = ecb.Instantiate(spawnCommand.entity);
 							ecb.SetComponent(entity, projectileSpawnData.translation);
 							ecb.SetComponent(entity, projectileSpawnData.projectile);

@@ -49,6 +49,12 @@ namespace Kodebolds.Core
 				UnsafeUtility.MemClear(m_Buffer, m_Length * UnsafeUtility.SizeOf<T>());
 		}
 
+		public NativeArray2D(T[] array, int length0, int length1, Allocator allocator)
+		{
+			Allocate(length0, length1, allocator, out this);
+			Copy(array, this);
+		}
+		
 		public NativeArray2D(T[,] array, Allocator allocator)
 		{
 			int length0 = array.GetLength(0);
@@ -282,6 +288,19 @@ namespace Kodebolds.Core
 			fixed (void* destPtr = &dest[0, 0])
 			{
 				UnsafeUtility.MemCpy(destPtr, src.GetUnsafePtr(), dest.Length * sizeof(T));
+			}
+		}
+
+		private static void Copy(T[] src, NativeArray2D<T> dest)
+		{
+			dest.RequireWriteAccess();
+
+			if (src.Length != dest.Length)
+				throw new ArgumentException("Arrays must have the same size.");
+
+			fixed (void* srcPtr = &src[0])
+			{
+				UnsafeUtility.MemCpy(dest.GetUnsafePtr(), srcPtr, dest.Length * sizeof(T));
 			}
 		}
 

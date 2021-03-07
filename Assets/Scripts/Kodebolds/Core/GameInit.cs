@@ -17,6 +17,8 @@ namespace Kodebolds.Core
 
 		protected static InitialisationBehaviourUpdaterSystem m_initialisationBehaviourUpdaterSystem;
 		protected static UpdateBehaviourUpdaterSystem m_updateBehaviourUpdaterSystem;
+		public GameObject BehaviourContainer;
+
 
 		public List<KodeboldBehaviour> InitialisationKodeboldBehaviours = new List<KodeboldBehaviour>();
 		public List<KodeboldBehaviour> UpdateKodeboldBehaviours = new List<KodeboldBehaviour>();
@@ -230,17 +232,17 @@ namespace Kodebolds.Core
 		{
 			List<KodeboldBehaviour> initKodeboldBehaviours = new List<KodeboldBehaviour>();
 			List<KodeboldBehaviour> updateKodeboldBehaviours = new List<KodeboldBehaviour>();
-			GameObject behaviourContainer = new GameObject("Behaviours");
 
 			foreach (KodeboldBehaviour kodeboldBehaviour in InitialisationKodeboldBehaviours)
 			{
-				initKodeboldBehaviours.Add(Instantiate(kodeboldBehaviour, behaviourContainer.transform));
+				initKodeboldBehaviours.Add(Instantiate(kodeboldBehaviour, BehaviourContainer.transform));
 			}
 			m_initialisationBehaviourUpdaterSystem.SetBehavioursList(initKodeboldBehaviours);
+			updateKodeboldBehaviours.AddRange(BehaviourContainer.GetComponentsInChildren<KodeboldBehaviour>());
 
 			foreach (KodeboldBehaviour kodeboldBehaviour in UpdateKodeboldBehaviours)
 			{
-				updateKodeboldBehaviours.Add(Instantiate(kodeboldBehaviour, behaviourContainer.transform));
+				updateKodeboldBehaviours.Add(Instantiate(kodeboldBehaviour, BehaviourContainer.transform));
 			}
 			m_updateBehaviourUpdaterSystem.SetBehavioursList(updateKodeboldBehaviours);
 

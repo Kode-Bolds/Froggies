@@ -1,4 +1,4 @@
-﻿using Kodebolds.Core;
+using Kodebolds.Core;
 using Unity.Entities;
 using UnityEngine;
 
@@ -12,7 +12,6 @@ namespace Froggies
 
 		public override void GetSystemDependencies(Dependencies dependencies)
 		{
-
 		}
 
 		public override void InitSystem()
@@ -24,7 +23,8 @@ namespace Froggies
 		{
 			EntityCommandBuffer.ParallelWriter ecb = m_endSimulationECB.CreateCommandBuffer().AsParallelWriter();
 
-			Entities.ForEach((Entity entity, int entityInQueryIndex, ref CurrentTarget target, ref PreviousTarget previousTarget, ref CurrentAIState currentAIState) =>
+            Entities.ForEach((Entity entity, int entityInQueryIndex, ref CurrentTarget target,
+                ref PreviousTarget previousTarget, ref CurrentAIState currentAIState) =>
 			{
 				if (currentAIState.requestedAIState == AIState.None)
 					return;
@@ -95,15 +95,19 @@ namespace Froggies
 				target.targetData = currentAIState.requestedAIStateTargetData;
 
 				currentAIState.CompleteStateChange();
-
 			}).Schedule();
 
 			m_endSimulationECB.AddJobHandleForProducer(Dependency);
 		}
 
+        private void CreatePathFinderEntity(EntityCommandBuffer.ParallelWriter ecb)
+        {
+
+            //ecb.Instantiate();
+        }
+
 		public override void FreeSystem()
 		{
-
 		}
 	}
 }
