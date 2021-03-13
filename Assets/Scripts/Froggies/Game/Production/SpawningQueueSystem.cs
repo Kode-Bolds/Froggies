@@ -12,7 +12,7 @@ namespace Froggies
 	{
 		private InputManager m_inputManager;
 		private RaycastSystem m_raycastSystem;
-		private GridManager m_gridManager;
+		private MapManager m_mapManager;
 
 		public NativeQueue<SpawnCommand> spawnQueue;
 		public JobHandle spawnQueueDependencies;
@@ -23,7 +23,7 @@ namespace Froggies
 		{
 			m_inputManager = dependencies.GetDependency<InputManager>();
 			m_raycastSystem = dependencies.GetDependency<RaycastSystem>();
-			m_gridManager = dependencies.GetDependency<GridManager>();
+			m_mapManager = dependencies.GetDependency<MapManager>();
 		}
 
 		public override void InitSystem()
@@ -39,7 +39,7 @@ namespace Froggies
 			{
 				NativeArray<RaycastResult> raycastResult = m_raycastSystem.RaycastResult;
 				NativeQueue<SpawnCommand> spawnQueueLocal = spawnQueue;
-				NativeArray2D<MapNode> grid = m_gridManager.Grid;
+				NativeArray2D<MapNode> grid = m_mapManager.map;
 
 				Dependency = Entities.WithReadOnly(grid).WithReadOnly(raycastResult).ForEach((ref RuntimePrefabData runtimePrefabData) =>
 				{
@@ -48,7 +48,7 @@ namespace Froggies
 						Rotation rotation = GetComponent<Rotation>(runtimePrefabData.aiDrone);
 						Translation translation = new Translation { Value = raycastResult[0].hitPosition + new float3(0, 1, 0) };
 						LocalToWorld localToWorld = new LocalToWorld { Value = new float4x4(rotation.Value, translation.Value) };
-						PathFinding pathFinding = new PathFinding { currentNode = PathFindingSystem.FindNearestNode(translation.Value, grid) };
+						PathFinding pathFinding = new PathFinding { currentNode = MapUtils.FindNearestNode(translation.Value, grid) };
 
 						SpawnCommands.SpawnHarvester(spawnQueueLocal, runtimePrefabData.aiDrone, translation, localToWorld, pathFinding);
 					}
