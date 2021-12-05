@@ -45,4 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maps:
   - {fileID: 11400000, guid: 50d70fc0095793645b1fd5ae7ef12e8b, type: 2}
-  currentMap: {fileID: 0}
+  currentMap: {fileID: 11400000, guid: 50d70fc0095793645b1fd5ae7ef12e8b, type: 2}
