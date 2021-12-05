@@ -55,4 +55,28 @@ namespace Froggies
             return closestNode;
         }
     }
+
+    public class OVRInput
+	{
+        public static void DoHaptic()
+		{
+
+		}
+	}
+
+    public static class OVRInputExtensions
+    {
+        public static bool HapticEnabled { get; private set; } = false;
+
+        public static void NexusDoHaptic()
+		{
+            if (HapticEnabled)
+                OVRInput.DoHaptic();
+		}
+
+        public static void SetHapticEnabled(bool enabled)
+		{
+            HapticEnabled = enabled;
+		}
+	}
 }

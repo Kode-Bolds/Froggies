@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.LowLevel;
 
 namespace Kodebolds.Core
 {
@@ -72,9 +73,9 @@ namespace Kodebolds.Core
 		private static void CleanupWorld()
 		{
 			Unity.Entities.World.DisposeAllWorlds();
-			WordStorage.Instance.Dispose();
-			WordStorage.Instance = null;
-			Unity.Entities.ScriptBehaviourUpdateOrder.UpdatePlayerLoop(null);
+			WordStorage.Shutdown();
+			PlayerLoopSystem playerLoop = PlayerLoop.GetCurrentPlayerLoop();
+			Unity.Entities.ScriptBehaviourUpdateOrder.AddWorldToPlayerLoop(null, ref playerLoop);
 		}
 
 #if UNITY_EDITOR
@@ -194,7 +195,8 @@ namespace Kodebolds.Core
 			presentationSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<Unity.Rendering.RenderMeshSystemV2>());
 			presentationSystemGroup.AddSystemToUpdateList(world.GetOrCreateSystem<EndFrameJobCompleteSystem>());
 
-			Unity.Entities.ScriptBehaviourUpdateOrder.UpdatePlayerLoop(world);
+			PlayerLoopSystem playerLoop = PlayerLoop.GetCurrentPlayerLoop();
+			Unity.Entities.ScriptBehaviourUpdateOrder.AddWorldToPlayerLoop(world, ref playerLoop);
 
 			return world;
 		}

@@ -157,7 +157,7 @@ namespace Froggies
 			NativeArray<RaycastResult> selectionRaycastResult = m_selectionRaycastResult;
 
 			Dependency = Job
-			.WithDeallocateOnJobCompletion(cameraTranslation)
+			.WithDisposeOnCompletion(cameraTranslation)
 			.WithReadOnly(cameraTranslation)
 			.WithCode(() =>
 			{
